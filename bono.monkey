@@ -10,4 +10,5 @@ Import scene
 Import scenemanager
 Import score
 Import sprite
+Import util
 Import vector2d

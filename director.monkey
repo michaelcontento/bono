@@ -3,9 +3,10 @@ Strict
 Private
 
 Import mojo
-Import scenemanager
-Import vector2d
 Import deltatimer
+Import scenemanager
+Import util
+Import vector2d
 
 Global globalDirectorInstance:Director
 
@@ -62,7 +63,7 @@ Class Director Extends App
     End
 
     Method OnCreate:Int()
-        Seed = Millisecs()
+        Seed = GetTimestamp()
         SetUpdateRate(60)
         deltaTimer = New DeltaTimer(30)
         device_ = New Vector2D(DeviceWidth(), DeviceHeight())
