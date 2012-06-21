@@ -5,6 +5,7 @@ Private
 Import mojo
 Import scenemanager
 Import vector2d
+Import deltatimer
 
 Global globalDirectorInstance:Director
 
@@ -20,6 +21,12 @@ Function CurrentDirectorReset:Void()
 End
 
 Class Director Extends App
+    Private
+
+    Field deltaTimer:DeltaTimer
+
+    Public
+
     Field scenes:SceneManager = New SceneManager()
     Field center:Vector2D
     Field device:Vector2D
@@ -33,10 +40,15 @@ Class Director Extends App
 
     Method OnCreate:Int()
         Seed = Millisecs()
-        SetUpdateRate(30)
+        SetUpdateRate(60)
+        deltaTimer = New DeltaTimer(30)
         device = New Vector2D(DeviceWidth(), DeviceHeight())
         scale = device.Copy().Div(size)
         Return 0
+    End
+
+    Method delta:Float() Property
+        Return deltaTimer.delta
     End
 
     Method OnLoading:Int()
@@ -45,6 +57,7 @@ Class Director Extends App
     End
 
     Method OnUpdate:Int()
+        deltaTimer.OnUpdate()
         If scenes.current Then scenes.current.OnUpdate()
         Return 0
     End
