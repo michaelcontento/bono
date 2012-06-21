@@ -66,11 +66,11 @@ Class Sprite Implements Animationable
     End
 
     Method CenterY:Void()
-        pos.y = CurrentDirector().center_.y - center_.y
+        pos.y = CurrentDirector().center.y - center_.y
     End
 
     Method Center:Void()
-        pos = CurrentDirector().center_.Copy().Sub(center_)
+        pos = CurrentDirector().center.Copy().Sub(center_)
     End
 
     Private
