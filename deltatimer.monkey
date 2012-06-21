@@ -5,24 +5,24 @@ Import mojo
 Class DeltaTimer
     Private
 
-    Field targetfps:Float
-    Field currentticks:Float
-    Field lastticks:Float
-    Field frametime:Float
+    Field currentTicks:Float
+    Field frameTime:Float
+    Field lastTicks:Float
+    Field targetFps:Float
 
     Public
 
     Field delta:Float
 
     Method New(fps:Float)
-        targetfps = fps
-        lastticks = Millisecs()
+        targetFps = fps
+        lastTicks = Millisecs()
     End
 
     Method OnUpdate:Void()
-        currentticks = Millisecs()
-        frametime = currentticks - lastticks
-        delta = frametime / (1000.0 / targetfps)
-        lastticks = currentticks
+        currentTicks = Millisecs()
+        frameTime = currentTicks - lastTicks
+        delta = frameTime / (1000.0 / targetFps)
+        lastTicks = currentTicks
     End
 End
