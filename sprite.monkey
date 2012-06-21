@@ -17,7 +17,6 @@ Class Sprite Implements Animationable
     Field currentFrame:Int
     Field frameCount:Int
     Field frameSpeed:Int
-    Field loopAnimation:Bool
     Field size_:Vector2D
     Field center_:Vector2D
 
@@ -26,6 +25,7 @@ Class Sprite Implements Animationable
     Field pos:Vector2D
     Field rotation:Float
     Field scale:Vector2D = New Vector2D(1, 1)
+    Field loopAnimation:Bool
 
     Method size:Vector2D() Property
         Return size_
@@ -46,10 +46,6 @@ Class Sprite Implements Animationable
 
         image = LoadImage(imageName, frameWidth, frameHeight, frameCount)
         InitVectors(frameWidth, frameHeight, pos)
-    End
-
-    Method LoopAnimation:Void(flag:Bool=True)
-        loopAnimation = flag
     End
 
     Method AnimationIsDone:Bool()
