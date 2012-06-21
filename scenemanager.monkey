@@ -10,15 +10,22 @@ Class SceneManager
     Private
 
     Field scenes:StringMap<Scene> = New StringMap<Scene>
+    Field nextScene_:Scene
+    Field current_:Scene
 
     Public
 
-    Field nextScene:Scene
-    Field current:Scene
+    Method nextScene:Scene() Property
+        Return nextScene_
+    End
+
+    Method current:Scene() Property
+        Return current_
+    End
 
     Method Add:Void(scene:Scene)
         If scenes.IsEmpty()
-            current = scene
+            current_ = scene
         ElseIf scenes.Contains(scene.name)
             Error("Scenemanager already contains a scene name " + scene.name)
         End
@@ -27,17 +34,17 @@ Class SceneManager
     End
 
     Method Goto:Void(name:String)
-        If nextScene And nextScene.name = name Then Return
-        nextScene = scenes.Get(name)
+        If nextScene_ And nextScene_.name = name Then Return
+        nextScene_ = scenes.Get(name)
 
-        If Not nextScene.created
-            nextScene.OnCreate()
-            nextScene.created = True
+        If Not nextScene_.created
+            nextScene_.OnCreate()
+            nextScene_.created = True
         End
 
-        If current Then current.OnLeave()
-        nextScene.OnEnter()
+        If current_ Then current_.OnLeave()
+        nextScene_.OnEnter()
 
-        current = nextScene
+        current_ = nextScene_
     End
 End

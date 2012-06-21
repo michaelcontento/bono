@@ -18,14 +18,22 @@ Class Sprite Implements Animationable
     Field frameCount:Int
     Field frameSpeed:Int
     Field loopAnimation:Bool
+    Field size_:Vector2D
+    Field center_:Vector2D
 
     Public
 
     Field pos:Vector2D
     Field rotation:Float
     Field scale:Vector2D = New Vector2D(1, 1)
-    Field size:Vector2D
-    Field center:Vector2D
+
+    Method size:Vector2D() Property
+        Return size_
+    End
+
+    Method center:Vector2D() Property
+        Return center_
+    End
 
     Method New(imageName:String, pos:Vector2D=Null)
         image = LoadImage(imageName)
@@ -58,15 +66,15 @@ Class Sprite Implements Animationable
     End
 
     Method CenterX:Void()
-        pos.x = CurrentDirector().center.x - center.x
+        pos.x = CurrentDirector().center.x - center_.x
     End
 
     Method CenterY:Void()
-        pos.y = CurrentDirector().center.y - center.y
+        pos.y = CurrentDirector().center_.y - center_.y
     End
 
     Method Center:Void()
-        pos = CurrentDirector().center.Copy().Sub(center)
+        pos = CurrentDirector().center_.Copy().Sub(center_)
     End
 
     Private
@@ -98,7 +106,7 @@ Class Sprite Implements Animationable
             Self.pos = pos
         End
 
-        size = New Vector2D(width, height)
-        center = size.Copy().Div(2)
+        size_ = New Vector2D(width, height)
+        center_ = size_.Copy().Div(2)
     End
 End

@@ -11,13 +11,16 @@ Class Highscore<T>
     Private
 
     Field objects:List<Score<T>> = New List<Score<T>>()
+    Field maxCount_:Int
 
     Public
 
-    Field maxCount:Int
+    Method maxCount:Int() Property
+        Return maxCount_
+    End
 
     Method New(maxCount:Int)
-        Self.maxCount = maxCount
+        maxCount_ = maxCount
     End
 
     Method Add:Void(key:String, value:T)
@@ -72,7 +75,7 @@ Class Highscore<T>
     Private
 
     Method SizeTrim:Void()
-        While objects.Count() > maxCount
+        While objects.Count() > maxCount_
             objects.RemoveLast()
         End
     End
