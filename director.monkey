@@ -2,8 +2,9 @@ Strict
 
 Private
 
-Import mojo
 Import deltatimer
+Import inputcontroller
+Import mojo
 Import scenemanager
 Import util
 Import vector2d
@@ -25,6 +26,7 @@ Class Director Extends App
     Private
 
     Field deltaTimer:DeltaTimer
+    Field inputController_:InputController = New InputController()
     Field scenes_:SceneManager = New SceneManager()
     Field center_:Vector2D
     Field device_:Vector2D
@@ -57,6 +59,10 @@ Class Director Extends App
         Return size_
     End
 
+    Method inputController:InputController() Property
+        Return inputController_
+    End
+
     Method New()
         size_ = New Vector2D(640, 960)
         center_ = size_.Copy().Div(2)
@@ -68,6 +74,7 @@ Class Director Extends App
         deltaTimer = New DeltaTimer(30)
         device_ = New Vector2D(DeviceWidth(), DeviceHeight())
         scale_ = device_.Copy().Div(size_)
+        inputController_.scale = scale_
         Return 0
     End
 
@@ -78,7 +85,10 @@ Class Director Extends App
 
     Method OnUpdate:Int()
         deltaTimer.OnUpdate()
-        If scenes_.current Then scenes_.current.OnUpdate()
+        If scenes_.current
+            inputController_.OnUpdate(scenes_.current)
+            scenes_.current.OnUpdate()
+        End
         Return 0
     End
 

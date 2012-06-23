@@ -3,11 +3,13 @@ Strict
 Private
 
 Import animationable
+Import inputhandler
 Import layer
+Import vector2d
 
 Public
 
-Class Scene Implements Animationable Abstract
+Class Scene Implements Animationable, InputHandler Abstract
     Private
 
     Field layer_:Layer = New Layer()
@@ -65,5 +67,11 @@ Class Scene Implements Animationable Abstract
     End
 
     Method OnLeave:Void()
+    End
+
+    Method OnTouchDown:Void(finger:Int, pos:Vector2D)
+    End
+
+    Method OnTouchUp:Void(finger:Int, pos:Vector2D)
     End
 End
