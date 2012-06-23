@@ -73,6 +73,12 @@ Class Sprite Implements Animationable
         pos = CurrentDirector().center.Copy().Sub(center_)
     End
 
+    Method Collide:Bool(checkPos:Vector2D)
+        If checkPos.x < pos.x Or checkPos.x > pos.x + size_.x Then Return False
+        If checkPos.y < pos.y Or checkPos.y > pos.y + size_.y Then Return False
+        Return True
+    End
+
     Private
 
     Method UpdateAnimation:Void()
