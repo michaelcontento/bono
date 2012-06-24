@@ -5,6 +5,7 @@ Private
 Import animationable
 Import inputhandler
 Import layer
+Import touchevent
 Import vector2d
 
 Public

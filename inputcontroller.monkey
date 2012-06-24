@@ -3,9 +3,10 @@ Strict
 Private
 
 Import mojo
-Import vector2d
 Import director
 Import inputhandler
+Import touchevent
+Import vector2d
 
 Public
 
