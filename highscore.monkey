@@ -52,7 +52,7 @@ Class Highscore<T>
         Local splitted:String[] = input.Split(",")
 
         For Local count:Int = 0 To splitted.Length() - 2 Step 2
-            key = splitted[count]
+            key = splitted[count].Replace("[COMMA]", ",")
             value = T(splitted[count + 1])
             objects.AddLast(New Score<T>(key, value))
         End
@@ -63,7 +63,7 @@ Class Highscore<T>
     Method ToString:String()
         Local result:String
         For Local score:Score<T> = EachIn Self
-            result += score.key + "," + score.value + ","
+            result += score.key.Replace(",", "[COMMA]") + "," + score.value + ","
         End
         Return result
     End
