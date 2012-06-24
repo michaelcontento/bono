@@ -12,15 +12,15 @@ Public
 Class InputController
     Private
 
-    ' TODO: Resize those arrays to touchFingers_ to save memory
-    Field touchDown:Int[MAX_TOUCH_FINGERS]
-    Field touchUp:Int[MAX_TOUCH_FINGERS]
-    Field touchPos:Vector2D[MAX_TOUCH_FINGERS]
+    Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
     Field touchFingers_:Int = MAX_TOUCH_FINGERS
+    Field isTouchUp:Bool[MAX_TOUCH_FINGERS]
+    Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
 
     Public
 
     Field trackTouch:Bool = True
+    Field touchRetainSize:Int = -1
     Field scale:Vector2D = New Vector2D(0, 0)
     Const MAX_TOUCH_FINGERS:Int = 31
 
@@ -35,6 +35,9 @@ Class InputController
         If number > MAX_TOUCH_FINGERS
             Error("Only " + MAX_TOUCH_FINGERS + " can be tracked.")
         End
+        If Not number > 0
+            Error("Number of fingers must be greater than 0.")
+        End
 
         touchFingers_ = number
     End
@@ -43,20 +46,38 @@ Class InputController
 
     Method ProcessTouch:Void(handler:InputHandler)
         For Local i:Int = 0 To touchFingers_ - 1
-            If touchDown[i] Then handler.OnTouchDown(i, touchPos[i])
-            If touchUp[i] Then handler.OnTouchUp(i, touchPos[i])
+            If touchEvents[i] = Null Then Continue
+
+            If Not touchDownDispatched[i]
+                handler.OnTouchDown(touchEvents[i].Copy())
+                touchDownDispatched[i] = True
+            ElseIf isTouchUp[i]
+                handler.OnTouchUp(touchEvents[i])
+                touchEvents[i] = Null
+            Else
+                handler.OnTouchMove(touchEvents[i])
+            End
         End
     End
 
     Method ReadTouch:Void()
-        Local newTouchDown:Bool
-        For Local i:Int = 0 To touchFingers_ - 1
-            ' TODO: Reuse the last vector2d instance
-            touchPos[i] = New Vector2D(TouchX(i), TouchY(i)).Div(scale)
+        Local scaledVector:Vector2D
+        Local lastTouchUp:Bool
 
-            newTouchDown = Bool(TouchDown(i))
-            touchUp[i] = (touchDown[i] And Not newTouchDown)
-            touchDown[i] = newTouchDown
+        For Local i:Int = 0 To touchFingers_ - 1
+            lastTouchUp = isTouchUp[i]
+            isTouchUp[i] = (Not TouchDown(i))
+
+            If isTouchUp[i] And lastTouchUp Then Continue
+
+            If touchEvents[i] = Null
+                touchDownDispatched[i] = False
+                touchEvents[i] = New TouchEvent(i)
+            End
+
+            scaledVector = New Vector2D(TouchX(i), TouchY(i)).Div(scale)
+            touchEvents[i].Add(scaledVector)
+            If touchRetainSize > -1 Then touchEvents[i].Trim(touchRetainSize)
         End
     End
 End

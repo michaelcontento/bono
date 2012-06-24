@@ -69,9 +69,12 @@ Class Scene Implements Animationable, InputHandler Abstract
     Method OnLeave:Void()
     End
 
-    Method OnTouchDown:Void(finger:Int, pos:Vector2D)
+    Method OnTouchDown:Void(event:TouchEvent)
     End
 
-    Method OnTouchUp:Void(finger:Int, pos:Vector2D)
+    Method OnTouchUp:Void(event:TouchEvent)
+    End
+
+    Method OnTouchMove:Void(event:TouchEvent)
     End
 End

@@ -2,11 +2,12 @@ Strict
 
 Private
 
-Import vector2d
+Import touchevent
 
 Public
 
 Interface InputHandler
-    Method OnTouchDown:Void(finger:Int, pos:Vector2D)
-    Method OnTouchUp:Void(finger:Int, pos:Vector2D)
+    Method OnTouchDown:Void(event:TouchEvent)
+    Method OnTouchUp:Void(event:TouchEvent)
+    Method OnTouchMove:Void(event:TouchEvent)
 End
