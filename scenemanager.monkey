@@ -33,6 +33,10 @@ Class SceneManager
         scenes.Set(scene.name, scene)
     End
 
+    Method Get:Scene(name:String)
+        Return scenes.Get(name)
+    End
+
     Method Goto:Void(name:String)
         If nextScene_ And nextScene_.name = name Then Return
         nextScene_ = scenes.Get(name)
