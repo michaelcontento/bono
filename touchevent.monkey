@@ -37,10 +37,12 @@ Class TouchEvent
     End
 
     Method pos:Vector2D() Property
+        If positions.Count() = 0 Then Return New Vector2D(0, 0)
         Return positions.Last()
     End
 
     Method startPos:Vector2D() Property
+        If positions.Count() = 0 Then Return New Vector2D(0, 0)
         Return positions.First()
     End
 

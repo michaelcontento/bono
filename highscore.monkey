@@ -72,6 +72,16 @@ Class Highscore<T>
         Return objects.ObjectEnumerator()
     End
 
+    Method First:Score<T>()
+        If objects.Count() = 0 Then Return New Score<T>("", 0)
+        Return objects.First()
+    End
+
+    Method Last:Score<T>()
+        If objects.Count() = 0 Then Return New Score<T>("", 0)
+        Return objects.Last()
+    End
+
     Private
 
     Method SizeTrim:Void()
