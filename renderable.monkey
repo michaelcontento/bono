@@ -1,6 +1,6 @@
 Strict
 
-Interface Animationable
+Interface Renderable
     Method OnRender:Void()
     Method OnUpdate:Void()
 End

@@ -2,34 +2,32 @@ Strict
 
 Private
 
-Import scene
+Import bono
 
 Public
 
 Class SceneManager
     Private
 
-    Field scenes:StringMap<Scene> = New StringMap<Scene>
-    Field nextScene_:Scene
-    Field current_:Scene
+    Field scenes:StringMap<Scene> = New StringMap<Scene>()
+    Field created:List<String> = New List<String>()
+    Field _current:Scene
+    Field _prevScene:Scene
+    Field _nextScene:Scene
+    Field _director:Director
 
     Public
 
-    Method nextScene:Scene() Property
-        Return nextScene_
-    End
-
-    Method current:Scene() Property
-        Return current_
+    Method New(director:Director)
+        _director = director
     End
 
     Method Add:Void(scene:Scene)
-        If scenes.IsEmpty()
-            current_ = scene
-        ElseIf scenes.Contains(scene.name)
-            Error("Scenemanager already contains a scene name " + scene.name)
+        If scenes.Contains(scene.name)
+            Error("Scenemanager already contains a scene named " + scene.name)
         End
 
+        scene.scenes = Self
         scenes.Set(scene.name, scene)
     End
 
@@ -38,17 +36,34 @@ Class SceneManager
     End
 
     Method Goto:Void(name:String)
-        If nextScene_ And nextScene_.name = name Then Return
-        nextScene_ = scenes.Get(name)
+        If _nextScene And _nextScene.name = name Then Return
+        _prevScene = _current
+        _nextScene = scenes.Get(name)
 
-        If Not nextScene_.created
-            nextScene_.OnCreate()
-            nextScene_.created = True
+        If Not created.Contains(name)
+            created.AddLast(name)
+            _nextScene.OnCreate()
         End
 
-        If current_ Then current_.OnLeave()
-        nextScene_.OnEnter()
+        If _current Then _current.OnLeave()
+        _nextScene.OnEnter()
 
-        current_ = nextScene_
+        _current = _nextScene
+    End
+
+    Method nextScene:Scene() Property
+        Return _nextScene
+    End
+
+    Method prevScene:Scene() Property
+        Return _prevScene
+    End
+
+    Method scene:Scene() Property
+        Return _current
+    End
+
+    Method director:Director() Property
+        Return _director
     End
 End

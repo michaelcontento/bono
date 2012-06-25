@@ -2,123 +2,125 @@ Strict
 
 Private
 
-Import deltatimer
-Import inputcontroller
 Import mojo
-Import scenemanager
-Import util
-Import vector2d
-
-Global globalDirectorInstance:Director
+Import bono
 
 Public
-
-Function CurrentDirector:Director()
-    If Not globalDirectorInstance Then globalDirectorInstance = New Director()
-    Return globalDirectorInstance
-End
-
-Function CurrentDirectorReset:Void()
-    globalDirectorInstance = Null
-End
 
 Class Director Extends App
     Private
 
     Field deltaTimer:DeltaTimer
-    Field inputController_:InputController = New InputController()
-    Field scenes_:SceneManager = New SceneManager()
-    Field center_:Vector2D
-    Field device_:Vector2D
-    Field scale_:Vector2D
-    Field size_:Vector2D
+    Field _inputController:InputController = New InputController()
+    Field _center:Vector2D
+    Field _device:Vector2D
+    Field _scale:Vector2D
+    Field _size:Vector2D
 
     Public
 
-    Method delta:Float() Property
-        Return deltaTimer.delta
-    End
-
-    Method scenes:SceneManager() Property
-        Return scenes_
-    End
-
-    Method center:Vector2D() Property
-        Return center_
-    End
-
-    Method device:Vector2D() Property
-        Return device_
-    End
-
-    Method scale:Vector2D() Property
-        Return scale_
-    End
-
-    Method size:Vector2D() Property
-        Return size_
-    End
-
-    Method inputController:InputController() Property
-        Return inputController_
-    End
+    Field scenes:SceneManager
 
     Method New()
-        size_ = New Vector2D(640, 960)
-        center_ = size_.Copy().Div(2)
+        Error("Please use New(Int, Int) with proper screen dimensions")
+    End
+
+    Method New(width:Int, height:Int)
+        Super.New()
+        scenes = New SceneManager(Self)
+        _size = New Vector2D(width, height)
+        _center = _size.Copy().Div(2)
     End
 
     Method OnCreate:Int()
+        _device = New Vector2D(DeviceWidth(), DeviceHeight())
+        _scale = _device.Copy().Div(_size)
+        _inputController.scale = _scale
+
         Seed = GetTimestamp()
-        SetUpdateRate(60)
+
         deltaTimer = New DeltaTimer(30)
-        device_ = New Vector2D(DeviceWidth(), DeviceHeight())
-        scale_ = device_.Copy().Div(size_)
-        inputController_.scale = scale_
+        SetUpdateRate(60)
+
         Return 0
     End
 
     Method OnLoading:Int()
-        If scenes_.current Then scenes_.current.OnLoading()
+        If scenes.scene Then scenes.scene.OnLoading()
         Return 0
     End
 
     Method OnUpdate:Int()
         deltaTimer.OnUpdate()
-        If scenes_.current
-            inputController_.OnUpdate(scenes_.current)
-            scenes_.current.OnUpdate()
+        If scenes.scene
+            _inputController.OnUpdate(scenes.scene)
+            scenes.scene.OnUpdate()
         End
         Return 0
     End
 
     Method OnResume:Int()
-        If scenes_.current Then scenes_.current.OnResume()
+        If scenes.scene Then scenes.scene.OnResume()
         Return 0
     End
 
     Method OnSuspend:Int()
-        If scenes_.current Then scenes_.current.OnSuspend()
+        If scenes.scene Then scenes.scene.OnSuspend()
         Return 0
     End
 
     Method OnRender:Int()
-        If Not scenes_.current Then Return 0
+        If Not scenes.scene Then Return 0
 
         PushMatrix()
-            Scale(scale_.x, scale_.y)
-            SetScissor(0, 0, device_.x, device_.y)
+            Scale(_scale.x, _scale.y)
+            SetScissor(0, 0, _device.x, _device.y)
 
             PushMatrix()
-                scenes_.current.OnRender()
+                scenes.scene.OnRender()
             PopMatrix()
         PopMatrix()
 
         Return 0
     End
 
-    Method Run:Void()
-        If Not scenes_.current Then Error("No scenes_ found!")
-        scenes_.Goto(scenes_.current.name)
+    Method Run:Void(scene:String)
+        scenes.Goto(scene)
+    End
+
+    Method CenterX:Void(entity:Positionable)
+        entity.pos.x = _center.x - entity.center.x
+    End
+
+    Method CenterY:Void(entity:Positionable)
+        entity.pos.y = _center.y - entity.center.y
+    End
+
+    Method Center:Void(entity:Positionable)
+        entity.pos = _center.Copy().Sub(entity.center)
+    End
+
+    Method delta:Float() Property
+        Return deltaTimer.delta
+    End
+
+    Method center:Vector2D() Property
+        Return _center
+    End
+
+    Method device:Vector2D() Property
+        Return _device
+    End
+
+    Method scale:Vector2D() Property
+        Return _scale
+    End
+
+    Method size:Vector2D() Property
+        Return _size
+    End
+
+    Method inputController:InputController() Property
+        Return _inputController
     End
 End

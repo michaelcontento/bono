@@ -2,18 +2,18 @@ Strict
 
 Private
 
-Import animationable
+Import bono
 
 Public
 
-Class Layer Implements Animationable
+Class Layer Implements Renderable
     Private
 
-    Field objects:List<Animationable> = New List<Animationable>
+    Field objects:List<Renderable> = New List<Renderable>
 
     Public
 
-    Method Add:Void(obj:Animationable)
+    Method Add:Void(obj:Renderable)
         objects.AddLast(obj)
     End
 
@@ -25,25 +25,25 @@ Class Layer Implements Animationable
         objects.Clear()
     End
 
-    Method Remove:Void(obj:Animationable)
+    Method Remove:Void(obj:Renderable)
         objects.RemoveEach(obj)
+    End
+
+    Method ObjectEnumerator:list.Enumerator<Renderable>()
+        Return objects.ObjectEnumerator()
     End
 
     Method OnRender:Void()
         If Not objects Then Return
-        For Local obj:Animationable = EachIn objects
+        For Local obj:Renderable = EachIn objects
             obj.OnRender()
         End
     End
 
     Method OnUpdate:Void()
         If Not objects Then Return
-        For Local obj:Animationable = EachIn objects
+        For Local obj:Renderable = EachIn objects
             obj.OnUpdate()
         End
-    End
-
-    Method ObjectEnumerator:list.Enumerator<Animationable>()
-        Return objects.ObjectEnumerator()
     End
 End

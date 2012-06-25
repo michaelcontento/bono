@@ -1,13 +1,14 @@
 Strict
 
 Import angelfont
-Import animationable
 Import deltatimer
 Import director
 Import highscore
 Import inputcontroller
 Import inputhandler
 Import layer
+Import positionable
+Import renderable
 Import scene
 Import scenemanager
 Import score

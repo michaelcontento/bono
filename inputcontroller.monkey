@@ -3,10 +3,7 @@ Strict
 Private
 
 Import mojo
-Import director
-Import inputhandler
-Import touchevent
-Import vector2d
+Import bono
 
 Public
 
@@ -14,7 +11,7 @@ Class InputController
     Private
 
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
-    Field touchFingers_:Int = MAX_TOUCH_FINGERS
+    Field _touchFingers:Int = MAX_TOUCH_FINGERS
     Field isTouchUp:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
 
@@ -40,13 +37,13 @@ Class InputController
             Error("Number of fingers must be greater than 0.")
         End
 
-        touchFingers_ = number
+        _touchFingers = number
     End
 
     Private
 
     Method ProcessTouch:Void(handler:InputHandler)
-        For Local i:Int = 0 To touchFingers_ - 1
+        For Local i:Int = 0 Until _touchFingers
             If touchEvents[i] = Null Then Continue
 
             If Not touchDownDispatched[i]
@@ -65,7 +62,7 @@ Class InputController
         Local scaledVector:Vector2D
         Local lastTouchUp:Bool
 
-        For Local i:Int = 0 To touchFingers_ - 1
+        For Local i:Int = 0 Until _touchFingers
             lastTouchUp = isTouchUp[i]
             isTouchUp[i] = (Not TouchDown(i))
 

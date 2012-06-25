@@ -2,57 +2,22 @@ Strict
 
 Private
 
-Import animationable
-Import inputhandler
-Import layer
-Import touchevent
-Import vector2d
+Import bono
 
 Public
 
-Class Scene Implements Animationable, InputHandler Abstract
+Class Scene Implements Renderable, InputHandler Abstract
     Private
 
-    Field layer_:Layer = New Layer()
-    Field created_:Bool = False
-    Field name_:String
+    Field _layer:Layer = New Layer()
+    Field _name:String
     Field nameAlreadySet:Bool
 
     Public
 
-    Method layer:Layer() Property
-        Return layer_
-    End
-
-    Method created:Bool() Property
-        Return created_
-    End
-
-    Method created:Void(flag:Bool) Property
-        If created_ Then Error("Scene already created.")
-        created_ = flag
-    End
-
-    Method name:String() Property
-        Return name_
-    End
-
-    Method name:Void(name:String) Property
-        If nameAlreadySet Then Error("Name already set.")
-        nameAlreadySet = True
-
-        name_ = name
-    End
+    Field scenes:SceneManager
 
     Method OnLoading:Void()
-    End
-
-    Method OnUpdate:Void()
-        layer_.OnUpdate()
-    End
-
-    Method OnRender:Void()
-        layer_.OnRender()
     End
 
     Method OnResume:Void()
@@ -70,6 +35,14 @@ Class Scene Implements Animationable, InputHandler Abstract
     Method OnLeave:Void()
     End
 
+    Method OnUpdate:Void()
+        _layer.OnUpdate()
+    End
+
+    Method OnRender:Void()
+        _layer.OnRender()
+    End
+
     Method OnTouchDown:Void(event:TouchEvent)
     End
 
@@ -77,5 +50,23 @@ Class Scene Implements Animationable, InputHandler Abstract
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
+    End
+
+    Method director:Director() Property
+        Return scenes.director
+    End
+
+    Method layer:Layer() Property
+        Return _layer
+    End
+
+    Method name:String() Property
+        Return _name
+    End
+
+    Method name:Void(name:String) Property
+        If nameAlreadySet Then Error("Name already set.")
+        nameAlreadySet = True
+        _name = name
     End
 End

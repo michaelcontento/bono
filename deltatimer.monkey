@@ -9,13 +9,9 @@ Class DeltaTimer
     Field frameTime:Float
     Field lastTicks:Float
     Field targetFps:Float
-    Field delta_:Float
+    Field _delta:Float
 
     Public
-
-    Method delta:Float() Property
-        Return delta_
-    End
 
     Method New(fps:Float)
         targetFps = fps
@@ -25,7 +21,11 @@ Class DeltaTimer
     Method OnUpdate:Void()
         currentTicks = Millisecs()
         frameTime = currentTicks - lastTicks
-        delta_ = frameTime / (1000.0 / targetFps)
+        _delta = frameTime / (1000.0 / targetFps)
         lastTicks = currentTicks
+    End
+
+    Method delta:Float() Property
+        Return _delta
     End
 End

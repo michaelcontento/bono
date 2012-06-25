@@ -3,7 +3,7 @@ Strict
 Private
 
 Import mojo
-Import score
+Import bono
 
 Public
 
@@ -11,16 +11,12 @@ Class Highscore<T>
     Private
 
     Field objects:List<Score<T>> = New List<Score<T>>()
-    Field maxCount_:Int
+    Field _maxCount:Int
 
     Public
 
-    Method maxCount:Int() Property
-        Return maxCount_
-    End
-
     Method New(maxCount:Int)
-        maxCount_ = maxCount
+        _maxCount = maxCount
     End
 
     Method Add:Void(key:String, value:T)
@@ -33,16 +29,16 @@ Class Highscore<T>
         objects.Clear()
     End
 
+    Method Count:Int()
+        Return objects.Count()
+    End
+
     Method Save:Void()
         SaveState(ToString())
     End
 
     Method Load:Void()
         FromString(LoadState())
-    End
-
-    Method Count:Int()
-        Return objects.Count()
     End
 
     Method FromString:Void(input:String)
@@ -82,10 +78,14 @@ Class Highscore<T>
         Return objects.Last()
     End
 
+    Method maxCount:Int() Property
+        Return _maxCount
+    End
+
     Private
 
     Method SizeTrim:Void()
-        While objects.Count() > maxCount_
+        While objects.Count() > _maxCount
             objects.RemoveLast()
         End
     End
