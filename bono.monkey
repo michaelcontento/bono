@@ -6,6 +6,7 @@ Import bono.displayobject
 Import bono.highscore
 Import bono.inputcontroller
 Import bono.inputhandler
+Import bono.keyevent
 Import bono.layer
 Import bono.persistable
 Import bono.renderable

@@ -4,6 +4,7 @@ Private
 
 Import director
 Import inputhandler
+Import keyevent
 Import layer
 Import renderable
 Import scenemanager
@@ -55,6 +56,15 @@ Class Scene Implements Renderable, InputHandler Abstract
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
+    End
+
+    Method OnKeyDown:Void(event:KeyEvent)
+    End
+
+    Method OnKeyUp:Void(event:KeyEvent)
+    End
+
+    Method OnKeyPress:Void(event:KeyEvent)
     End
 
     Method director:Director() Property

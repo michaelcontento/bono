@@ -93,6 +93,10 @@ Class Director Extends App
         Return 0
     End
 
+    Method Quit:Void()
+        Error("")
+    End
+
     Method Run:Void(scene:String)
         scenes.Goto(scene)
     End
