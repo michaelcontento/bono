@@ -3,6 +3,7 @@ Strict
 Private
 
 Import mojo
+Import color
 Import deltatimer
 Import displayobject
 Import inputcontroller
@@ -23,6 +24,8 @@ Class Director Extends App
     Field _size:Vector2D
 
     Public
+
+    Field clearColor:Color = New Color(0, 0, 0)
 
     Field scenes:SceneManager
 
@@ -80,6 +83,7 @@ Class Director Extends App
         PushMatrix()
             Scale(_scale.x, _scale.y)
             SetScissor(0, 0, _device.x, _device.y)
+            Cls(clearColor.red, clearColor.green, clearColor.blue)
 
             PushMatrix()
                 scenes.scene.OnRender()
