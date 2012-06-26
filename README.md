@@ -10,6 +10,8 @@
   * New handler `OnKeyDown:Void(event:KeyEvent)`
   * New handler `OnKeyPress:Void(event:KeyEvent)`
   * New handler `OnKeyUp:Void(event:KeyEvent)`
+* Copy the whole position list in `TouchEvent.Copy()`
+* Verify position acces for `TouchEvent`s with an empty positions list
 
 # Instructions
 
