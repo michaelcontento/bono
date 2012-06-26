@@ -1,3 +1,16 @@
+# TODO
+
+* Make FPS in `Director` customizable
+* Make "deltatime FPS" in `Director` customizable
+* Wrap `AngelFont` into own `Font` that derived from `DisplayObject`
+* Refactor `Highscore` to use JSON
+* Refactor `Score` to easily support deviations with custom fields
+* Add keyboard events to `InputController` and `InputHandler`
+  * New class `KeyEvent`
+  * New handler `OnKeyDown:Void(event:KeyEvent)`
+  * New handler `OnKeyPress:Void(event:KeyEvent)`
+  * New handler `OnKeyUp:Void(event:KeyEvent)`
+
 # Instructions
 
 Given your monkey project lives in `~/projects/tetris` and all sources are
