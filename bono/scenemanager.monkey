@@ -36,6 +36,10 @@ Class SceneManager
         Return scenes.Get(name)
     End
 
+    Method Goto:Void(scene:Scene)
+        Goto(scene.name)
+    End
+
     Method Goto:Void(name:String)
         If _nextScene And _nextScene.name = name Then Return
         _prevScene = _current
