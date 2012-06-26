@@ -2,12 +2,11 @@ Strict
 
 Private
 
-Import mojo
 Import bono
 
 Public
 
-Class Highscore<T>
+Class Highscore<T> Implements Persistable
     Private
 
     Field objects:List<Score<T>> = New List<Score<T>>()
@@ -31,14 +30,6 @@ Class Highscore<T>
 
     Method Count:Int()
         Return objects.Count()
-    End
-
-    Method Save:Void()
-        SaveState(ToString())
-    End
-
-    Method Load:Void()
-        FromString(LoadState())
     End
 
     Method FromString:Void(input:String)
