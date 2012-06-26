@@ -88,15 +88,15 @@ Class Director Extends App
         scenes.Goto(scene)
     End
 
-    Method CenterX:Void(entity:Positionable)
+    Method CenterX:Void(entity:DisplayObject)
         entity.pos.x = _center.x - entity.center.x
     End
 
-    Method CenterY:Void(entity:Positionable)
+    Method CenterY:Void(entity:DisplayObject)
         entity.pos.y = _center.y - entity.center.y
     End
 
-    Method Center:Void(entity:Positionable)
+    Method Center:Void(entity:DisplayObject)
         entity.pos = _center.Copy().Sub(entity.center)
     End
 

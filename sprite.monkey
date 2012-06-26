@@ -7,7 +7,7 @@ Import bono
 
 Public
 
-Class Sprite Extends Positionable
+Class Sprite Extends DisplayObject
     Private
 
     Field image:Image

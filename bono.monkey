@@ -7,9 +7,9 @@ Import highscore
 Import inputcontroller
 Import inputhandler
 Import layer
-Import positionable
-Import renderable
+Import displayobject
 Import scene
+Import renderable
 Import scenemanager
 Import score
 Import sprite

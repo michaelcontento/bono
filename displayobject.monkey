@@ -6,7 +6,7 @@ Import bono
 
 Public
 
-Class Positionable Implements Renderable Abstract
+Class DisplayObject Implements Renderable Abstract
     Field _pos:Vector2D
     Field _center:Vector2D
     Field _size:Vector2D
