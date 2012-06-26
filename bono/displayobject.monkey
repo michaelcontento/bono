@@ -2,7 +2,8 @@ Strict
 
 Private
 
-Import bono
+Import renderable
+Import vector2d
 
 Public
 

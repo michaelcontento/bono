@@ -3,7 +3,9 @@ Strict
 Private
 
 Import mojo
-Import bono
+Import inputhandler
+Import touchevent
+Import vector2d
 
 Public
 

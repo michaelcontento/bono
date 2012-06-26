@@ -2,7 +2,8 @@ Strict
 
 Private
 
-Import bono
+Import persistable
+Import score
 
 Public
 

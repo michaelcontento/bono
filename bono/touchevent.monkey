@@ -3,7 +3,7 @@ Strict
 Private
 
 Import mojo
-Import bono
+Import vector2d
 
 Public
 

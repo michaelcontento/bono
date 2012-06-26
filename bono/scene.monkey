@@ -2,7 +2,12 @@ Strict
 
 Private
 
-Import bono
+Import director
+Import inputhandler
+Import layer
+Import renderable
+Import scenemanager
+Import touchevent
 
 Public
 

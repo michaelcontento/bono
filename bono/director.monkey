@@ -3,7 +3,12 @@ Strict
 Private
 
 Import mojo
-Import bono
+Import deltatimer
+Import displayobject
+Import inputcontroller
+Import scenemanager
+Import util
+Import vector2d
 
 Public
 
