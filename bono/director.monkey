@@ -2,12 +2,10 @@ Strict
 
 Private
 
-Import mojo
-Import color
 Import deltatimer
-Import displayobject
+Import directorevents
 Import inputcontroller
-Import scenemanager
+Import mojo
 Import util
 Import vector2d
 
@@ -16,105 +14,79 @@ Public
 Class Director Extends App
     Private
 
-    Field deltaTimer:DeltaTimer
-    Field _inputController:InputController = New InputController()
     Field _center:Vector2D
-    Field _device:Vector2D
+    Field _device:Vector2D = New Vector2D(0, 0)
+    Field _inputController:InputController = New InputController()
     Field _scale:Vector2D
     Field _size:Vector2D
+    Field deltaTimer:DeltaTimer
+    Field _handler:DirectorEvents
+    Field onCreateDispatched:Bool
+    Field appOnCreateCatched:Bool
 
     Public
 
-    Field clearColor:Color = New Color(0, 0, 0)
-
-    Field scenes:SceneManager
-
-    Method New()
-        Error("Please use New(Int, Int) with proper screen dimensions")
-    End
-
     Method New(width:Int, height:Int)
         Super.New()
-        scenes = New SceneManager(Self)
-        _size = New Vector2D(width, height)
-        _center = _size.Copy().Div(2)
+        size = New Vector2D(width, height)
     End
 
     Method OnCreate:Int()
         _device = New Vector2D(DeviceWidth(), DeviceHeight())
-        _scale = _device.Copy().Div(_size)
-        _inputController.scale = _scale
+        If Not size Then size = _device.Copy()
+        RecalculateScale()
 
+        inputController.scale = scale
         Seed = GetTimestamp()
 
         deltaTimer = New DeltaTimer(30)
         SetUpdateRate(60)
 
+        appOnCreateCatched = True
+        DispatchOnCreate()
         Return 0
     End
 
     Method OnLoading:Int()
-        If scenes.scene Then scenes.scene.OnLoading()
+        If _handler Then _handler.OnLoading()
         Return 0
     End
 
     Method OnUpdate:Int()
         deltaTimer.OnUpdate()
-        If scenes.scene
-            _inputController.OnUpdate(scenes.scene)
-            scenes.scene.OnUpdate()
+        If _handler
+            _handler.OnUpdate(deltaTimer.delta)
+            inputController.OnUpdate(_handler)
         End
         Return 0
     End
 
     Method OnResume:Int()
-        If scenes.scene Then scenes.scene.OnResume()
+        If _handler Then _handler.OnResume(0)
         Return 0
     End
 
     Method OnSuspend:Int()
-        If scenes.scene Then scenes.scene.OnSuspend()
+        If _handler Then _handler.OnSuspend()
         Return 0
     End
 
     Method OnRender:Int()
-        If Not scenes.scene Then Return 0
-
         PushMatrix()
             Scale(_scale.x, _scale.y)
             SetScissor(0, 0, _device.x, _device.y)
-            Cls(clearColor.red, clearColor.green, clearColor.blue)
+            Cls(0, 0, 0)
 
             PushMatrix()
-                scenes.scene.OnRender()
+                If _handler Then _handler.OnRender()
             PopMatrix()
         PopMatrix()
-
         Return 0
     End
 
-    Method Quit:Void()
-        Error("")
-    End
-
-    Method Run:Void(scene:String)
-        scenes.Goto(scene)
-    End
-
-    Method CenterX:Void(entity:DisplayObject)
-        entity.pos.x = _center.x - entity.center.x
-    End
-
-    Method CenterY:Void(entity:DisplayObject)
-        entity.pos.y = _center.y - entity.center.y
-    End
-
-    Method Center:Void(entity:DisplayObject)
-        entity.pos = _center.Copy().Sub(entity.center)
-    End
-
-    Method delta:Float() Property
-        Return deltaTimer.delta
+    Method Run:Void(_handler:DirectorEvents)
+        Self._handler = _handler
+        DispatchOnCreate()
     End
 
     Method center:Vector2D() Property
@@ -133,7 +105,32 @@ Class Director Extends App
         Return _size
     End
 
+    Method size:Void(newSize:Vector2D) Property
+        _size = newSize
+        _center = _size.Copy().Div(2)
+        RecalculateScale()
+    End
+
     Method inputController:InputController() Property
         Return _inputController
+    End
+
+    Method handler:DirectorEvents() Property
+        Return _handler
+    End
+
+    Private
+
+    Method RecalculateScale:Void()
+        _scale = _device.Copy().Div(_size)
+    End
+
+    Method DispatchOnCreate:Void()
+        If onCreateDispatched Then Return
+        If Not _handler Then Return
+        If Not appOnCreateCatched Then Return
+
+        _handler.OnCreate(Self)
+        onCreateDispatched = True
     End
 End

@@ -2,13 +2,14 @@ Strict
 
 Private
 
+Import baseobject
+Import director
 Import mojo
-Import displayobject
 Import vector2d
 
 Public
 
-Class Sprite Extends DisplayObject
+Class Sprite Extends BaseObject
     Private
 
     Field image:Image
@@ -24,6 +25,7 @@ Class Sprite Extends DisplayObject
     Field frameSpeed:Int
 
     Method New(imageName:String, pos:Vector2D=Null)
+    ' FIXME
         image = LoadImage(imageName)
         InitVectors(image.Width(), image.Height(), pos)
     End
@@ -40,24 +42,7 @@ Class Sprite Extends DisplayObject
         DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
     End
 
-    Method OnUpdate:Void()
-        UpdateAnimation()
-    End
-
-    Method Collide:Bool(checkPos:Vector2D)
-        If checkPos.x < pos.x Or checkPos.x > pos.x + size.x Then Return False
-        If checkPos.y < pos.y Or checkPos.y > pos.y + size.y Then Return False
-        Return True
-    End
-
-    Method animationIsDone:Bool() Property
-        If loopAnimation Then Return False
-        Return (currentFrame = frameCount)
-    End
-
-    Private
-
-    Method UpdateAnimation:Void()
+    Method OnUpdate:Void(delta:Float)
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
@@ -76,6 +61,31 @@ Class Sprite Extends DisplayObject
         End
         frameTimer = Millisecs()
     End
+
+    Method Collide:Bool(checkPos:Vector2D)
+        If checkPos.x < pos.x Or checkPos.x > pos.x + size.x Then Return False
+        If checkPos.y < pos.y Or checkPos.y > pos.y + size.y Then Return False
+        Return True
+    End
+
+    Method CenterX:Void(entity:Director)
+        pos.x = entity.center.x - center.x
+    End
+
+    Method CenterY:Void(entity:Director)
+        pos.y = entity.center.y - center.y
+    End
+
+    Method Center:Void(entity:Director)
+        pos = entity.center.Copy().Sub(center)
+    End
+
+    Method animationIsDone:Bool() Property
+        If loopAnimation Then Return False
+        Return (currentFrame = frameCount)
+    End
+
+    Private
 
     Method InitVectors:Void(width:Int, height:Int, pos:Vector2D=Null)
         If pos = Null

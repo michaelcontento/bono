@@ -4,17 +4,18 @@ digraph G {
     subgraph extends {
         edge [dir=back, arrowtail=onormal]
         App -> Director [weight=8]
+        NullObject -> BaseObject
     }
 
     subgraph aggregations {
         edge [arrowhead=odiamond]
-        FanOut -> Delegateable
-        Router -> Delegateable
+        FanOut -> DirectorEvents
+        Router -> DirectorEvents
     }
 
     subgraph relations {
         edge [arrowhead=none]
-        Director -> Delegateable [weight=8]
+        Director -> DirectorEvents [weight=8]
         InputController -> Director
     }
 
@@ -23,11 +24,11 @@ digraph G {
         BaseObject -> Font
         BaseObject -> Sprite
         BaseObject -> TextInput
-        Delegateable -> BaseObject
-        Delegateable -> FanOut
-        Delegateable -> Router
+        DirectorEvents -> NullObject
+        DirectorEvents -> FanOut
+        DirectorEvents -> Router
     }
 
     BaseObject [label="<< abstract >>\nBaseObject"]
-    Delegateable [label="<< interface >>\nDelegateable"]
+    DirectorEvents [label="<< interface >>\nDirectorEvents"]
 }

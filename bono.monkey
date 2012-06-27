@@ -1,17 +1,17 @@
 Strict
 
+Import bono.baseobject
+Import bono.color
 Import bono.deltatimer
 Import bono.director
-Import bono.displayobject
+Import bono.directorevents
+Import bono.fanout
 Import bono.highscore
 Import bono.inputcontroller
-Import bono.inputhandler
 Import bono.keyevent
-Import bono.layer
+Import bono.nullobject
 Import bono.persistable
-Import bono.renderable
-Import bono.scene
-Import bono.scenemanager
+Import bono.router
 Import bono.score
 Import bono.sprite
 Import bono.statestore

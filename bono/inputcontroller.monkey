@@ -2,9 +2,9 @@ Strict
 
 Private
 
-Import mojo
-Import inputhandler
+Import directorevents
 Import keyevent
+Import mojo
 Import touchevent
 Import vector2d
 
@@ -16,9 +16,6 @@ Class InputController
     Const FIRST_KEY:Int = KEY_BACKSPACE
     Const LAST_KEY:Int = KEY_QUOTES
     Const KEY_COUNT:Int = LAST_KEY - FIRST_KEY + 1
-
-    Public
-
     Field _touchFingers:Int = MAX_TOUCH_FINGERS
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
     Field isTouchUp:Bool[MAX_TOUCH_FINGERS]
@@ -29,13 +26,13 @@ Class InputController
 
     Public
 
+    Field scale:Vector2D = New Vector2D(0, 0)
     Field trackTouch:Bool = True
     Field trackKeys:Bool = True
     Field touchRetainSize:Int = -1
-    Field scale:Vector2D = New Vector2D(0, 0)
     Const MAX_TOUCH_FINGERS:Int = 31
 
-    Method OnUpdate:Void(handler:InputHandler)
+    Method OnUpdate:Void(handler:DirectorEvents)
         If trackTouch
             ReadTouch()
             ProcessTouch(handler)
@@ -60,7 +57,7 @@ Class InputController
 
     Private
 
-    Method ProcessKeys:Void(handler:InputHandler)
+    Method ProcessKeys:Void(handler:DirectorEvents)
         For Local i:Int = 0 Until KEY_COUNT
             If keyEvents[i] = Null Then Continue
 
@@ -92,7 +89,7 @@ Class InputController
         End
     End
 
-    Method ProcessTouch:Void(handler:InputHandler)
+    Method ProcessTouch:Void(handler:DirectorEvents)
         For Local i:Int = 0 Until _touchFingers
             If touchEvents[i] = Null Then Continue
 
