@@ -4,30 +4,30 @@ digraph G {
     subgraph extends {
         edge [dir=back, arrowtail=onormal]
         App -> Director
-        DisplayObject -> Sprite
     }
 
     subgraph aggregations {
         edge [arrowhead=odiamond]
-        SceneManager -> Scene [weight=8]
-        Layer -> Renderable [weight=8]
+        FanOut -> Delegateable
+        Router -> Delegateable
     }
 
     subgraph relations {
         edge [arrowhead=none]
-        InputController -> InputHandler
+        Director -> Delegateable [weight=8]
         Director -> InputController
-        Director -> SceneManager [weight=8]
-        Scene -> Layer [weight=8]
     }
 
     subgraph implements {
         edge [style=dotted, dir=back, arrowtail=onormal]
-        Renderable [label="<< interface >>\nRenderable"]
-        InputHandler [label="<< interface >>\nInputHandler"]
-        Renderable -> Scene
-        Renderable -> Layer
-        Renderable -> DisplayObject
-        InputHandler -> Scene
+        BaseObject -> Font
+        BaseObject -> Sprite
+        BaseObject -> TextInput
+        Delegateable -> BaseObject
+        Delegateable -> FanOut
+        Delegateable -> Router
     }
+
+    BaseObject [label="<< abstract >>\nBaseObject"]
+    Delegateable [label="<< interface >>\nDelegateable"]
 }
