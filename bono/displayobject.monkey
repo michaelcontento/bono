@@ -8,9 +8,13 @@ Import vector2d
 Public
 
 Class DisplayObject Implements Renderable Abstract
+    Private
+
     Field _pos:Vector2D
     Field _center:Vector2D
     Field _size:Vector2D
+
+    Public
 
     Method pos:Vector2D() Property
         If _pos = Null Then Error("Position not set yet.")
