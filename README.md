@@ -1,17 +1,19 @@
 # TODO
 
-* Make FPS in `Director` customizable
-* Make "deltatime FPS" in `Director` customizable
 * Wrap `AngelFont` into own `Font` that derived from `DisplayObject`
-* Refactor `Highscore` to use JSON
-* Refactor `Score` to easily support deviations with custom fields
-* Add keyboard events to `InputController` and `InputHandler`
-  * New class `KeyEvent`
-  * New handler `OnKeyDown:Void(event:KeyEvent)`
-  * New handler `OnKeyPress:Void(event:KeyEvent)`
-  * New handler `OnKeyUp:Void(event:KeyEvent)`
-* Copy the whole position list in `TouchEvent.Copy()`
-* Verify position acces for `TouchEvent`s with an empty positions list
+* `Director`
+  * Make FPS in `Director` customizable
+  * Make "deltatime FPS" in `Director` customizable
+* `Highscore`
+  * Refactor `Highscore` to use JSON
+  * Refactor `Score` to easily support deviations with custom fields
+* `Sprite`
+  * Replace `Millisecs()` with the new `delta:Int` argument
+  * Move the `LoadImage()` from `New()` into `OnCreate()`
+* `InputController`
+  * Copy the whole position list in `TouchEvent.Copy()`
+  * Fix the "random `KeyEvents` on startup"-Bug in `InputController`
+  * Verify position acces for `TouchEvent`s with an empty positions list
 
 # Instructions
 

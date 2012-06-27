@@ -24,8 +24,8 @@ Class Sprite Extends BaseObject
     Field loopAnimation:Bool
     Field frameSpeed:Int
 
+    ' TODO: LoadImage() should be called in OnCreate()
     Method New(imageName:String, pos:Vector2D=Null)
-    ' FIXME
         image = LoadImage(imageName)
         InitVectors(image.Width(), image.Height(), pos)
     End
@@ -39,13 +39,17 @@ Class Sprite Extends BaseObject
     End
 
     Method OnRender:Void()
+        Super.OnRender()
         DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
     End
 
     Method OnUpdate:Void(delta:Float)
+        Super.OnUpdate(delta)
+
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
+        ' TODO: Replace the old Millisecs() implementation with delta
         If frameTimer = 0 Then
             frameTimer = Millisecs()
             Return

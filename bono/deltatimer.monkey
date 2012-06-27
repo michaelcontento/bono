@@ -1,6 +1,10 @@
 Strict
 
+Private
+
 Import mojo
+
+Public
 
 Class DeltaTimer
     Private
