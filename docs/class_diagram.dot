@@ -24,11 +24,17 @@ digraph G {
         BaseObject -> Font
         BaseObject -> Sprite
         BaseObject -> TextInput
-        DirectorEvents -> NullObject
         DirectorEvents -> FanOut
+        DirectorEvents -> NullObject
         DirectorEvents -> Router
+        Positionable -> BaseObject
+        Sizeable -> BaseObject
+        Sizeable -> Director
     }
 
     BaseObject [label="<< abstract >>\nBaseObject"]
     DirectorEvents [label="<< interface >>\nDirectorEvents"]
+    NullObject [label="<< abstract >>\nNullObject"]
+    Positionable [label="<< interface >>\nPositionable"]
+    Sizeable [label="<< interface >>\nSizeable"]
 }

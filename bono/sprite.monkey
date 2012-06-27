@@ -68,18 +68,6 @@ Class Sprite Extends BaseObject
         Return True
     End
 
-    Method CenterX:Void(entity:Director)
-        pos.x = entity.center.x - center.x
-    End
-
-    Method CenterY:Void(entity:Director)
-        pos.y = entity.center.y - center.y
-    End
-
-    Method Center:Void(entity:Director)
-        pos = entity.center.Copy().Sub(center)
-    End
-
     Method animationIsDone:Bool() Property
         If loopAnimation Then Return False
         Return (currentFrame = frameCount)

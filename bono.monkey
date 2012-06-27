@@ -11,8 +11,10 @@ Import bono.inputcontroller
 Import bono.keyevent
 Import bono.nullobject
 Import bono.persistable
+Import bono.positionable
 Import bono.router
 Import bono.score
+Import bono.sizeable
 Import bono.sprite
 Import bono.statestore
 Import bono.touchevent

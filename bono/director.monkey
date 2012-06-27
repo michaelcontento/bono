@@ -6,12 +6,13 @@ Import deltatimer
 Import directorevents
 Import inputcontroller
 Import mojo
+Import sizeable
 Import util
 Import vector2d
 
 Public
 
-Class Director Extends App
+Class Director Extends App Implements Sizeable
     Private
 
     Field _center:Vector2D

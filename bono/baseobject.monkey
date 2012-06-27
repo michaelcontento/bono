@@ -6,13 +6,15 @@ Import director
 Import directorevents
 Import fanout
 Import keyevent
+Import nullobject
+Import positionable
+Import sizeable
 Import touchevent
 Import vector2d
-Import nullobject
 
 Public
 
-Class BaseObject Extends NullObject Abstract
+Class BaseObject Extends NullObject Implements Positionable, Sizeable Abstract
     Private
 
     Field _pos:Vector2D
@@ -21,6 +23,18 @@ Class BaseObject Extends NullObject Abstract
     Field _layer:FanOut = New FanOut()
 
     Public
+
+    Method CenterX:Void(entity:Sizeable)
+        pos.x = entity.center.x - center.x
+    End
+
+    Method CenterY:Void(entity:Sizeable)
+        pos.y = entity.center.y - center.y
+    End
+
+    Method Center:Void(entity:Sizeable)
+        pos = entity.center.Copy().Sub(center)
+    End
 
     Method OnCreate:Void(director:Director)
         Super.OnCreate(director)
