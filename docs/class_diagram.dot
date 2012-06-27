@@ -3,7 +3,7 @@ digraph G {
 
     subgraph extends {
         edge [dir=back, arrowtail=onormal]
-        App -> Director
+        App -> Director [weight=8]
     }
 
     subgraph aggregations {
@@ -15,7 +15,7 @@ digraph G {
     subgraph relations {
         edge [arrowhead=none]
         Director -> Delegateable [weight=8]
-        Director -> InputController
+        InputController -> Director
     }
 
     subgraph implements {
