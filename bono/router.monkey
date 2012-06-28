@@ -56,47 +56,47 @@ Class Router Implements DirectorEvents
     End
 
     Method OnLoading:Void()
-        _current.OnLoading()
+        If _current Then _current.OnLoading()
     End
 
     Method OnUpdate:Void(delta:Float)
-        _current.OnUpdate(delta)
+        If _current Then _current.OnUpdate(delta)
     End
 
     Method OnRender:Void()
-        _current.OnRender()
+        If _current Then _current.OnRender()
     End
 
     Method OnSuspend:Void()
-        _current.OnSuspend()
+        If _current Then _current.OnSuspend()
     End
 
     Method OnResume:Void(delta:Int)
-        _current.OnResume(delta)
+        If _current Then _current.OnResume(delta)
     End
 
     Method OnKeyDown:Void(event:KeyEvent)
-        _current.OnKeyDown(event)
+        If _current Then _current.OnKeyDown(event)
     End
 
     Method OnKeyPress:Void(event:KeyEvent)
-        _current.OnKeyPress(event)
+        If _current Then _current.OnKeyPress(event)
     End
 
     Method OnKeyUp:Void(event:KeyEvent)
-        _current.OnKeyUp(event)
+        If _current Then _current.OnKeyUp(event)
     End
 
     Method OnTouchDown:Void(event:TouchEvent)
-        _current.OnTouchDown(event)
+        If _current Then _current.OnTouchDown(event)
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
-        _current.OnTouchMove(event)
+        If _current Then _current.OnTouchMove(event)
     End
 
     Method OnTouchUp:Void(event:TouchEvent)
-        _current.OnTouchUp(event)
+        If _current Then _current.OnTouchUp(event)
     End
 
     Method current:DirectorEvents() Property
