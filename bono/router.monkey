@@ -5,6 +5,7 @@ Private
 Import director
 Import directorevents
 Import keyevent
+Import routerevents
 Import touchevent
 
 Public
@@ -44,10 +45,15 @@ Class Router Implements DirectorEvents
         _previous = _current
         _previousName = _currentName
 
+        Local routerevents:RouterEvents = RouterEvents(_previous)
+        If routerevents Then routerevents.OnLeave()
+
         _current = Get(name)
         _currentName = name
-
         DispatchOnCreate()
+
+        routerevents = RouterEvents(_current)
+        If routerevents Then routerevents.OnEnter()
     End
 
     Method OnCreate:Void(director:Director)

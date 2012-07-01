@@ -13,6 +13,7 @@ Import bono.nullobject
 Import bono.persistable
 Import bono.positionable
 Import bono.router
+Import bono.routerevents
 Import bono.score
 Import bono.sizeable
 Import bono.sprite
