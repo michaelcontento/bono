@@ -22,9 +22,9 @@ Class Font Extends BaseObject
 
     Public
 
-    Const LEFT:Int = 0
-    Const CENTER:Int = 1
-    Const RIGHT:Int = 2
+    Const LEFT:Int = AngelFont.ALIGN_LEFT
+    Const CENTER:Int = AngelFont.ALIGN_CENTER
+    Const RIGHT:Int = AngelFont.ALIGN_RIGHT
     Field color:Color
 
     Method New(fontName:String, pos:Vector2D=Null)
