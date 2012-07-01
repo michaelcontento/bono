@@ -1,6 +1,5 @@
 # TODO
 
-* Wrap `AngelFont` into own `Font` that derived from `DisplayObject`
 * `Director`
   * Make FPS in `Director` customizable
   * Make "deltatime FPS" in `Director` customizable
@@ -8,7 +7,6 @@
   * Refactor `Highscore` to use JSON
   * Refactor `Score` to easily support deviations with custom fields
 * `Sprite`
-  * Replace `Millisecs()` with the new `frameTime:Float` argument
   * Move the `LoadImage()` from `New()` into `OnCreate()`
 * `InputController`
   * Copy the whole position list in `TouchEvent.Copy()`
