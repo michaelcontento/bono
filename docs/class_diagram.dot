@@ -4,13 +4,14 @@ digraph G {
     subgraph extends {
         edge [dir=back, arrowtail=onormal]
         App -> Director [weight=8]
-        NullObject -> BaseObject
+        Partial -> BaseObject [weight=8]
     }
 
     subgraph aggregations {
         edge [arrowhead=odiamond]
         FanOut -> DirectorEvents
         Router -> DirectorEvents
+        Router -> RouterEvents [style=dotted]
     }
 
     subgraph relations {
@@ -20,21 +21,22 @@ digraph G {
     }
 
     subgraph implements {
-        edge [style=dotted, dir=back, arrowtail=onormal]
+        edge [style=dotted, dir=back, arrowtail=onormal, arrowhead=onormal]
         BaseObject -> Font
         BaseObject -> Sprite
         BaseObject -> TextInput
         DirectorEvents -> FanOut
-        DirectorEvents -> NullObject
+        DirectorEvents -> Partial [weight=8]
         DirectorEvents -> Router
-        Positionable -> BaseObject
         Sizeable -> BaseObject
-        Sizeable -> Director
+        BaseObject -> Positionable [dir=normal]
+        Director -> Sizeable [dir=normal]
     }
 
     BaseObject [label="<< abstract >>\nBaseObject"]
     DirectorEvents [label="<< interface >>\nDirectorEvents"]
-    NullObject [label="<< abstract >>\nNullObject"]
+    RouterEvents [label="<< interface >>\nRouterEvents"]
+    Partial [label="<< abstract >>\nPartial"]
     Positionable [label="<< interface >>\nPositionable"]
     Sizeable [label="<< interface >>\nSizeable"]
 }
