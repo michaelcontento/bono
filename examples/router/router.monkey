@@ -3,7 +3,7 @@ Strict
 Import mojo.graphics
 Import bono
 
-Class PlainScene Extends NullObject
+Class PlainScene Extends Partial
     Method OnRender:Void()
         Cls(0, 255, 0)
         DrawText("PLAIN", 0, 0)
@@ -14,7 +14,7 @@ Class PlainScene Extends NullObject
     End
 End
 
-Class AdvancedScene Extends NullObject Implements RouterEvents
+Class AdvancedScene Extends Partial Implements RouterEvents
     Method OnRender:Void()
         Cls(255, 0, 0)
         DrawText("ADVANCED", 0, 0)
