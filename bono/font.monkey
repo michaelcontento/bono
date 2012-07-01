@@ -16,8 +16,8 @@ Class Font Extends BaseObject
 
     Field _align:Int = LEFT
     Field _text:String
-    Field font:AngelFont
-    Field fontName:String
+    Field fontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
+    Field name:String
     Field recalculateSize:Bool
 
     Public
@@ -30,20 +30,22 @@ Class Font Extends BaseObject
     Method New(fontName:String, pos:Vector2D=Null)
         If pos = Null Then pos = New Vector2D(0, 0)
 
-        Self.fontName = fontName
+        Self.name = fontName
         Self.pos = pos
     End
 
     Method OnCreate:Void(director:Director)
-        font = New AngelFont()
-        font.LoadFont(fontName)
+        Super.OnCreate(director)
+
+        If Not fontStore.Contains(name)
+            fontStore.Set(name, New AngelFont())
+            fontStore.Get(name).LoadFont(name)
+        End
 
         If recalculateSize
             recalculateSize = False
             text = _text
         End
-
-        Super.OnCreate(director)
     End
 
     Method OnRender:Void()
@@ -79,5 +81,11 @@ Class Font Extends BaseObject
 
     Method align:Int() Property
         Return _align
+    End
+
+    Private
+
+    Method font:AngelFont() Property
+        Return fontStore.Get(name)
     End
 End
