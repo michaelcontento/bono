@@ -4,7 +4,7 @@ Private
 
 Import baseobject
 Import director
-Import mojo
+Import mojo.graphics
 Import vector2d
 
 Public
@@ -49,12 +49,10 @@ Class Sprite Extends BaseObject
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
-        ' TODO: Replace the old Millisecs() implementation with delta
-        If frameTimer = 0 Then
-            frameTimer = Millisecs()
+        If frameTimer < frameSpeed
+            frameTimer += frameTime
             Return
         End
-        If Millisecs() < frameTimer + frameSpeed Then Return
 
         If currentFrame = frameCount
             If loopAnimation
@@ -63,7 +61,7 @@ Class Sprite Extends BaseObject
         Else
             currentFrame += 1
         End
-        frameTimer = Millisecs()
+        frameTimer = 0
     End
 
     Method Collide:Bool(checkPos:Vector2D)
