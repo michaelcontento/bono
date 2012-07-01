@@ -2,7 +2,8 @@
 
 * `Director`
   * Make FPS in `Director` customizable
-  * Make "deltatime FPS" in `Director` customizable
+  * Make "DeltaTimer FPS" in `Director` customizable
+  * Ratelimit `OnUpdate` to the "DeltaTimer FPS"
 * `Highscore`
   * Refactor `Highscore` to use JSON
   * Refactor `Score` to easily support deviations with custom fields
@@ -11,6 +12,7 @@
 * `InputController`
   * Copy the whole position list in `TouchEvent.Copy()`
   * Verify position acces for `TouchEvent`s with an empty positions list
+  * Clear internal key/touch state on `trackKey` or `trackTouch` changes
 
 # Instructions
 

@@ -41,8 +41,11 @@ Class InputController
         End
 
         If trackKeys
+            EnableKeyboard()
             ReadKeys()
             ProcessKeys(handler)
+        Else
+            DisableKeyboard()
         End
     End
 
