@@ -56,7 +56,7 @@ Class Director Extends App Implements Sizeable
     Method OnUpdate:Int()
         deltaTimer.OnUpdate()
         If _handler
-            _handler.OnUpdate(deltaTimer.delta)
+            _handler.OnUpdate(deltaTimer.delta, deltaTimer.frameTime)
             inputController.OnUpdate(_handler)
         End
         Return 0

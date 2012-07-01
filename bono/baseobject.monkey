@@ -46,9 +46,9 @@ Class BaseObject Extends Partial Implements Positionable, Sizeable Abstract
         _layer.OnLoading()
     End
 
-    Method OnUpdate:Void(delta:Float)
-        Super.OnUpdate(delta)
-        _layer.OnUpdate(delta)
+    Method OnUpdate:Void(delta:Float, frameTime:Float)
+        Super.OnUpdate(delta, frameTime)
+        _layer.OnUpdate(delta, frameTime)
     End
 
     Method OnRender:Void()

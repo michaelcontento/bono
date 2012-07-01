@@ -34,6 +34,6 @@ Class DeltaTimer
     End
 
     Method frameTime:Float() Property
-        Return frameTime
+        Return _frameTime
     End
 End

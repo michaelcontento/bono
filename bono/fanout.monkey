@@ -50,10 +50,10 @@ Class FanOut Implements DirectorEvents
         End
     End
 
-    Method OnUpdate:Void(delta:Float)
+    Method OnUpdate:Void(delta:Float, frameTime:Float)
         If Not objects Then Return
         For Local obj:DirectorEvents = EachIn objects
-            obj.OnUpdate(delta)
+            obj.OnUpdate(delta, frameTime)
         End
     End
 

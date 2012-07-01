@@ -23,7 +23,7 @@ Class Partial Implements DirectorEvents Abstract
     Method OnLoading:Void()
     End
 
-    Method OnUpdate:Void(delta:Float)
+    Method OnUpdate:Void(delta:Float, frameTime:Float)
     End
 
     Method OnRender:Void()

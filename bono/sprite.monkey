@@ -43,8 +43,8 @@ Class Sprite Extends BaseObject
         DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
     End
 
-    Method OnUpdate:Void(delta:Float)
-        Super.OnUpdate(delta)
+    Method OnUpdate:Void(delta:Float, frameTime:Float)
+        Super.OnUpdate(delta, frameTime)
 
         If frameCount <= 0 Then Return
         If animationIsDone Then Return

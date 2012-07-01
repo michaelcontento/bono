@@ -65,8 +65,8 @@ Class Router Implements DirectorEvents
         If _current Then _current.OnLoading()
     End
 
-    Method OnUpdate:Void(delta:Float)
-        If _current Then _current.OnUpdate(delta)
+    Method OnUpdate:Void(delta:Float, frameTime:Float)
+        If _current Then _current.OnUpdate(delta, frameTime)
     End
 
     Method OnRender:Void()
