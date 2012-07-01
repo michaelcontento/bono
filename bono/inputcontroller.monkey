@@ -30,6 +30,7 @@ Class InputController
     Field trackTouch:Bool = True
     Field trackKeys:Bool = True
     Field touchRetainSize:Int = -1
+    Field touchMinDistance:Float = 5
     Const MAX_TOUCH_FINGERS:Int = 31
 
     Method OnUpdate:Void(handler:DirectorEvents)
@@ -122,8 +123,12 @@ Class InputController
             End
 
             scaledVector = New Vector2D(TouchX(i), TouchY(i)).Div(scale)
-            touchEvents[i].Add(scaledVector)
-            If touchRetainSize > -1 Then touchEvents[i].Trim(touchRetainSize)
+            diffVector = scaledVector.Copy().Sub(touchEvents[i].prevPos)
+
+            If diffVector.Length() >= touchMinDistance
+                touchEvents[i].Add(scaledVector)
+                If touchRetainSize > -1 Then touchEvents[i].Trim(touchRetainSize)
+            End
         End
     End
 End
