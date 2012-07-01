@@ -8,11 +8,10 @@
   * Refactor `Highscore` to use JSON
   * Refactor `Score` to easily support deviations with custom fields
 * `Sprite`
-  * Replace `Millisecs()` with the new `delta:Int` argument
+  * Replace `Millisecs()` with the new `frameTime:Float` argument
   * Move the `LoadImage()` from `New()` into `OnCreate()`
 * `InputController`
   * Copy the whole position list in `TouchEvent.Copy()`
-  * Fix the "random `KeyEvents` on startup"-Bug in `InputController`
   * Verify position acces for `TouchEvent`s with an empty positions list
 
 # Instructions

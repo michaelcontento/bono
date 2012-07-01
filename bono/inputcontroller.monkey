@@ -18,10 +18,10 @@ Class InputController
     Const KEY_COUNT:Int = LAST_KEY - FIRST_KEY + 1
     Field _touchFingers:Int = MAX_TOUCH_FINGERS
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
-    Field isTouchUp:Bool[MAX_TOUCH_FINGERS]
+    Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field keyEvents:KeyEvent[KEY_COUNT]
-    Field isKeyUp:Bool[KEY_COUNT]
+    Field isKeyDown:Bool[KEY_COUNT]
     Field keyDownDispatched:Bool[KEY_COUNT]
 
     Public
@@ -64,7 +64,7 @@ Class InputController
             If Not keyDownDispatched[i]
                 handler.OnKeyDown(keyEvents[i])
                 keyDownDispatched[i] = True
-            ElseIf isKeyUp[i]
+            ElseIf Not isKeyDown[i]
                 handler.OnKeyUp(keyEvents[i])
                 keyEvents[i] = Null
             Else
@@ -74,13 +74,13 @@ Class InputController
     End
 
     Method ReadKeys:Void()
-        Local lastKeyUp:Bool
+        Local lastKeyDown:Bool
 
         For Local i:Int = 0 Until KEY_COUNT
-            lastKeyUp = isKeyUp[i]
-            isKeyUp[i] = (Not KeyDown(FIRST_KEY + i))
+            lastKeyDown = isKeyDown[i]
+            isKeyDown[i] = (Not KeyDown(FIRST_KEY + i))
 
-            If isKeyUp[i] And lastKeyUp Then Continue
+            If Not isKeyDown[i] And Not lastKeyDown Then Continue
 
             If keyEvents[i] = Null
                 keyDownDispatched[i] = False
@@ -96,7 +96,7 @@ Class InputController
             If Not touchDownDispatched[i]
                 handler.OnTouchDown(touchEvents[i].Copy())
                 touchDownDispatched[i] = True
-            ElseIf isTouchUp[i]
+            ElseIf Not isTouchDown[i]
                 handler.OnTouchUp(touchEvents[i])
                 touchEvents[i] = Null
             Else
@@ -107,13 +107,14 @@ Class InputController
 
     Method ReadTouch:Void()
         Local scaledVector:Vector2D
-        Local lastTouchUp:Bool
+        Local diffVector:Vector2D
+        Local lastTouchDown:Bool
 
         For Local i:Int = 0 Until _touchFingers
-            lastTouchUp = isTouchUp[i]
-            isTouchUp[i] = (Not TouchDown(i))
+            lastTouchDown = isTouchDown[i]
+            isTouchDown[i] = Bool(TouchDown(i))
 
-            If isTouchUp[i] And lastTouchUp Then Continue
+            If Not isTouchDown[i] And Not lastTouchDown Then Continue
 
             If touchEvents[i] = Null
                 touchDownDispatched[i] = False
