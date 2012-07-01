@@ -6,7 +6,7 @@ Import director
 Import directorevents
 Import fanout
 Import keyevent
-Import nullobject
+Import partial
 Import positionable
 Import sizeable
 Import touchevent
@@ -14,7 +14,7 @@ Import vector2d
 
 Public
 
-Class BaseObject Extends NullObject Implements Positionable, Sizeable Abstract
+Class BaseObject Extends Partial Implements Positionable, Sizeable Abstract
     Private
 
     Field _pos:Vector2D

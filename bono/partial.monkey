@@ -9,7 +9,7 @@ Import touchevent
 
 Public
 
-Class NullObject Implements DirectorEvents Abstract
+Class Partial Implements DirectorEvents Abstract
     Private
 
     Field _director:Director

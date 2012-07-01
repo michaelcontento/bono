@@ -9,7 +9,7 @@ Import bono.fanout
 Import bono.highscore
 Import bono.inputcontroller
 Import bono.keyevent
-Import bono.nullobject
+Import bono.partial
 Import bono.persistable
 Import bono.positionable
 Import bono.router
