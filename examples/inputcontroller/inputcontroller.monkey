@@ -9,6 +9,9 @@ Class Handler Extends Partial
     Field lastTouchDown:TouchEvent
     Field lastTouchMove:TouchEvent
     Field lastTouchUp:TouchEvent
+    Field lastKeyDown:KeyEvent
+    Field lastKeyPress:KeyEvent
+    Field lastKeyUp:KeyEvent
 
     Public
 
@@ -23,6 +26,11 @@ Class Handler Extends Partial
 
         SetColor(0, 0, 255)
         If lastTouchUp Then RenderTouch(lastTouchUp)
+
+        SetColor(255, 255, 255)
+        If lastKeyDown Then DrawText("lastKeyDown: " + lastKeyDown.code, 100, 100)
+        If lastKeyPress Then DrawText("lastKeyPress: " + lastKeyPress.code, 100, 120)
+        If lastKeyUp Then DrawText("lastKeyUp: " + lastKeyUp.code, 100, 140)
     End
 
     Method OnTouchDown:Void(touch:TouchEvent)
@@ -35,6 +43,18 @@ Class Handler Extends Partial
 
     Method OnTouchUp:Void(touch:TouchEvent)
         lastTouchUp = touch
+    End
+
+    Method OnKeyUp:Void(event:KeyEvent)
+        lastKeyUp = event
+    End
+
+    Method OnKeyPress:Void(event:KeyEvent)
+        lastKeyPress = event
+    End
+
+    Method OnKeyDown:Void(event:KeyEvent)
+        lastKeyDown = event
     End
 
     Private
@@ -52,6 +72,7 @@ End
 
 Function Main:Int()
     Local director:Director = New Director(640, 480)
+    director.inputController.touchRetainSize = 25
     director.Run(New Handler())
 
     Return 0
