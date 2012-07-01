@@ -79,7 +79,7 @@ Class InputController
 
         For Local i:Int = 0 Until KEY_COUNT
             lastKeyDown = isKeyDown[i]
-            isKeyDown[i] = (Not KeyDown(FIRST_KEY + i))
+            isKeyDown[i] = Bool(KeyDown(FIRST_KEY + i))
 
             If Not isKeyDown[i] And Not lastKeyDown Then Continue
 
