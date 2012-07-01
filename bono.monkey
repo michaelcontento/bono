@@ -6,6 +6,7 @@ Import bono.deltatimer
 Import bono.director
 Import bono.directorevents
 Import bono.fanout
+Import bono.font
 Import bono.highscore
 Import bono.inputcontroller
 Import bono.keyevent
