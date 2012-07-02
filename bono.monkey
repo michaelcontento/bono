@@ -1,5 +1,6 @@
 Strict
 
+Import bono.animation
 Import bono.baseobject
 Import bono.color
 Import bono.deltatimer
