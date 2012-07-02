@@ -1,5 +1,7 @@
 Strict
 
+' All transitions where ported from the Kivy project
+' See: https://github.com/kivy/kivy/blob/master/kivy/animation.py#L366
 
 Interface Transition
     Method Calculate:Float(progress:Float)
