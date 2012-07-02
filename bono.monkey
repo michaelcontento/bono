@@ -5,6 +5,7 @@ Import bono.color
 Import bono.deltatimer
 Import bono.director
 Import bono.directorevents
+Import bono.fader
 Import bono.fanout
 Import bono.font
 Import bono.highscore
@@ -20,5 +21,6 @@ Import bono.sizeable
 Import bono.sprite
 Import bono.statestore
 Import bono.touchevent
+Import bono.transition
 Import bono.util
 Import bono.vector2d
