@@ -16,7 +16,7 @@ Class InputController
     Const FIRST_KEY:Int = KEY_BACKSPACE
     Const LAST_KEY:Int = KEY_QUOTES
     Const KEY_COUNT:Int = LAST_KEY - FIRST_KEY + 1
-    Field _touchFingers:Int = DEFAULT_TOUCH_FINGERS
+    Field _touchFingers:Int = 1
     Field isKeyDown:Bool[KEY_COUNT]
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field keyDownDispatched:Bool[KEY_COUNT]
@@ -26,13 +26,13 @@ Class InputController
 
     Public
 
-    Field scale:Vector2D = New Vector2D(0, 0)
-    Field touchMinDistance:Float = 5
-    Field touchRetainSize:Int = -1
-    Field trackKeys:Bool = True
-    Field trackTouch:Bool = True
-    Const DEFAULT_TOUCH_FINGERS:Int = 5
     Const MAX_TOUCH_FINGERS:Int = 31
+    Const RETAIN_UNLIMITED:Int = -1
+    Field scale:Vector2D = New Vector2D(0, 0)
+    Field trackKeys:Bool = False
+    Field trackTouch:Bool = False
+    Field touchMinDistance:Float = 5
+    Field touchRetainSize:Int = 5
 
     Method OnUpdate:Void(handler:DirectorEvents)
         If trackTouch
