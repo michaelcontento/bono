@@ -4,7 +4,10 @@ digraph G {
     subgraph extends {
         edge [dir=back, arrowtail=onormal]
         App -> Director [weight=8]
-        Partial -> BaseObject [weight=8]
+        Partial -> BaseObject
+        FanOut -> Animation
+        BaseObject -> Font
+        BaseObject -> Sprite
     }
 
     subgraph aggregations {
@@ -17,26 +20,33 @@ digraph G {
     subgraph relations {
         edge [arrowhead=none]
         Director -> DirectorEvents [weight=8]
-        InputController -> Director
+        Director -> InputController [constraint=false]
+        Animation -> Fader
+        Animation -> Transition
     }
 
     subgraph implements {
         edge [style=dotted, dir=back, arrowtail=onormal, arrowhead=onormal]
-        BaseObject -> Font
-        BaseObject -> Sprite
-        BaseObject -> TextInput
         DirectorEvents -> FanOut
-        DirectorEvents -> Partial [weight=8]
+        DirectorEvents -> Partial
         DirectorEvents -> Router
         Sizeable -> BaseObject
         BaseObject -> Positionable [dir=normal]
         Director -> Sizeable [dir=normal]
+        Fader -> FaderAlpha
+        Fader -> FaderFF
+        Transition -> TransitionLinear
+        Transition -> TransitionFF
     }
 
+    FaderFF [label="Fader..."]
+    TransitionFF [label="Transition..."]
     BaseObject [label="<< abstract >>\nBaseObject"]
     DirectorEvents [label="<< interface >>\nDirectorEvents"]
-    RouterEvents [label="<< interface >>\nRouterEvents"]
+    Fader [label="<< interface >>\nFader"]
     Partial [label="<< abstract >>\nPartial"]
     Positionable [label="<< interface >>\nPositionable"]
+    RouterEvents [label="<< interface >>\nRouterEvents"]
     Sizeable [label="<< interface >>\nSizeable"]
+    Transition [label="<< interface >>\nTransition"]
 }
