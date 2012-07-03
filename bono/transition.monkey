@@ -83,19 +83,19 @@ End
 
 Class TransitionInSine Implements Transition
     Method Calculate:Float(progress:Float)
-        Return -1 * Cos(progress * HALFPI) + 1.0
+        Return -1 * Cosr(progress * HALFPI) + 1
     End
 End
 
 Class TransitionOutSine Implements Transition
     Method Calculate:Float(progress:Float)
-        Return Sin(progress * HALFPI)
+        Return Sinr(progress * HALFPI)
     End
 End
 
 Class TransitionInOutSine Implements Transition
     Method Calculate:Float(progress:Float)
-        Return -0.5 * (Cos(progress * PI) - 1.0)
+        Return -0.5 * (Cosr(progress * PI) - 1.0)
     End
 End
 
@@ -161,7 +161,7 @@ Class TransitionInElastic Implements Transition
         If progress = 1 Then Return 1
         progress -= 1
 
-        Return -(Pow(2, 10 * progress) * Sin((progress - S) * TWOPI / P))
+        Return -(Pow(2, 10 * progress) * Sinr((progress - S) * TWOPI / P))
     End
 End
 
@@ -175,9 +175,7 @@ Class TransitionOutElastic Implements Transition
 
     Method Calculate:Float(progress:Float)
         If progress = 1 Then Return 1
-        progress -= 1
-
-        Return Pow(2, -10 * progress) * Sin((progress - S) * TWOPI / P) + 1
+        Return Pow(2, -10 * progress) * Sinr((progress - S) * TWOPI / P) + 1
     End
 End
 
@@ -190,14 +188,16 @@ Class TransitionInOutElastic Implements Transition
     Public
 
     Method Calculate:Float(progress:Float)
-        If progress = 1 Then Return 1
+        progress *= 2
+        If progress = 2 Then Return 1
 
-        progress = progress * 2 - 1
         If progress < 1 Then
-            Return -0.5 * (Pow(2, 10 * progress) * Sin((progress - S) * TWOPI / P))
+            progress -= 1
+            Return -0.5 * (Pow(2, 10 * progress) * Sinr((progress - S) * TWOPI / P))
+        Else
+            progress -= 1
+            Return Pow(2, -10 * progress) * Sinr((progress - S) * TWOPI / P) * 0.5 + 1
         End
-
-        Return Pow(2, -10 * progress) * Sin((progress - S) * TWOPI / P) * 0.5 + 1
     End
 End
 
