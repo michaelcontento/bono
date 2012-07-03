@@ -2,6 +2,7 @@ Strict
 
 Private
 
+Import directorevents
 Import fader
 Import fanout
 Import transition
@@ -46,9 +47,21 @@ Class Animation Extends FanOut
     End
 
     Method OnRender:Void()
-        If effect Then effect.OnPreRender(_value)
-        Super.OnRender()
-        If effect Then effect.OnPostRender(_value)
+        If Not effect
+            Super.OnRender()
+            Return
+        End
+
+        If Count() = 0 Then Return
+        effect.PreRender(_value)
+
+        For Local obj:DirectorEvents = EachIn Self
+            effect.PreNode(_value, obj)
+            obj.OnRender()
+            effect.PostNode(_value, obj)
+        End
+
+        effect.PostRender(_value)
     End
 
     Method value:Float() Property
