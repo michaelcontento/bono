@@ -33,14 +33,12 @@ digraph G {
         Sizeable -> BaseObject
         BaseObject -> Positionable [dir=normal]
         Director -> Sizeable [dir=normal]
-        Fader -> FaderAlpha
-        Fader -> FaderFF
-        Transition -> TransitionLinear
-        Transition -> TransitionFF
+        Fader -> ConcreteFader
+        Transition -> ConcreteTransition
     }
 
-    FaderFF [label="Fader..."]
-    TransitionFF [label="Transition..."]
+    ConcreteTransition [label="Concrete Transition"]
+    ConcreteFader [label="Concrete Fader"]
     BaseObject [label="<< abstract >>\nBaseObject"]
     DirectorEvents [label="<< interface >>\nDirectorEvents"]
     Fader [label="<< interface >>\nFader"]
