@@ -7,7 +7,7 @@ Function Main:Int()
     Local director:Director = New Director(640, 480)
     Local pool:FanOut = New FanOut()
 
-    Local font:Font = New Font("angel_verdana")
+    Local font:Font = New Font("angel_verdana", New Vector2D(320 - 30, 240))
     font.text = "Hello World"
 
     Local fontAnim:Animation = New Animation(0.5, 3.5, 5000)

@@ -5,6 +5,7 @@ Private
 Import directorevents
 Import mojo.graphics
 Import positionable
+Import sizeable
 
 Public
 
@@ -33,6 +34,13 @@ Class FaderAlpha Implements Fader
 End
 
 Class FaderScale Implements Fader
+    Private
+
+    Field offsetX:Float
+    Field offsetY:Float
+
+    Public
+
     Method PreRender:Void(value:Float)
     End
 
@@ -43,10 +51,17 @@ Class FaderScale Implements Fader
         If value = 1 Then Return
         PushMatrix()
 
+        Local sizeNode:Sizeable = Sizeable(node)
+        If sizeNode
+            offsetX = sizeNode.center.x * (value - 1)
+            offsetY = sizeNode.center.y * (value - 1)
+            Translate(-offsetX, -offsetY)
+        End
+
         Local posNode:Positionable = Positionable(node)
         If posNode
-            Local offsetX:Float = posNode.pos.x * (value - 1)
-            Local offsetY:Float = posNode.pos.y * (value - 1)
+            offsetX = posNode.pos.x * (value - 1)
+            offsetY = posNode.pos.y * (value - 1)
             Translate(-offsetX, -offsetY)
         End
 
