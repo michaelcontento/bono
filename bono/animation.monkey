@@ -30,6 +30,19 @@ Class Animation Extends FanOut
         Self.duration = duration
     End
 
+    Method Pause:Void()
+        finished = True
+    End
+
+    Method Play:Void()
+        finished = False
+    End
+
+    Method Restart:Void()
+        animationTime = 0
+        Play()
+    End
+
     Method OnUpdate:Void(delta:Float, frameTime:Float)
         Super.OnUpdate(delta, frameTime)
 
