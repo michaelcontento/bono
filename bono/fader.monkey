@@ -38,6 +38,8 @@ Class FaderScale Implements Fader
 
     Field offsetX:Float
     Field offsetY:Float
+    Field sizeNode:Sizeable
+    Field posNode:Positionable
 
     Public
 
@@ -51,14 +53,14 @@ Class FaderScale Implements Fader
         If value = 1 Then Return
         PushMatrix()
 
-        Local sizeNode:Sizeable = Sizeable(node)
+        sizeNode = Sizeable(node)
         If sizeNode
             offsetX = sizeNode.center.x * (value - 1)
             offsetY = sizeNode.center.y * (value - 1)
             Translate(-offsetX, -offsetY)
         End
 
-        Local posNode:Positionable = Positionable(node)
+        posNode = Positionable(node)
         If posNode
             offsetX = posNode.pos.x * (value - 1)
             offsetY = posNode.pos.y * (value - 1)
