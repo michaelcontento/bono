@@ -23,6 +23,7 @@ Class InputController
     Field keyEvents:KeyEvent[KEY_COUNT]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
+    Field keyboardEnabled:Bool
 
     Public
 
@@ -41,10 +42,14 @@ Class InputController
         End
 
         If trackKeys
-            EnableKeyboard()
+            If Not keyboardEnabled
+                keyboardEnabled = True
+                EnableKeyboard()
+            End
             ReadKeys()
             ProcessKeys(handler)
         Else
+            keyboardEnabled = False
             DisableKeyboard()
         End
     End
