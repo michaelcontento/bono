@@ -40,6 +40,8 @@ Function Main:Int()
     router.Goto("plain")
 
     Local director:Director = New Director(640, 480)
+    director.inputController.trackTouch = True
+    director.inputController.trackKeys = True
     director.Run(router)
 
     Return 0
