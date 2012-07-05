@@ -61,8 +61,8 @@ Class Font Extends BaseObject
             Return
         End
 
-        Local width:Int = font.TextWidth(newText)
-        Local height:Int = font.TextHeight(newText)
+        Local width:Float = font.TextWidth(newText)
+        Local height:Float = font.TextHeight(newText)
         size = New Vector2D(width, height)
     End
 
