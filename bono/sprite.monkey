@@ -64,6 +64,10 @@ Class Sprite Extends BaseObject
         frameTimer = 0
     End
 
+    Method Restart:Void()
+        currentFrame = 0
+    End
+
     Method Collide:Bool(checkPos:Vector2D)
         If checkPos.x < pos.x Or checkPos.x > pos.x + size.x Then Return False
         If checkPos.y < pos.y Or checkPos.y > pos.y + size.y Then Return False
