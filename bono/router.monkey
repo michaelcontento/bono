@@ -14,6 +14,7 @@ Class Router Implements DirectorEvents
     Private
 
     Field handlers:StringMap<DirectorEvents> = New StringMap<DirectorEvents>()
+    Field routers:StringMap<RouterEvents> = New StringMap<RouterEvents>()
     Field created:List<String> = New List<String>()
     Field _current:DirectorEvents
     Field _currentName:String
@@ -29,6 +30,7 @@ Class Router Implements DirectorEvents
         End
 
         handlers.Set(name, handler)
+        routers.Set(name, RouterEvents(handler))
     End
 
     Method Get:DirectorEvents(name:String)
@@ -45,15 +47,15 @@ Class Router Implements DirectorEvents
         _previous = _current
         _previousName = _currentName
 
-        Local routerevents:RouterEvents = RouterEvents(_previous)
-        If routerevents Then routerevents.OnLeave()
+        Local tmpRouter:RouterEvents = routers.Get(name)
+        If tmpRouter Then tmpRouter.OnLeave()
 
         _current = Get(name)
         _currentName = name
         DispatchOnCreate()
 
-        routerevents = RouterEvents(_current)
-        If routerevents Then routerevents.OnEnter()
+        tmpRouter = routers.Get(name)
+        If tmpRouter Then tmpRouter.OnEnter()
     End
 
     Method OnCreate:Void(director:Director)
@@ -125,7 +127,7 @@ Class Router Implements DirectorEvents
 
     Method DispatchOnCreate:Void()
         If Not director Then Return
-        If Not _current Then return
+        If Not _current Then Return
         If created.Contains(_currentName) Then Return
 
         _current.OnCreate(director)
