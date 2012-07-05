@@ -47,14 +47,14 @@ Class Router Implements DirectorEvents
         _previous = _current
         _previousName = _currentName
 
-        Local tmpRouter:RouterEvents = routers.Get(name)
-        If tmpRouter Then tmpRouter.OnLeave()
-
         _current = Get(name)
         _currentName = name
         DispatchOnCreate()
 
-        tmpRouter = routers.Get(name)
+        Local tmpRouter:RouterEvents = routers.Get(_previousName)
+        If tmpRouter Then tmpRouter.OnLeave()
+
+        tmpRouter = routers.Get(_currentName)
         If tmpRouter Then tmpRouter.OnEnter()
     End
 
