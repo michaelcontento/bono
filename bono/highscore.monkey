@@ -91,7 +91,7 @@ Class Highscore<T> Implements Persistable
         While objects.Count() > 0
             current = objects.First()
             For Local check:Score<T> = EachIn objects
-                If check.value <= current.value
+                If check.value < current.value
                     current = check
                 End
             End
