@@ -54,6 +54,14 @@ Class Font Extends BaseObject
         If color Then color.Deactivate()
     End
 
+    Method TextWidth:Int(char:String)
+        Return font.TextWidth(char)
+    End
+
+    Method TextHeight:Int(char:String)
+        Return font.TextHeight(char)
+    End
+
     Method text:Void(newText:String) Property
         _text = newText
         If Not font
