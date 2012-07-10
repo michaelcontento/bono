@@ -71,7 +71,9 @@ Class Handler Extends Partial
 End
 
 Function Main:Int()
-    Local director:Director = New Director(640, 480)
+    Local director:Director = New Director(480, 640)
+    director.inputController.trackTouch = True
+    director.inputController.trackKeys = True
     director.inputController.touchRetainSize = 25
     director.Run(New Handler())
 
