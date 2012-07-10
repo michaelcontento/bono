@@ -21,6 +21,7 @@ Import bono.score
 Import bono.sizeable
 Import bono.sprite
 Import bono.statestore
+Import bono.textinput
 Import bono.touchevent
 Import bono.transition
 Import bono.util
