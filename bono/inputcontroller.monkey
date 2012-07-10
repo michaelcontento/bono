@@ -13,17 +13,14 @@ Public
 Class InputController
     Private
 
-    Const FIRST_KEY:Int = KEY_BACKSPACE
-    Const LAST_KEY:Int = KEY_QUOTES
-    Const KEY_COUNT:Int = LAST_KEY - FIRST_KEY + 1
     Field _touchFingers:Int = 1
-    Field isKeyDown:Bool[KEY_COUNT]
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
-    Field keyDownDispatched:Bool[KEY_COUNT]
-    Field keyEvents:KeyEvent[KEY_COUNT]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
     Field keyboardEnabled:Bool
+    Field keyEvents:IntMap<KeyEvent> = New IntMap<KeyEvent>()
+    Field keysActive:IntSet = New IntSet()
+    Field dispatchedKeyEvents:IntSet = New IntSet()
 
     Public
 
@@ -49,8 +46,13 @@ Class InputController
             ReadKeys()
             ProcessKeys(handler)
         Else
-            keyboardEnabled = False
-            DisableKeyboard()
+            If keyboardEnabled
+                keyboardEnabled = False
+                DisableKeyboard()
+                keysActive.Clear()
+                keyEvents.Clear()
+                dispatchedKeyEvents.Clear()
+            End
         End
     End
 
@@ -68,35 +70,37 @@ Class InputController
     Private
 
     Method ProcessKeys:Void(handler:DirectorEvents)
-        For Local i:Int = 0 Until KEY_COUNT
-            If keyEvents[i] = Null Then Continue
+        For Local event:KeyEvent = EachIn keyEvents.Values()
+            If Not dispatchedKeyEvents.Contains(event.code)
+                handler.OnKeyDown(event)
+                dispatchedKeyEvents.Insert(event.code)
+                Continue
+            End
 
-            If Not keyDownDispatched[i]
-                handler.OnKeyDown(keyEvents[i])
-                keyDownDispatched[i] = True
-            ElseIf Not isKeyDown[i]
-                handler.OnKeyUp(keyEvents[i])
-                keyEvents[i] = Null
+            If Not keysActive.Contains(event.code)
+                handler.OnKeyUp(event)
+                dispatchedKeyEvents.Remove(event.code)
+                keyEvents.Remove(event.code)
             Else
-                handler.OnKeyPress(keyEvents[i])
+                handler.OnKeyPress(event)
             End
         End
     End
 
     Method ReadKeys:Void()
-        Local lastKeyDown:Bool
+        keysActive.Clear()
+        Local charCode:Int
 
-        For Local i:Int = 0 Until KEY_COUNT
-            lastKeyDown = isKeyDown[i]
-            isKeyDown[i] = Bool(KeyDown(FIRST_KEY + i))
+        Repeat
+            charCode = GetChar()
+            If Not charCode Then Return
 
-            If Not isKeyDown[i] And Not lastKeyDown Then Continue
-
-            If keyEvents[i] = Null
-                keyDownDispatched[i] = False
-                keyEvents[i] = New KeyEvent(FIRST_KEY + i)
+            keysActive.Insert(charCode)
+            If Not keyEvents.Contains(charCode)
+                keyEvents.Add(charCode, New KeyEvent(charCode))
+                dispatchedKeyEvents.Remove(charCode)
             End
-        End
+        Forever
     End
 
     Method ProcessTouch:Void(handler:DirectorEvents)
