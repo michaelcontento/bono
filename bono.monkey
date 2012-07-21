@@ -8,7 +8,6 @@ Import bono.director
 Import bono.directorevents
 Import bono.fader
 Import bono.fanout
-Import bono.font
 Import bono.highscore
 Import bono.inputcontroller
 Import bono.keyevent
@@ -21,6 +20,7 @@ Import bono.score
 Import bono.sizeable
 Import bono.sprite
 Import bono.statestore
+Import bono.text
 Import bono.textinput
 Import bono.touchevent
 Import bono.transition

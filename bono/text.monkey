@@ -11,67 +11,66 @@ Import vendor.angelfont
 
 Public
 
-Class Font Extends BaseObject
+Class Text Extends BaseObject
     Private
 
-    Field _align:Int = LEFT
+    Field _align:Int = ALIGN_LEFT
     Field _text:String
-    Field fontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
     Field name:String
     Field recalculateSize:Bool
+    Global angelFontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
 
     Public
 
-    Const LEFT:Int = AngelFont.ALIGN_LEFT
-    Const CENTER:Int = AngelFont.ALIGN_CENTER
-    Const RIGHT:Int = AngelFont.ALIGN_RIGHT
+    Const ALIGN_LEFT:Int = AngelFont.ALIGN_LEFT
+    Const ALIGN_CENTER:Int = AngelFont.ALIGN_CENTER
+    Const ALIGN_RIGHT:Int = AngelFont.ALIGN_RIGHT
     Field color:Color
 
-    Method New(fontName:String, pos:Vector2D=Null)
+    Method New(name:String, pos:Vector2D=Null)
         If pos = Null Then pos = New Vector2D(0, 0)
 
-        Self.name = fontName
+        Self.name = name
         Self.pos = pos
     End
 
     Method OnCreate:Void(director:Director)
         Super.OnCreate(director)
 
-        If Not fontStore.Contains(name)
-            fontStore.Set(name, New AngelFont())
-            fontStore.Get(name).LoadFont(name)
+        If Not angelFontStore.Contains(name)
+            Print "LOADED"
+            angelFontStore.Set(name, New AngelFont())
+            angelFontStore.Get(name).LoadFont(name)
         End
 
-        If recalculateSize
-            recalculateSize = False
-            text = _text
-        End
+        If recalculateSize Then text = _text
     End
 
     Method OnRender:Void()
         If color Then color.Activate()
-        font.DrawText(_text, pos.x, pos.y, _align)
+        angelFont.DrawText(_text, pos.x, pos.y, _align)
         If color Then color.Deactivate()
     End
 
     Method TextWidth:Int(char:String)
-        Return font.TextWidth(char)
+        Return angelFont.TextWidth(char)
     End
 
     Method TextHeight:Int(char:String)
-        Return font.TextHeight(char)
+        Return angelFont.TextHeight(char)
     End
 
     Method text:Void(newText:String) Property
         _text = newText
-        If Not font
+        If Not angelFont
             recalculateSize = True
             Return
         End
 
-        Local width:Float = font.TextWidth(newText)
-        Local height:Float = font.TextHeight(newText)
+        Local width:Float = angelFont.TextWidth(newText)
+        Local height:Float = angelFont.TextHeight(newText)
         size = New Vector2D(width, height)
+        recalculateSize = False
     End
 
     Method text:String() Property
@@ -80,7 +79,7 @@ Class Font Extends BaseObject
 
     Method align:Void(newAlign:Int) Property
         Select newAlign
-        Case LEFT, CENTER, RIGHT
+        Case ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT
             _align = newAlign
         Default
             Error("Invalid align value specified.")
@@ -93,7 +92,7 @@ Class Font Extends BaseObject
 
     Private
 
-    Method font:AngelFont() Property
-        Return fontStore.Get(name)
+    Method angelFont:AngelFont() Property
+        Return angelFontStore.Get(name)
     End
 End

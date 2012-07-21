@@ -2,14 +2,14 @@ Strict
 
 Private
 
-Import font
+Import text
 Import keyevent
 Import vector2d
 Import mojo
 
 Public
 
-Class TextInput Extends Font
+Class TextInput Extends Text
     Private
 
     Field cursorPos:Int
