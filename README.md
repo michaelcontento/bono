@@ -9,10 +9,6 @@
   * Refactor `Score` to easily support deviations with custom fields
 * `Sprite`
   * Move the `LoadImage()` from `New()` into `OnCreate()`
-* `InputController`
-  * Copy the whole position list in `TouchEvent.Copy()`
-  * Verify position acces for `TouchEvent`s with an empty positions list
-  * Clear internal key/touch state on `trackKey` or `trackTouch` changes
 
 # Instructions
 

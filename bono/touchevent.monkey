@@ -47,8 +47,10 @@ Class TouchEvent
 
     Method Copy:TouchEvent()
         Local obj:TouchEvent = New TouchEvent(_finger)
-        ' TODO: Copy the whole list
-        obj.Add(pos)
+        For Local pos:Vector2D = EachIn positions
+            obj.Add(pos)
+        End
+
         Return obj
     End
 
@@ -69,19 +71,16 @@ Class TouchEvent
     End
 
     Method pos:Vector2D() Property
-        ' TODO: Should this be valid / possible?
         If positions.Count() = 0 Then Return New Vector2D(0, 0)
         Return positions.Last()
     End
 
     Method startPos:Vector2D() Property
-        ' TODO: Should this be valid / possible?
         If positions.Count() = 0 Then Return New Vector2D(0, 0)
         Return positions.First()
     End
 
     Method prevPos:Vector2D() Property
-        ' TODO: Should this be valid / possible?
         If positions.Count() = 0 Then Return New Vector2D(0, 0)
         If positions.Count() = 1 Then Return startPos
         Return positions.LastNode().PrevNode().Value()
