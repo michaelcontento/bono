@@ -10,9 +10,11 @@ Public
 Class TouchEvent
     Private
 
-    Field _finger:Int
-    Field _startTime:Int
     Field _endTime:Int
+    Field _finger:Int
+    Field _id:Int
+    Field _startTime:Int
+    Global nextId:Int = 0
 
     Public
 
@@ -21,6 +23,9 @@ Class TouchEvent
     Method New(finger:Int)
         _finger = finger
         _startTime = Millisecs()
+
+        nextId += 1
+        _id = nextId
     End
 
     Method Trim:Void(size:Int)
@@ -57,6 +62,10 @@ Class TouchEvent
 
     Method endTime:Int() Property
         Return _endTime
+    End
+
+    Method id:Int() Property
+        Return _id
     End
 
     Method pos:Vector2D() Property
