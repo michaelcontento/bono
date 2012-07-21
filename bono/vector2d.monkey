@@ -104,4 +104,8 @@ Class Vector2D
         x /= factor
         Return Self
     End
+
+    Method ToString:String()
+        Return "(" + x + ", " + y + ")"
+    End
 End
