@@ -43,6 +43,10 @@ Class Animation Extends FanOut
         Play()
     End
 
+    Method IsPlaying:Bool()
+        Return (Not finished)
+    End
+
     Method OnUpdate:Void(delta:Float, frameTime:Float)
         Super.OnUpdate(delta, frameTime)
 
