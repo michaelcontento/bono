@@ -12,6 +12,10 @@ Class PlainScene Extends Partial
     Method OnTouchDown:Void(touch:TouchEvent)
         Router(director.handler).Goto("advanced")
     End
+
+    Method OnKeyDown:Void(key:KeyEvent)
+        Router(director.handler).Goto("advanced")
+    End
 End
 
 Class AdvancedScene Extends Partial Implements RouterEvents
@@ -24,12 +28,16 @@ Class AdvancedScene Extends Partial Implements RouterEvents
         Router(director.handler).Goto("plain")
     End
 
+    Method OnKeyDown:Void(key:KeyEvent)
+        Router(director.handler).Goto("plain")
+    End
+
     Method OnEnter:Void()
-        Print("scene enter")
+        Print("advanced scene enter")
     End
 
     Method OnLeave:Void()
-        Print("scene leave")
+        Print("advanced scene leave")
     End
 End
 

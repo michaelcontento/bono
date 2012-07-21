@@ -7,13 +7,13 @@ Function Main:Int()
     Local director:Director = New Director(640, 480)
     Local pool:FanOut = New FanOut()
 
-    Local font:Font = New Font("angel_verdana", New Vector2D(320 - 30, 240))
-    font.text = "Hello World"
+    Local text:Text = New Text("angel_verdana", New Vector2D(320 - 30, 240))
+    text.text = "Hello World"
 
     Local fontAnim:Animation = New Animation(0.5, 3.5, 5000)
     fontAnim.effect = New FaderScale()
     fontAnim.transition = New TransitionInBounce()
-    fontAnim.Add(font)
+    fontAnim.Add(text)
 
     Local logo:Sprite = New Sprite("monkey64.png")
     logo.pos = director.size.Copy().Sub(logo.size)

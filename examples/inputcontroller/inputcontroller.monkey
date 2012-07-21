@@ -28,9 +28,9 @@ Class Handler Extends Partial
         If lastTouchUp Then RenderTouch(lastTouchUp)
 
         SetColor(255, 255, 255)
-        If lastKeyDown Then DrawText("lastKeyDown: " + lastKeyDown.code, 100, 100)
-        If lastKeyPress Then DrawText("lastKeyPress: " + lastKeyPress.code, 100, 120)
-        If lastKeyUp Then DrawText("lastKeyUp: " + lastKeyUp.code, 100, 140)
+        If lastKeyDown  Then DrawText(" lastKeyDown: " + lastKeyDown.code,  10, 10)
+        If lastKeyPress Then DrawText("lastKeyPress: " + lastKeyPress.code, 10, 25)
+        If lastKeyUp    Then DrawText("   lastKeyUp: " + lastKeyUp.code,    10, 40)
     End
 
     Method OnTouchDown:Void(touch:TouchEvent)
@@ -60,21 +60,27 @@ Class Handler Extends Partial
     Private
 
     Method RenderTouch:Void(touch:TouchEvent)
-        SetAlpha(0.2)
+        SetAlpha(0.7)
+        Local lastPos:Vector2D
         For Local pos:Vector2D = EachIn touch.positions
-            DrawCircle(pos.x, pos.y, 10)
+            If lastPos Then DrawLine(lastPos.x, lastPos.y, pos.x, pos.y)
+            lastPos = pos
         End
 
         SetAlpha(1)
-        DrawCircle(touch.pos.x, touch.pos.y, 10)
+        DrawCircle(touch.pos.x, touch.pos.y, 4)
+        DrawText(" id: " + touch.id    , touch.pos.x + 10, touch.pos.y +  0)
+        DrawText("finger: " + touch.finger, touch.pos.x + 70, touch.pos.y +  0)
+        DrawText("pos: " + touch.pos   , touch.pos.x + 10, touch.pos.y + 15)
     End
 End
 
 Function Main:Int()
-    Local director:Director = New Director(480, 640)
-    director.inputController.trackTouch = True
+    Local director:Director = New Director(640, 480)
     director.inputController.trackKeys = True
-    director.inputController.touchRetainSize = 25
+    director.inputController.trackTouch = True
+    director.inputController.touchRetainSize = 250
+    director.inputController.touchMinDistance = 0
     director.Run(New Handler())
 
     Return 0
