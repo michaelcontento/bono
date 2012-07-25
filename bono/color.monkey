@@ -18,7 +18,7 @@ Class Color
     Field blue:Float
     Field alpha:Float
 
-    Method New(red:Float, green:Float, blue:Float, alpha:Float=1)
+    Method New(red:Float=255, green:Float=255, blue:Float=255, alpha:Float=1)
         Self.red = red
         Self.green = green
         Self.blue = blue
