@@ -57,6 +57,13 @@ Class Vector2D
         Return Self
     End
 
+    Method Revert:Vector2D()
+        x *= -1
+        y *= -1
+
+        Return Self
+    End
+
     Method Add:Vector2D(v2:Vector2D)
         x += v2.x
         y += v2.y
