@@ -14,9 +14,8 @@ Class Text Extends BaseObject
     Private
 
     Field _align:Int = ALIGN_LEFT
-    Field _text:String
+    Field _text:String = ""
     Field name:String
-    Field recalculateSize:Bool
     Global angelFontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
 
     Public
@@ -41,7 +40,7 @@ Class Text Extends BaseObject
             angelFontStore.Get(name).LoadFont(name)
         End
 
-        If recalculateSize Then text = _text
+        text = _text
     End
 
     Method OnRender:Void()
@@ -60,15 +59,11 @@ Class Text Extends BaseObject
 
     Method text:Void(newText:String) Property
         _text = newText
-        If Not angelFont
-            recalculateSize = True
-            Return
-        End
+        If Not angelFont Then Return
 
         Local width:Float = angelFont.TextWidth(newText)
         Local height:Float = angelFont.TextHeight(newText)
         size = New Vector2D(width, height)
-        recalculateSize = False
     End
 
     Method text:String() Property
