@@ -30,7 +30,11 @@ Class BaseObject Extends Partial Implements Positionable, Sizeable, Colorable Ab
     End
 
     Method Center:Void(entity:Sizeable)
-        pos = entity.center.Copy().Sub(center)
+        Center(entity.center)
+    End
+
+    Method Center:Void(vector:Vector2D)
+        pos = vector.Copy().Sub(center)
     End
 
     Method pos:Vector2D() Property
