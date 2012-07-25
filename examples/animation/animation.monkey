@@ -5,27 +5,26 @@ Import bono
 
 Function Main:Int()
     Local director:Director = New Director(640, 480)
-    Local pool:FanOut = New FanOut()
 
-    Local text:Text = New Text("angel_verdana", New Vector2D(320 - 30, 240))
+    Local text:Text = New Text("angel_verdana", New Vector2D(200, 100))
     text.text = "Hello World"
-
-    Local fontAnim:Animation = New Animation(0.5, 3.5, 5000)
-    fontAnim.effect = New FaderScale()
-    fontAnim.transition = New TransitionInBounce()
-    fontAnim.Add(text)
 
     Local logo:Sprite = New Sprite("monkey64.png")
     logo.pos = director.size.Copy().Sub(logo.size)
 
-    Local logoAnim:Animation = New Animation(0, 1, 5500)
-    logoAnim.effect = New FaderAlpha()
-    logoAnim.transition = New TransitionInOutQuad()
-    logoAnim.Add(logo)
+    Local effect:EffectColorAlpha = New EffectColorAlpha(0, 1)
+    effect.AddLast(text)
+    effect.AddLast(logo)
 
-    pool.Add(fontAnim)
-    pool.Add(logoAnim)
+    Local anim:Animation = New Animation(5000, New TransitionInOutQuad())
+    anim.AddLast(effect)
+    anim.Start()
+
+    Local pool:FanOut = New FanOut()
+    pool.Add(anim.ToDirectorEvents())
+    pool.Add(logo)
+    pool.Add(text)
+
     director.Run(pool)
-
     Return 0
 End

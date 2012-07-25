@@ -3,44 +3,48 @@ Strict
 Private
 
 Import directorevents
-Import fader
-Import fanout
+Import effect
+Import partial
 Import transition
 
 Public
 
-Class Animation Extends FanOut
+Class Animation Extends List<Effect>
     Private
 
-    Field startValue:Float
-    Field endValue:Float
-    Field duration:Float
     Field animationTime:Float
-    Field finished:Bool
-    Field _value:Float
+    Field duration:Float
+    Field finished:Bool = True
+    Field transition:Transition
 
     Public
 
-    Field transition:Transition = New TransitionLinear()
-    Field effect:Fader
+    Method New()
+        Error("Wrong constructor. Use New(Float, Transition)")
+    End
 
-    Method New(startValue:Float, endValue:Float, duration:Float)
-        Self.startValue = startValue
-        Self.endValue = endValue
+    Method New(duration:Float, transition:Transition)
+        Super.New()
         Self.duration = duration
+        Self.transition = transition
     End
 
     Method Pause:Void()
         finished = True
     End
 
-    Method Play:Void()
+    Method Start:Void()
         finished = False
+    End
+
+    Method Stop:Void()
+        Pause()
+        Restart()
     End
 
     Method Restart:Void()
         animationTime = 0
-        Play()
+        SetProgress(0)
     End
 
     Method IsPlaying:Bool()
@@ -48,40 +52,47 @@ Class Animation Extends FanOut
     End
 
     Method OnUpdate:Void(delta:Float, frameTime:Float)
-        Super.OnUpdate(delta, frameTime)
+        If Not finished Then UpdateProgress(frameTime)
+    End
 
-        If finished Then Return
-        animationTime += frameTime
+    Method ToDirectorEvents:DirectorEvents()
+        Return New AnimationUpdater(Self)
+    End
 
-        Local progress:Float = Min(1.0, animationTime / duration)
-        Local t:Float = transition.Calculate(progress)
-        _value = (startValue * (1.0 - t)) + (endValue * t)
+    Private
 
-        If animationTime >= duration
-            animationTime = duration
-            finished = True
+    Method SetProgress:Void(progress:Float)
+        For Local effect:Effect = EachIn Self
+            effect.OnProgress(progress)
         End
     End
 
-    Method OnRender:Void()
-        If Not effect
-            Super.OnRender()
-            Return
+    Method UpdateProgress:Void(frameTime:Float)
+        animationTime = Min(duration, animationTime + frameTime)
+
+        If animationTime = duration
+            Pause()
+            SetProgress(1)
+        Else
+            Local progress:Float = Min(1.0, animationTime / duration)
+            Local t:Float = transition.Calculate(progress)
+            SetProgress((0 * (1.0 - t)) + (1 * t))
         End
+    End
+End
 
-        If Count() = 0 Then Return
-        effect.PreRender(_value)
+Class AnimationUpdater Extends Partial
+    Private
 
-        For Local obj:DirectorEvents = EachIn Self
-            effect.PreNode(_value, obj)
-            obj.OnRender()
-            effect.PostNode(_value, obj)
-        End
+    Field animation:Animation
 
-        effect.PostRender(_value)
+    Public
+
+    Method New(animation:Animation)
+        Self.animation = animation
     End
 
-    Method value:Float() Property
-        Return _value
+    Method OnUpdate:Void(delta:Float, frameTime:Float)
+        animation.OnUpdate(delta, frameTime)
     End
 End

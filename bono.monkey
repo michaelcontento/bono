@@ -7,7 +7,7 @@ Import bono.colorable
 Import bono.deltatimer
 Import bono.director
 Import bono.directorevents
-Import bono.fader
+Import bono.effect
 Import bono.fanout
 Import bono.highscore
 Import bono.inputcontroller
