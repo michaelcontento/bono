@@ -40,7 +40,9 @@ Class Sprite Extends BaseObject
 
     Method OnRender:Void()
         Super.OnRender()
+        If color Then color.Activate()
         DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
+        If color Then color.Deactivate()
     End
 
     Method OnUpdate:Void(delta:Float, frameTime:Float)

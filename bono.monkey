@@ -3,6 +3,7 @@ Strict
 Import bono.animation
 Import bono.baseobject
 Import bono.color
+Import bono.colorable
 Import bono.deltatimer
 Import bono.director
 Import bono.directorevents

@@ -3,7 +3,6 @@ Strict
 Private
 
 Import baseobject
-Import color
 Import director
 Import mojo
 Import vector2d
@@ -25,7 +24,6 @@ Class Text Extends BaseObject
     Const ALIGN_LEFT:Int = AngelFont.ALIGN_LEFT
     Const ALIGN_CENTER:Int = AngelFont.ALIGN_CENTER
     Const ALIGN_RIGHT:Int = AngelFont.ALIGN_RIGHT
-    Field color:Color
 
     Method New(name:String, pos:Vector2D=Null)
         If pos = Null Then pos = New Vector2D(0, 0)

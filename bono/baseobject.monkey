@@ -2,6 +2,8 @@ Strict
 
 Private
 
+Import color
+Import colorable
 Import partial
 Import positionable
 Import sizeable
@@ -9,12 +11,13 @@ Import vector2d
 
 Public
 
-Class BaseObject Extends Partial Implements Positionable, Sizeable Abstract
+Class BaseObject Extends Partial Implements Positionable, Sizeable, Colorable Abstract
     Private
 
     Field _pos:Vector2D
     Field _center:Vector2D
     Field _size:Vector2D
+    Field _color:Color
 
     Public
 
@@ -52,5 +55,14 @@ Class BaseObject Extends Partial Implements Positionable, Sizeable Abstract
     Method center:Vector2D() Property
         If _center = Null Then Error("No size set and center therefore unset.")
         Return _center
+    End
+
+    Method color:Void(color:Color) Property
+        _color = color
+    End
+
+    Method color:Color() Property
+        If Not _color Then _color = New Color()
+        Return _color
     End
 End
