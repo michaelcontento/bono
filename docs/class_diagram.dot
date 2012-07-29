@@ -5,7 +5,7 @@ digraph G {
         edge [dir=back, arrowtail=onormal]
         App -> Director [weight=8]
         Partial -> BaseObject
-        FanOut -> Animation
+        Partial -> AnimationUpdater
         BaseObject -> Font
         BaseObject -> Sprite
     }
@@ -13,6 +13,7 @@ digraph G {
     subgraph aggregations {
         edge [arrowhead=odiamond]
         FanOut -> DirectorEvents
+        Animation -> Effect
         Router -> DirectorEvents
         Router -> RouterEvents [style=dotted]
     }
@@ -21,8 +22,8 @@ digraph G {
         edge [arrowhead=none]
         Director -> DirectorEvents [weight=8]
         Director -> InputController [constraint=false]
-        Animation -> Fader
         Animation -> Transition
+        AnimationUpdater -> Animation
     }
 
     subgraph implements {
@@ -31,20 +32,22 @@ digraph G {
         DirectorEvents -> Partial
         DirectorEvents -> Router
         Sizeable -> BaseObject
-        BaseObject -> Positionable [dir=normal]
+        Colorable -> BaseObject
+        Positionable -> BaseObject
         Director -> Sizeable [dir=normal]
-        Fader -> ConcreteFader
+        Effect -> ConcreteEffect
         Transition -> ConcreteTransition
     }
 
     ConcreteTransition [label="Concrete Transition"]
-    ConcreteFader [label="Concrete Fader"]
+    ConcreteEffect [label="Concrete Effect"]
     BaseObject [label="<< abstract >>\nBaseObject"]
     DirectorEvents [label="<< interface >>\nDirectorEvents"]
-    Fader [label="<< interface >>\nFader"]
+    Effect [label="<< interface >>\nEffect"]
     Partial [label="<< abstract >>\nPartial"]
     Positionable [label="<< interface >>\nPositionable"]
     RouterEvents [label="<< interface >>\nRouterEvents"]
     Sizeable [label="<< interface >>\nSizeable"]
+    Colorable [label="<< interface >>\nColorable"]
     Transition [label="<< interface >>\nTransition"]
 }
