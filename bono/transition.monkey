@@ -1,5 +1,30 @@
 Strict
 
+Private
+
+Function OutBounce:Float(progress:Float)
+    If progress < (1 / 2.75) Return 7.5625 * Pow(progress, 2)
+
+    If progress < (2 / 2.75)
+        progress -= 1.5 / 2.75
+        Return 7.5625 * Pow(progress, 2) + 0.75
+    End
+
+    If progress < (2.5 / 2.75)
+        progress -= 2.25 / 2.75
+        Return 7.5625 * Pow(progress, 2) + 0.9375
+    End
+
+    progress -= 2.625 / 2.75
+    Return 7.5625 * Pow(progress, 2) + 0.984375
+End
+
+Function InBounce:Float(progress:Float)
+    Return 1 - OutBounce(1 - progress)
+End
+
+Public
+
 ' All transitions where ported from the Kivy project
 ' See: https://github.com/kivy/kivy/blob/master/kivy/animation.py#L366
 
@@ -228,27 +253,6 @@ Class TransitionInOutBack Implements Transition
         progress -= 2
         Return 0.5 * (Pow(progress, 2) * ((S + 1) * progress + S) + 2)
     End
-End
-
-Function OutBounce:Float(progress:Float)
-    If progress < (1 / 2.75) Return 7.5625 * Pow(progress, 2)
-
-    If progress < (2 / 2.75)
-        progress -= 1.5 / 2.75
-        Return 7.5625 * Pow(progress, 2) + 0.75
-    End
-
-    If progress < (2.5 / 2.75)
-        progress -= 2.25 / 2.75
-        Return 7.5625 * Pow(progress, 2) + 0.9375
-    End
-
-    progress -= 2.625 / 2.75
-    Return 7.5625 * Pow(progress, 2) + 0.984375
-End
-
-Function InBounce:Float(progress:Float)
-    Return 1 - OutBounce(1 - progress)
 End
 
 Class TransitionInBounce Implements Transition
