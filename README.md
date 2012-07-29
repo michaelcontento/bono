@@ -7,8 +7,6 @@
 * `Highscore`
   * Refactor `Highscore` to use JSON
   * Refactor `Score` to easily support deviations with custom fields
-* `Sprite`
-  * Move the `LoadImage()` from `New()` into `OnCreate()`
 
 # Instructions
 

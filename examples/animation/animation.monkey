@@ -10,6 +10,7 @@ Function Main:Int()
     text.text = "Hello World"
 
     Local logo:Sprite = New Sprite("monkey64.png")
+    logo.OnCreate(director)
     logo.pos = director.size.Copy().Sub(logo.size)
 
     Local effect:EffectColorAlpha = New EffectColorAlpha(0, 1)

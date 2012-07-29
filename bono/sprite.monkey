@@ -16,6 +16,8 @@ Class Sprite Extends BaseObject
     Field frameTimer:Int
     Field currentFrame:Int
     Field frameCount:Int
+    Field frameSize:Vector2D
+    Field imageName:String
 
     Public
 
@@ -24,18 +26,30 @@ Class Sprite Extends BaseObject
     Field loopAnimation:Bool
     Field frameSpeed:Int
 
-    ' TODO: LoadImage() should be called in OnCreate()
     Method New(imageName:String, pos:Vector2D=Null)
-        image = LoadImage(imageName)
-        InitVectors(image.Width(), image.Height(), pos)
+        Self.imageName = imageName
+        If Not pos Then pos = New Vector2D(0, 0)
+        Self.pos = pos
     End
 
     Method New(imageName:String, frameWidth:Int, frameHeight:Int, frameCount:Int, frameSpeed:Int, pos:Vector2D=Null)
+        Self.imageName = imageName
+        If Not pos Then pos = New Vector2D(0, 0)
+        Self.pos = pos
+
+        Self.frameSize = New Vector2D(frameHeight, frameHeight)
         Self.frameCount = frameCount - 1
         Self.frameSpeed = frameSpeed
+    End
 
-        image = LoadImage(imageName, frameWidth, frameHeight, frameCount)
-        InitVectors(frameWidth, frameHeight, pos)
+    Method OnCreate:Void(director:Director)
+        If frameSize
+            image = LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
+            size = frameSize
+        Else
+            image = LoadImage(imageName)
+            size = New Vector2D(image.Width(), image.Height())
+        End
     End
 
     Method OnRender:Void()
@@ -79,16 +93,5 @@ Class Sprite Extends BaseObject
     Method animationIsDone:Bool() Property
         If loopAnimation Then Return False
         Return (currentFrame = frameCount)
-    End
-
-    Private
-
-    Method InitVectors:Void(width:Int, height:Int, pos:Vector2D=Null)
-        If pos = Null
-            Self.pos = New Vector2D(0, 0)
-        Else
-            Self.pos = pos
-        End
-        size = New Vector2D(width, height)
     End
 End
