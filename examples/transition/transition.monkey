@@ -99,6 +99,9 @@ Class Handler Extends Partial
 
         transitions.Push(New TransitionInOutBounce())
         names.Push("In Out Bounce")
+
+        transitions.Push(New TransitionRandom())
+        names.Push("Random")
     End
 
     Method OnRender:Void()

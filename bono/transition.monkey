@@ -271,3 +271,9 @@ Class TransitionInOutBounce Implements Transition
         Return OutBounce(progress - 1) * 0.5 + 0.5
     End
 End
+
+Class TransitionRandom Implements Transition
+    Method Calculate:Float(progress:Float)
+        Return Rnd(0, 1)
+    End
+End
