@@ -35,7 +35,6 @@ Class Text Extends BaseObject
         Super.OnCreate(director)
 
         If Not angelFontStore.Contains(name)
-            Print "LOADED"
             angelFontStore.Set(name, New AngelFont())
             angelFontStore.Get(name).LoadFont(name)
         End
