@@ -102,6 +102,12 @@ Class Handler Extends Partial
 
         transitions.Push(New TransitionRandom())
         names.Push("Random")
+
+        transitions.Push(New TransitionRandom(0.05, 0.25, New TransitionLinear()))
+        names.Push("Random Linear (min: 5% max: 15%)")
+
+        transitions.Push(New TransitionRandom(0.05, 0.25, New TransitionInOutCirc()))
+        names.Push("Random In Out Circ (min: 5% max: 15%)")
     End
 
     Method OnRender:Void()
