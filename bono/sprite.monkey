@@ -12,40 +12,36 @@ Public
 Class Sprite Extends BaseObject
     Private
 
-    Field image:Image
-    Field frameTimer:Int
     Field currentFrame:Int
     Field frameCount:Int
     Field frameSize:Vector2D
+    Field frameTimer:Int
+    Field image:Image
     Field imageName:String
 
     Public
 
+    Field frameSpeed:Int
+    Field loopAnimation:Bool
     Field rotation:Float
     Field scale:Vector2D = New Vector2D(1, 1)
-    Field loopAnimation:Bool
-    Field frameSpeed:Int
 
     Method New(imageName:String, pos:Vector2D=Null)
-        Self.imageName = imageName
-        If Not pos Then pos = New Vector2D(0, 0)
-        Self.pos = pos
+        SetNameAndPos(imageName, pos)
     End
 
-    Method New(imageName:String, frameWidth:Int, frameHeight:Int, frameCount:Int, frameSpeed:Int, pos:Vector2D=Null)
-        Self.imageName = imageName
-        If Not pos Then pos = New Vector2D(0, 0)
-        Self.pos = pos
+    Method New(imageName:String, frameSize:Vector2D, frameCount:Int, frameSpeed:Int, pos:Vector2D=Null)
+        SetNameAndPos(imageName, pos)
 
-        Self.frameSize = New Vector2D(frameHeight, frameHeight)
-        Self.frameCount = frameCount - 1
+        Self.frameSize = frameSize
+        Self.frameCount = frameCount
         Self.frameSpeed = frameSpeed
     End
 
     Method OnCreate:Void(director:Director)
         If frameSize
             image = LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
-            size = frameSize
+            size = frameSize.Copy()
         Else
             image = LoadImage(imageName)
             size = New Vector2D(image.Width(), image.Height())
@@ -70,7 +66,7 @@ Class Sprite Extends BaseObject
             Return
         End
 
-        If currentFrame = frameCount
+        If (currentFrame + 1) = frameCount
             If loopAnimation
                 currentFrame = 1
             End
@@ -93,5 +89,13 @@ Class Sprite Extends BaseObject
     Method animationIsDone:Bool() Property
         If loopAnimation Then Return False
         Return (currentFrame = frameCount)
+    End
+
+    Private
+
+    Method SetNameAndPos:Void(imageName:String, pos:Vector2D=Null)
+        Self.imageName = imageName
+        If Not pos Then pos = New Vector2D(0, 0)
+        Self.pos = pos
     End
 End
