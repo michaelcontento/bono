@@ -3,6 +3,7 @@ Strict
 Private
 
 Import baseobject
+Import deltatimer
 Import director
 Import mojo.graphics
 Import vector2d
@@ -56,12 +57,12 @@ Class Sprite Extends BaseObject
         If color Then color.Deactivate()
     End
 
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
+    Method OnUpdate:Void(deltaTimer:DeltaTimer)
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
         If frameTimer < frameSpeed
-            frameTimer += frameTime
+            frameTimer += deltaTimer.frameTime
             Return
         End
 

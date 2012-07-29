@@ -4,6 +4,7 @@ Private
 
 Import director
 Import directorevents
+Import deltatimer
 Import keyevent
 Import touchevent
 
@@ -23,7 +24,7 @@ Class Partial Implements DirectorEvents Abstract
     Method OnLoading:Void()
     End
 
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
+    Method OnUpdate:Void(deltaTimer:DeltaTimer)
     End
 
     Method OnRender:Void()

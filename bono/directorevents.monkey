@@ -5,13 +5,14 @@ Private
 Import director
 Import keyevent
 Import touchevent
+Import deltatimer
 
 Public
 
 Interface DirectorEvents
     Method OnCreate:Void(director:Director)
     Method OnLoading:Void()
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
+    Method OnUpdate:Void(deltatimer:DeltaTimer)
     Method OnRender:Void()
     Method OnSuspend:Void()
     Method OnResume:Void(delta:Int)

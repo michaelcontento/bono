@@ -4,6 +4,7 @@ Private
 
 Import director
 Import directorevents
+Import deltatimer
 Import keyevent
 Import touchevent
 
@@ -50,10 +51,10 @@ Class FanOut Implements DirectorEvents
         End
     End
 
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
+    Method OnUpdate:Void(deltaTimer:DeltaTimer)
         If Not objects Then Return
         For Local obj:DirectorEvents = EachIn objects
-            obj.OnUpdate(delta, frameTime)
+            obj.OnUpdate(deltaTimer)
         End
     End
 

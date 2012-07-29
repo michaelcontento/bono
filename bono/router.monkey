@@ -4,6 +4,7 @@ Private
 
 Import director
 Import directorevents
+Import deltatimer
 Import keyevent
 Import routerevents
 Import touchevent
@@ -67,8 +68,8 @@ Class Router Implements DirectorEvents
         If _current Then _current.OnLoading()
     End
 
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
-        If _current Then _current.OnUpdate(delta, frameTime)
+    Method OnUpdate:Void(deltaTimer:DeltaTimer)
+        If _current Then _current.OnUpdate(deltaTimer)
     End
 
     Method OnRender:Void()

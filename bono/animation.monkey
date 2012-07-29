@@ -3,6 +3,7 @@ Strict
 Private
 
 Import directorevents
+Import deltatimer
 Import effect
 Import partial
 Import transition
@@ -51,8 +52,8 @@ Class Animation Extends List<Effect>
         Return (Not finished)
     End
 
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
-        If Not finished Then UpdateProgress(frameTime)
+    Method OnUpdate:Void(deltaTimer:DeltaTimer)
+        If Not finished Then UpdateProgress(deltaTimer.frameTime)
     End
 
     Method ToDirectorEvents:DirectorEvents()
@@ -92,7 +93,7 @@ Class AnimationUpdater Extends Partial
         Self.animation = animation
     End
 
-    Method OnUpdate:Void(delta:Float, frameTime:Float)
-        animation.OnUpdate(delta, frameTime)
+    Method OnUpdate:Void(deltaTimer:DeltaTimer)
+        animation.OnUpdate(deltaTimer)
     End
 End
