@@ -39,6 +39,8 @@ Class Sprite Extends BaseObject
     End
 
     Method OnCreate:Void(director:Director)
+        Super.OnCreate(director)
+
         If frameSize
             image = LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
             size = frameSize.Copy()
