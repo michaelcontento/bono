@@ -41,7 +41,7 @@ Class Director Extends App Implements Sizeable
         inputController.scale = scale
         Seed = GetTimestamp()
 
-        deltaTimer = New DeltaTimer(30)
+        deltaTimer = New DeltaTimer(60)
         SetUpdateRate(60)
 
         appOnCreateCatched = True
