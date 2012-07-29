@@ -291,6 +291,10 @@ Class TransitionRandom Implements Transition
         Self.maxDiviation = maxDiviation
         Self.transition = transition
         maxDiviationHalf = maxDiviation / 2
+
+        If minDiviation >= maxDiviation
+            Error("minDiviation must be geater than maxDiviation")
+        End
     End
 
     Method Calculate:Float(progress:Float)
