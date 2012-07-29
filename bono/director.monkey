@@ -20,12 +20,13 @@ Class Director Extends App Implements Sizeable
     Field _inputController:InputController = New InputController()
     Field _scale:Vector2D
     Field _size:Vector2D
-    Field deltaTimer:DeltaTimer
     Field _handler:DirectorEvents
     Field onCreateDispatched:Bool
     Field appOnCreateCatched:Bool
 
     Public
+
+    Field deltaTimer:DeltaTimer
 
     Method New(width:Int, height:Int)
         Super.New()
