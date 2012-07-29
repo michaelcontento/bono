@@ -11,29 +11,60 @@ Class DeltaTimer
 
     Field _delta:Float
     Field _frameTime:Float
-    Field currentTicks:Float
-    Field lastTicks:Float
+    Field _millisecs:Float
+    Field lastMillisecs:Float
     Field targetFps:Float
+    Field paused:Bool
+    Field pauseOffset:Float
+    Field pauseStartMillisecs:Float
 
     Public
 
     Method New(fps:Float)
         targetFps = fps
-        lastTicks = Millisecs()
+        lastMillisecs = Millisecs()
     End
 
     Method OnUpdate:Void()
-        currentTicks = Millisecs()
-        _frameTime = currentTicks - lastTicks
+        If paused Then Return
+
+        _millisecs = Millisecs() - pauseOffset
+        _frameTime = _millisecs - lastMillisecs
         _delta = frameTime / (1000.0 / targetFps)
-        lastTicks = currentTicks
+        lastMillisecs = _millisecs
+    End
+
+    Method Play:Void()
+        If Not paused Then Return
+
+        Local pauseDuration:Float = Millisecs() - pauseStartMillisecs
+        pauseOffset += pauseDuration
+
+        paused = False
+    End
+
+    Method Pause:Void()
+        If paused Then Return
+
+        pauseStartMillisecs = Millisecs()
+        paused = True
+    End
+
+    Method IsPaused:Bool()
+        Return paused
+    End
+
+    Method millisecs:Float() Property
+        Return _millisecs
     End
 
     Method delta:Float() Property
+        If paused Then Return 0
         Return _delta
     End
 
     Method frameTime:Float() Property
+        If paused Then Return 0
         Return _frameTime
     End
 End
