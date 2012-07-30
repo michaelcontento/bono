@@ -22,6 +22,7 @@ Class Router Implements DirectorEvents
     Field _previous:DirectorEvents
     Field _previousName:String
     Field director:Director
+    Field onEnterPending:Bool
 
     Public
 
@@ -52,11 +53,15 @@ Class Router Implements DirectorEvents
         _currentName = name
         DispatchOnCreate()
 
-        Local tmpRouter:RouterEvents = routers.Get(_previousName)
-        If tmpRouter Then tmpRouter.OnLeave()
+        If Not director
+            onEnterPending = True
+        Else
+            Local tmpRouter:RouterEvents = routers.Get(_previousName)
+            If tmpRouter Then tmpRouter.OnLeave()
 
-        tmpRouter = routers.Get(_currentName)
-        If tmpRouter Then tmpRouter.OnEnter()
+            tmpRouter = routers.Get(_currentName)
+            If tmpRouter Then tmpRouter.OnEnter()
+        End
     End
 
     Method OnCreate:Void(director:Director)
@@ -133,5 +138,12 @@ Class Router Implements DirectorEvents
 
         _current.OnCreate(director)
         created.AddLast(_currentName)
+
+        If onEnterPending
+            onEnterPending = False
+
+            Local tmpRouter:RouterEvents = routers.Get(_currentName)
+            If tmpRouter Then tmpRouter.OnEnter()
+        End
     End
 End
