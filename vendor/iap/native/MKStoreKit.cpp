@@ -39,6 +39,7 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 }
 	
 - (void) paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions;
+- (void) paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction;
 - (void) completeTransaction: (SKPaymentTransaction *)transaction;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction;
@@ -122,6 +123,11 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 
 
 @implementation MKStoreObserver
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    [[MKStoreManager sharedManager] setIsPurchaseInProgress: NO];
+}
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
@@ -814,6 +820,7 @@ void InitInAppPurchases(String bundleID, Array<String> prodList) {
 
 void restorePurchasedProducts() {
 //	NSLog(@"trying to restore");
+	[[MKStoreManager sharedManager] setIsPurchaseInProgress: YES];
 	[[MKStoreManager sharedManager] restorePreviousTransactions];
 }
 
