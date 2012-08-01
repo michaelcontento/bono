@@ -38,7 +38,9 @@ Class Color
     End
 
     Method Deactivate:Void()
-        If oldColor Then Set(oldColor)
+        If Not oldColor Then Return
+        Set(oldColor)
+        oldColor = Null
     End
 
     Private
