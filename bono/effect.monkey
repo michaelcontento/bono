@@ -26,8 +26,8 @@ Class EffectColor Extends List<Colorable> Implements Effect
 
     Method New(start:Color, stop:Color)
         Super.New()
-        Self.start = start
-        Self.stop = stop
+        Self.start = start.Copy()
+        Self.stop = stop.Copy()
     End
 
     Method OnProgress:Void(progress:Float)

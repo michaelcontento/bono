@@ -43,6 +43,10 @@ Class Color
         oldColor = Null
     End
 
+    Method Copy:Color()
+        Return New Color(red, green, blue, alpha)
+    End
+
     Private
 
     Method Set:Void(color:Color)
