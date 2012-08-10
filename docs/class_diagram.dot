@@ -6,8 +6,9 @@ digraph G {
         App -> Director [weight=8]
         Partial -> BaseObject
         Partial -> AnimationUpdater
-        BaseObject -> Font
         BaseObject -> Sprite
+        BaseObject -> Text
+        BaseObject -> TextInput
     }
 
     subgraph aggregations {
