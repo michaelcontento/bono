@@ -23,6 +23,7 @@ digraph G {
         edge [arrowhead=none]
         Director -> DirectorEvents [weight=8]
         Director -> InputController [constraint=false]
+        Director -> DeltaTimer [constraint=false]
         Animation -> Transition
         AnimationUpdater -> Animation
     }
