@@ -1,5 +1,6 @@
 Import product
 Import service
+Import universalproduct
 
 #if TARGET="android"
 Import "native/payment.${TARGET}.${LANG}"
