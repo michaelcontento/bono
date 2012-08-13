@@ -19,13 +19,13 @@ Class Sprite Extends BaseObject
     Field frameTimer:Int
     Field image:Image
     Field imageName:String
+    Field _scale:Vector2D = New Vector2D(1, 1)
 
     Public
 
     Field frameSpeed:Int
     Field loopAnimation:Bool
     Field rotation:Float
-    Field scale:Vector2D = New Vector2D(1, 1)
 
     Method New(imageName:String, pos:Vector2D=Null)
         SetNameAndPos(imageName, pos)
@@ -49,6 +49,8 @@ Class Sprite Extends BaseObject
             image = LoadImage(imageName)
             size = New Vector2D(image.Width(), image.Height())
         End
+
+        size.Mul(scale)
     End
 
     Method OnRender:Void()
@@ -89,6 +91,15 @@ Class Sprite Extends BaseObject
     Method animationIsDone:Bool() Property
         If loopAnimation Then Return False
         Return (currentFrame = frameCount)
+    End
+
+    Method scale:Vector2D() Property
+        Return _scale
+    End
+
+    Method scale:Void(newScale:Vector2D) Property
+        If image Then size = size.Div(_scale).Mul(newScale)
+        _scale = newScale
     End
 
     Private
