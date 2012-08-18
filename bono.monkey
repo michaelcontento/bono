@@ -19,6 +19,7 @@ Import bono.router
 Import bono.routerevents
 Import bono.score
 Import bono.sizeable
+Import bono.soundmanager
 Import bono.sprite
 Import bono.statestore
 Import bono.text

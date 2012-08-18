@@ -9,6 +9,7 @@ Import mojo
 Import sizeable
 Import util
 Import vector2d
+Import soundmanager
 
 Public
 
@@ -27,6 +28,7 @@ Class Director Extends App Implements Sizeable
     Public
 
     Field deltaTimer:DeltaTimer
+    Field soundManager:SoundManager
 
     Method New(width:Int, height:Int)
         Super.New()
@@ -43,6 +45,8 @@ Class Director Extends App Implements Sizeable
 
         deltaTimer = New DeltaTimer(60)
         SetUpdateRate(60)
+
+        soundManager = New SoundManager()
 
         appOnCreateCatched = True
         DispatchOnCreate()
