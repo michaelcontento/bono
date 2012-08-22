@@ -24,6 +24,7 @@ digraph G {
         Director -> DirectorEvents [weight=8]
         Director -> InputController [constraint=false]
         Director -> DeltaTimer [constraint=false]
+        Director -> SoundManager [constraint=false]
         Animation -> Transition
         AnimationUpdater -> Animation
     }
