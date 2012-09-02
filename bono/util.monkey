@@ -6,8 +6,10 @@ Public
 
 Extern
 
-#if TARGET="ios" Or TARGET="glfw"
+Class Util Abstract
+#If TARGET="ios" Or TARGET="glfw"
     Function GetTimestamp:Int()="util::GetTimestamp"
-#else
+#Else
     Function GetTimestamp:Int()="util.GetTimestamp"
-#end
+#End
+End

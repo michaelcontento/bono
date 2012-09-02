@@ -41,7 +41,7 @@ Class Director Extends App Implements Sizeable
         RecalculateScale()
 
         inputController.scale = scale
-        Seed = GetTimestamp()
+        Seed = Util.GetTimestamp()
 
         deltaTimer = New DeltaTimer(60)
         SetUpdateRate(60)
