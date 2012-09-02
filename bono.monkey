@@ -22,6 +22,7 @@ Import bono.sizeable
 Import bono.soundmanager
 Import bono.sprite
 Import bono.statestore
+Import bono.target
 Import bono.text
 Import bono.textinput
 Import bono.touchevent
