@@ -3,6 +3,7 @@ Strict
 Private
 
 Import mojo.audio
+Import target
 
 Public
 
@@ -89,7 +90,13 @@ Class SoundManager
             channelId += 1
             If channelId >= CHANNELS Then channelId = 0
 
-            If ChannelState(channelId) = 0
+            ' Skip the ChannelState check on Android, because:
+            ' > Android: ChannelState always returns -1, ie: 'unknown'. Sounds
+            ' >          to be used with PlaySound must be less than 1MB in
+            ' >          length. Longer sounds can be played using the music 
+            ' >          commands.
+            ' Source: http://blitz-wiki.appspot.com/mojo.audio
+            If Target.IS_ANDROID Or ChannelState(channelId) = 0
                 lastChannel = channelId
                 Return channelId
             End
