@@ -1,3 +1,5 @@
+import android.net.Uri;
+
 class util
 {
     static int GetTimestamp()
