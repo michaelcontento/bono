@@ -6,7 +6,9 @@ public:
         return std::time(0);
     }
 
-    void static OpenUrl(String url) {
-        system("open " + url);
+    void static OpenUrl(const String url) {
+        String cmd("open ");
+        cmd += url;
+        system(cmd.ToCString<char>());
     }
 };
