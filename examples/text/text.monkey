@@ -1,6 +1,5 @@
 Strict
 
-Import mojo.graphics
 Import bono
 
 Function Main:Int()
@@ -9,8 +8,9 @@ Function Main:Int()
     text.align = Text.ALIGN_RIGHT
     text.color = New Color(255, 0, 0, 0.5)
 
-    Local director:Director = New Director(640, 480)
-    director.Run(text)
+    Local appEmitter:AppEmitter = New AppEmitter()
+    appEmitter.AddObserver(text)
+    appEmitter.Run()
 
     Return 0
 End

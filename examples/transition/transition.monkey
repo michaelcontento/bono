@@ -1,10 +1,9 @@
 Strict
 
-Import mojo.graphics
-Import monkey.stack
 Import bono
+Import mojo.graphics
 
-Class Handler Extends Partial
+Class Handler Implements AppObserver, TouchObserver
     Private
 
     Field transitions:Stack<Transition> = New Stack<Transition>()
@@ -13,9 +12,7 @@ Class Handler Extends Partial
 
     Public
 
-    Method OnCreate:Void(director:Director)
-        Super.OnCreate(director)
-
+    Method OnCreate:Void()
         transitions.Push(New TransitionLinear())
         names.Push("Linear")
 
@@ -110,18 +107,24 @@ Class Handler Extends Partial
         names.Push("Random In Out Circ (min: 5% max: 15%)")
     End
 
+    Method OnLoading:Void()
+    End
+
+    Method OnUpdate:Void(deltatimer:DeltaTimer)
+    End
+
     Method OnRender:Void()
         Local transition:Transition = transitions.Get(stackIndex)
         Local maxY:Float = 100
-        Local minY:Float = director.size.y - 100
+        Local minY:Float = DeviceHeight() - 100
         Local lastY:Float = minY
         Local lastX:Float
         Local progress:Float
         Local y:Float
 
         SetColor(255, 255, 255)
-        For Local x:Int = 0 Until director.size.x
-            progress = x / director.size.x
+        For Local x:Int = 0 Until DeviceWidth()
+            progress = x / Float(DeviceWidth())
             y = (maxY - minY) * transition.Calculate(progress) + minY
 
             DrawLine(lastX, lastY, x, y)
@@ -132,31 +135,38 @@ Class Handler Extends Partial
         DrawText(names.Get(stackIndex), 50, 50)
 
         SetColor(0, 255, 0)
-        DrawLine(0, minY, director.size.x, minY)
-        DrawLine(0, maxY, director.size.x, maxY)
+        DrawLine(0, minY, DeviceWidth(), minY)
+        DrawLine(0, maxY, DeviceWidth(), maxY)
     End
 
-    Method OnKeyDown:Void(event:KeyEvent)
-        NextTransition()
+    Method OnResume:Void()
+    End
+
+    Method OnSuspend:Void()
     End
 
     Method OnTouchDown:Void(event:TouchEvent)
-        NextTransition()
-    End
-
-    Private
-
-    Method NextTransition:Void()
         stackIndex += 1
         If stackIndex >= transitions.Length() Then stackIndex = 0
+    End
+
+    Method OnTouchMove:Void(event:TouchEvent)
+    End
+
+    Method OnTouchUp:Void(event:TouchEvent)
     End
 End
 
 Function Main:Int()
-    Local director:Director = New Director(640, 480)
-    director.inputController.trackKeys = True
-    director.inputController.trackTouch = True
-    director.Run(New Handler())
+    Local handler:Handler = New Handler()
+
+    Local touchEmitter:TouchEmitter = New TouchEmitter()
+    touchEmitter.AddObserver(handler)
+
+    Local appEmitter:AppEmitter = New AppEmitter()
+    appEmitter.AddObserver(touchEmitter)
+    appEmitter.AddObserver(handler)
+    appEmitter.Run()
 
     Return 0
 End
