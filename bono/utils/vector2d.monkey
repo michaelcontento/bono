@@ -1,5 +1,7 @@
 Strict
 
+Public
+
 Class Vector2D
     Field x:Float
     Field y:Float
