@@ -3,6 +3,7 @@ Strict
 Public
 
 Import basedisplayobject
+Import clearscene
 Import color
 Import colorable
 Import positionable
