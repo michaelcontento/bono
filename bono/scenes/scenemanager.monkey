@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import basescene
+Import sceneable
 Import bono.kernel
 
 Public
@@ -10,19 +10,20 @@ Public
 Class SceneManager Implements AppObserver
     Private
 
-    Field scenes:StringMap<BaseScene> = New StringMap<BaseScene>()
+    Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
     Field created:StringSet = New StringSet()
     Field onCreateCaught:Bool
     Field pendingGoto:String
-    Field appEmitter:AppEmitter
-    Field keyEmitter:KeyEmitter
-    Field touchEmitter:TouchEmitter
-    Field _current:BaseScene
+    Field _current:Sceneable
     Field _currentName:String
-    Field _previous:BaseScene
+    Field _previous:Sceneable
     Field _previousName:String
 
     Public
+
+    Field appEmitter:AppEmitter
+    Field keyEmitter:KeyEmitter
+    Field touchEmitter:TouchEmitter
 
     Method OnCreate:Void()
         onCreateCaught = True
@@ -59,16 +60,16 @@ Class SceneManager Implements AppObserver
         appEmitter.Run()
     End
 
-    Method Add:Void(name:String, scene:BaseScene)
+    Method Add:Void(name:String, scene:Sceneable)
         If scenes.Contains(name)
             Error("There is already a scene named: " + name)
         End
 
         scenes.Set(name, scene)
-        scene.sceneManager = Self
+        scene.SetSceneManager(Self)
     End
 
-    Method Get:BaseScene(name:String)
+    Method Get:Sceneable(name:String)
         If Not scenes.Contains(name)
             Error("Unknown scene name given: " + name)
         End
@@ -88,7 +89,7 @@ Class SceneManager Implements AppObserver
         HandleCurrentEnter()
     End
 
-    Method current:BaseScene() Property
+    Method current:Sceneable() Property
         Return _current
     End
 
@@ -96,7 +97,7 @@ Class SceneManager Implements AppObserver
         Return _currentName
     End
 
-    Method previous:BaseScene() Property
+    Method previous:Sceneable() Property
         Return _previous
     End
 
@@ -118,20 +119,20 @@ Class SceneManager Implements AppObserver
         If Not _previous Then Return
 
         _previous.OnSceneLeave()
-        appEmitter.RemoveObserver(_previous)
-        keyEmitter.RemoveObserver(_previous)
-        touchEmitter.RemoveObserver(_previous)
+        If AppObserver(_previous) Then appEmitter.RemoveObserver(AppObserver(_previous))
+        If KeyObserver(_previous) Then keyEmitter.RemoveObserver(KeyObserver(_previous))
+        If TouchObserver(_previous) Then touchEmitter.RemoveObserver(TouchObserver(_previous))
     End
 
     Method HandleCurrentEnter:Void()
         If Not created.Contains(_currentName) Then
-            _current.OnCreate()
+            AppObserver(_current).OnCreate()
             created.Insert(_currentName)
         End
 
         _current.OnSceneEnter()
-        appEmitter.AddObserver(_current)
-        keyEmitter.AddObserver(_current)
-        touchEmitter.AddObserver(_current)
+        If AppObserver(_previous) Then appEmitter.AddObserver(AppObserver(_previous))
+        If KeyObserver(_previous) Then keyEmitter.AddObserver(KeyObserver(_previous))
+        If TouchObserver(_previous) Then touchEmitter.AddObserver(TouchObserver(_previous))
     End
 End
