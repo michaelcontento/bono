@@ -2,6 +2,7 @@ Strict
 
 Public
 
+Import align
 Import basedisplayobject
 Import clearscene
 Import color
