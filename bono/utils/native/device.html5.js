@@ -1,11 +1,11 @@
-function device() {
+function Device() {
 }
 
-device.GetTimestamp = function() {
+Device.GetTimestamp = function() {
     var ts = Math.round((new Date()).getTime() / 1000);
     return ts;
 }
 
-device.OpenUrl = function(url) {
+Device.OpenUrl = function(url) {
     window.open(url);
 };

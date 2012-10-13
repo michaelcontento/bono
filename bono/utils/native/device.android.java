@@ -1,6 +1,6 @@
 import android.net.Uri;
 
-class device
+class Device
 {
     static int GetTimestamp()
     {

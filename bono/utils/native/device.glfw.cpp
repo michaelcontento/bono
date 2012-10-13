@@ -1,6 +1,6 @@
 #include <ctime>
 
-class device {
+class Device {
 public:
     int static GetTimestamp() {
         return std::time(0);

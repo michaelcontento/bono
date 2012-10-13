@@ -8,10 +8,10 @@ Extern
 
 Class Device Abstract
 #If TARGET="ios" Or TARGET="glfw"
-    Function GetTimestamp:Int()="device::GetTimestamp"
-    Function OpenUrl:Void(url:String)="device::OpenUrl"
+    Function GetTimestamp:Int()="Device::GetTimestamp"
+    Function OpenUrl:Void(url:String)="Device::OpenUrl"
 #Else
-    Function GetTimestamp:Int()="device.GetTimestamp"
-    Function OpenUrl:Void(url:String)="device.OpenUrl"
+    Function GetTimestamp:Int()="Device.GetTimestamp"
+    Function OpenUrl:Void(url:String)="Device.OpenUrl"
 #End
 End

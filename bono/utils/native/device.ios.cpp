@@ -1,4 +1,4 @@
-class device {
+class Device {
 public:
     int static GetTimestamp() {
         time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
