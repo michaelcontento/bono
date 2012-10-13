@@ -7,24 +7,10 @@ Import observerfan
 
 Public
 
-Class KeyObserverFan Implements KeyObserver, ObserverFan
-    Private
-
-    Field childs:List<Object> = New List<Object>()
-
-    Public
-
-    Method Add:Void(child:Object)
-        childs.AddLast(child)
-    End
-
-    Method Remove:Void(child:Object)
-        childs.RemoveEach(child)
-    End
-
+Class KeyObserverFan Extends ObserverFan Implements KeyObserver
     Method OnKeyDown:Void(event:KeyEvent)
         Local castedChild:KeyObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = KeyObserver(child)
             If castedChild Then castedChild.OnKeyDown(event)
         End
@@ -32,7 +18,7 @@ Class KeyObserverFan Implements KeyObserver, ObserverFan
 
     Method OnKeyPress:Void(event:KeyEvent)
         Local castedChild:KeyObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = KeyObserver(child)
             If castedChild Then castedChild.OnKeyPress(event)
         End
@@ -40,7 +26,7 @@ Class KeyObserverFan Implements KeyObserver, ObserverFan
 
     Method OnKeyUp:Void(event:KeyEvent)
         Local castedChild:KeyObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = KeyObserver(child)
             If castedChild Then castedChild.OnKeyUp(event)
         End

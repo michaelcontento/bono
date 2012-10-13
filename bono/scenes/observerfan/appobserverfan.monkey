@@ -7,24 +7,10 @@ Import observerfan
 
 Public
 
-Class AppObserverFan Implements AppObserver, ObserverFan
-    Private
-
-    Field childs:List<Object> = New List<Object>()
-
-    Public
-
-    Method Add:Void(child:Object)
-        childs.AddLast(child)
-    End
-
-    Method Remove:Void(child:Object)
-        childs.RemoveEach(child)
-    End
-
+Class AppObserverFan Extends ObserverFan Implements AppObserver
     Method OnCreate:Void()
         Local castedChild:AppObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = AppObserver(child)
             If castedChild Then castedChild.OnCreate()
         End
@@ -32,7 +18,7 @@ Class AppObserverFan Implements AppObserver, ObserverFan
 
     Method OnLoading:Void()
         Local castedChild:AppObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = AppObserver(child)
             If castedChild Then castedChild.OnLoading()
         End
@@ -40,7 +26,7 @@ Class AppObserverFan Implements AppObserver, ObserverFan
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
         Local castedChild:AppObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = AppObserver(child)
             If castedChild Then castedChild.OnUpdate(deltatimer)
         End
@@ -48,7 +34,7 @@ Class AppObserverFan Implements AppObserver, ObserverFan
 
     Method OnRender:Void()
         Local castedChild:AppObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = AppObserver(child)
             If castedChild Then castedChild.OnRender()
         End
@@ -56,7 +42,7 @@ Class AppObserverFan Implements AppObserver, ObserverFan
 
     Method OnResume:Void()
         Local castedChild:AppObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = AppObserver(child)
             If castedChild Then castedChild.OnResume()
         End
@@ -64,7 +50,7 @@ Class AppObserverFan Implements AppObserver, ObserverFan
 
     Method OnSuspend:Void()
         Local castedChild:AppObserver
-        For Local child:Object = EachIn childs
+        For Local child:Object = EachIn Self
             castedChild = AppObserver(child)
             If castedChild Then castedChild.OnSuspend()
         End

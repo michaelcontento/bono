@@ -4,15 +4,14 @@ Private
 
 Import bono.kernel
 Import scenemanager
-Import observerfan
 Import sceneable
-Import appobserverfan
-Import touchobserverfan
-Import keyobserverfan
+Import observerfan.appobserverfan
+Import observerfan.touchobserverfan
+Import observerfan.keyobserverfan
 
 Public
 
-Class BaseScene Implements AppObserver, ObserverFan, Sceneable Abstract
+Class BaseScene Implements Sceneable Abstract
     Private
 
     Field firstTimeEnter:Bool
@@ -23,7 +22,6 @@ Class BaseScene Implements AppObserver, ObserverFan, Sceneable Abstract
 
     Public
 
-    ' --- AppObserver
     Method OnCreate:Void()
     End
 
@@ -40,15 +38,6 @@ Class BaseScene Implements AppObserver, ObserverFan, Sceneable Abstract
     End
 
     Method OnSuspend:Void()
-    End
-
-    ' --- Sceneable
-    Method SetSceneManager:Void(sceneManager:SceneManager)
-        Self.sceneManager = sceneManager
-    End
-
-    Method GetSceneManager:SceneManager()
-        Return sceneManager
     End
 
     Method OnSceneEnter:Void()
@@ -68,7 +57,14 @@ Class BaseScene Implements AppObserver, ObserverFan, Sceneable Abstract
         sceneManager.touchEmitter.RemoveObserver(touchObserverFan)
     End
 
-    ' --- ObserverFan
+    Method SetSceneManager:Void(sceneManager:SceneManager)
+        Self.sceneManager = sceneManager
+    End
+
+    Method GetSceneManager:SceneManager()
+        Return sceneManager
+    End
+
     Method Add:Void(child:Object)
         appObserverFan.Add(child)
         keyObserverFan.Add(child)
