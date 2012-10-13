@@ -2,11 +2,12 @@ Strict
 
 Private
 
+Import align
+Import basedisplayobject
 Import bono.graphics
 Import bono.kernel
 Import bono.utils
 Import bono.vendor.angelfont
-Import basedisplayobject
 
 Public
 
@@ -15,14 +16,12 @@ Class Text Extends BaseDisplayObject Implements AppObserver
 
     Global angelFontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
     Field name:String
-    Field _align:Int = ALIGN_LEFT
     Field _text:String = ""
 
     Public
 
-    Const ALIGN_LEFT:Int = AngelFont.ALIGN_LEFT
-    Const ALIGN_CENTER:Int = AngelFont.ALIGN_CENTER
-    Const ALIGN_RIGHT:Int = AngelFont.ALIGN_RIGHT
+    Field halign:Int = Align.LEFT
+    Field valign:Int = Align.TOP
 
     Method New(name:String, pos:Vector2D=Null)
         If pos = Null Then pos = New Vector2D(0, 0)
@@ -44,8 +43,12 @@ Class Text Extends BaseDisplayObject Implements AppObserver
     End
 
     Method OnRender:Void()
+        Local renderPos:Vector2D = pos.Copy()
+        Align.AdjustHorizontal(renderPos, Self, halign)
+        Align.AdjustVertical(renderPos, Self, valign)
+
         If color Then color.Activate()
-        angelFont.DrawText(_text, pos.x, pos.y, _align)
+        angelFont.DrawText(_text, renderPos.x, renderPos.y)
         If color Then color.Deactivate()
     End
 
@@ -77,19 +80,6 @@ Class Text Extends BaseDisplayObject Implements AppObserver
 
     Method text:String() Property
         Return _text
-    End
-
-    Method align:Void(newAlign:Int) Property
-        Select newAlign
-        Case ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT
-            _align = newAlign
-        Default
-            Error("Invalid align value specified.")
-        End
-    End
-
-    Method align:Int() Property
-        Return _align
     End
 
     Private

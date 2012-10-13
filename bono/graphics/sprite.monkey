@@ -2,9 +2,10 @@ Strict
 
 Private
 
+Import align
+Import basedisplayobject
 Import bono.kernel
 Import bono.utils
-Import basedisplayobject
 Import mojo.graphics
 
 Public
@@ -22,6 +23,8 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
 
     Public
 
+    Field halign:Int = Align.LEFT
+    Field valign:Int = Align.TOP
     Field frameSpeed:Int
     Field loopAnimation:Bool
     Field rotation:Float
@@ -56,12 +59,17 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
             size = New Vector2D(image.Width(), image.Height())
         End
 
+        If Not image Then Error("Unable to load: " + imageName)
         size.Mul(scale)
     End
 
     Method OnRender:Void()
+        Local renderPos:Vector2D = pos.Copy()
+        Align.AdjustHorizontal(renderPos, Self, halign)
+        Align.AdjustVertical(renderPos, Self, valign)
+
         If color Then color.Activate()
-        DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
+        DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
         If color Then color.Deactivate()
     End
 
