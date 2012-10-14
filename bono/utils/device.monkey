@@ -7,7 +7,7 @@ Import vector2d
 Private
 
 Class DeviceNonNative Abstract
-    Function Size:Vector2D()
+    Function GetSize:Vector2D()
         Return New Vector2D(DeviceWidth(), DeviceHeight())
     End
 End
