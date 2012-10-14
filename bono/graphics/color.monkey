@@ -25,6 +25,13 @@ Class Color
         Self.alpha = alpha
     End
 
+    Method Reset:Void()
+        red = 255
+        green = 255
+        blue = 255
+        alpha = 1.0
+    End
+
     Method Activate:Void()
         If Not oldColor Then oldColor = New Color(0, 0, 0, 0)
 
