@@ -116,6 +116,10 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
         _scale = newScale
     End
 
+    Method filepath:String() Property
+        Return imageName
+    End
+
     Private
 
     Method SetNameAndPos:Void(imageName:String, pos:Vector2D=Null)
