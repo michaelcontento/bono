@@ -29,9 +29,9 @@ Class Align Abstract
 
     Function AdjustVertical:Void(pos:Vector2D, object:Sizeable, mode:Int)
         Select mode
-        Case LEFT
+        Case TOP
             ' Default alignment - nothing to do here
-        Case RIGHT
+        Case BOTTOM
             pos.y -= object.size.y
         Case CENTER
             pos.y -= object.size.y / 2
