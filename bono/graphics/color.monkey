@@ -16,7 +16,7 @@ Class Color
     Field red:Float
     Field green:Float
     Field blue:Float
-    Field alpha:Float
+    Field _alpha:Float
 
     Method New(red:Float=255, green:Float=255, blue:Float=255, alpha:Float=1)
         Self.red = red
@@ -52,6 +52,20 @@ Class Color
 
     Method Copy:Color()
         Return New Color(red, green, blue, alpha)
+    End
+
+    Method alpha:Void(alpha:Int) Property
+        _alpha = alpha
+        If _alpha > 1 Then _alpha = 1 / 255 * _alpha
+    End
+
+    Method alpha:Void(alpha:Float) Property
+        _alpha = alpha
+        If _alpha > 1 Then _alpha = 1 / 255 * _alpha
+    End
+
+    Method alpha:Float() Property
+        Return _alpha
     End
 
     Private
