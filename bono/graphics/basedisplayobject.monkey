@@ -32,7 +32,7 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
 
     ' --- Positionable
     Method pos:Vector2D() Property
-        If _pos = Null Then Error("Position not set yet.")
+        If _pos = Null Then _pos = New Vector2D(0, 0)
         Return _pos
     End
 
