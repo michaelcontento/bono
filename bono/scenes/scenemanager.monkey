@@ -131,8 +131,8 @@ Class SceneManager Implements AppObserver
         End
 
         _current.OnSceneEnter()
-        If AppObserver(_previous) Then appEmitter.AddObserver(AppObserver(_previous))
-        If KeyObserver(_previous) Then keyEmitter.AddObserver(KeyObserver(_previous))
-        If TouchObserver(_previous) Then touchEmitter.AddObserver(TouchObserver(_previous))
+        If AppObserver(_current) Then appEmitter.AddObserver(AppObserver(_current))
+        If KeyObserver(_current) Then keyEmitter.AddObserver(KeyObserver(_current))
+        If TouchObserver(_current) Then touchEmitter.AddObserver(TouchObserver(_current))
     End
 End
