@@ -3,5 +3,6 @@ Strict
 Public
 
 Import device
+Import stringhelper
 Import target
 Import vector2d
