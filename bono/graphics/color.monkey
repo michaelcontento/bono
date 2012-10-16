@@ -32,6 +32,13 @@ Class Color
         alpha = 1.0
     End
 
+    Method Randomize:Void()
+        red = 255 * Rnd()
+        green = 255 * Rnd()
+        blue = 255 * Rnd()
+        alpha = Rnd()
+    End
+
     Method Activate:Void()
         If Not oldColor Then oldColor = New Color(0, 0, 0, 0)
 
