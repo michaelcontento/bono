@@ -2,6 +2,7 @@ Strict
 
 Public
 
+Import arrayhelper
 Import config
 Import configvaluenotfoundexception
 Import device
