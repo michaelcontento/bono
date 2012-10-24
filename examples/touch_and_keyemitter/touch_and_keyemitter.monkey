@@ -15,9 +15,6 @@ Class Handler Implements AppObserver, TouchObserver, KeyObserver
 
     Public
 
-    Method OnCreate:Void()
-    End
-
     Method OnLoading:Void()
     End
 

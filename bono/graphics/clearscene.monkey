@@ -19,9 +19,6 @@ Class ClearScene Implements AppObserver
         Self.color = color
     End
 
-    Method OnCreate:Void()
-    End
-
     Method OnLoading:Void()
     End
 

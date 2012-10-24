@@ -14,16 +14,12 @@ Public
 Class BaseScene Implements Sceneable Abstract
     Private
 
-    Field firstTimeEnter:Bool
     Field sceneManager:SceneManager
     Field appObserverFan:AppObserverFan = New AppObserverFan()
     Field keyObserverFan:KeyObserverFan = New KeyObserverFan()
     Field touchObserverFan:TouchObserverFan = New TouchObserverFan()
 
     Public
-
-    Method OnCreate:Void()
-    End
 
     Method OnLoading:Void()
     End
@@ -41,11 +37,6 @@ Class BaseScene Implements Sceneable Abstract
     End
 
     Method OnSceneEnter:Void()
-        If Not firstTimeEnter
-            firstTimeEnter = True
-            appObserverFan.OnCreate()
-        End
-
         sceneManager.appEmitter.AddObserver(appObserverFan)
         sceneManager.keyEmitter.AddObserver(keyObserverFan)
         sceneManager.touchEmitter.AddObserver(touchObserverFan)

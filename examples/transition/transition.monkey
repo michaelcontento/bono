@@ -12,7 +12,7 @@ Class Handler Implements AppObserver, TouchObserver
 
     Public
 
-    Method OnCreate:Void()
+    Method New()
         transitions.Push(New TransitionLinear())
         names.Push("Linear")
 

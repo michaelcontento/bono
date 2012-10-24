@@ -8,7 +8,6 @@ Import deltatimer
 Public
 
 Interface AppObserver Extends Observer
-    Method OnCreate:Void()
     Method OnLoading:Void()
     Method OnUpdate:Void(deltatimer:DeltaTimer)
     Method OnRender:Void()

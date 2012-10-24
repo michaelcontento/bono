@@ -50,9 +50,6 @@ Class Animation Extends List<Effect> Implements AppObserver
         Return (Not finished)
     End
 
-    Method OnCreate:Void()
-    End
-
     Method OnLoading:Void()
     End
 

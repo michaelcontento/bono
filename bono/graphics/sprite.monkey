@@ -31,14 +31,16 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
 
     Method New(imageName:String, pos:Vector2D=Null)
         SetNameAndPos(imageName, pos)
+        LoadImage()
     End
 
     Method New(imageName:String, frameSize:Vector2D, frameCount:Int, frameSpeed:Int, pos:Vector2D=Null)
-        SetNameAndPos(imageName, pos)
-
         Self.frameSize = frameSize
         Self.frameCount = frameCount
         Self.frameSpeed = frameSpeed
+
+        SetNameAndPos(imageName, pos)
+        LoadImage()
     End
 
     Method OnLoading:Void()
@@ -48,19 +50,6 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     End
 
     Method OnSuspend:Void()
-    End
-
-    Method OnCreate:Void()
-        If frameSize
-            image = LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
-            size = frameSize.Copy()
-        Else
-            image = LoadImage(imageName)
-            size = New Vector2D(image.Width(), image.Height())
-        End
-
-        If Not image Then Error("Unable to load: " + imageName)
-        size.Mul(scale)
     End
 
     Method OnRender:Void()
@@ -121,6 +110,19 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     End
 
     Private
+
+    Method LoadImage:Void()
+        If frameSize
+            image = graphics.LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
+            size = frameSize.Copy()
+        Else
+            image = graphics.LoadImage(imageName)
+            size = New Vector2D(image.Width(), image.Height())
+        End
+
+        If Not image Then Error("Unable to load: " + imageName)
+        size.Mul(scale)
+    End
 
     Method SetNameAndPos:Void(imageName:String, pos:Vector2D=Null)
         Self.imageName = imageName

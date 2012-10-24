@@ -27,9 +27,6 @@ Class KeyEmitter Implements Observable, AppObserver
 
     Field active:Bool = True
 
-    Method OnCreate:Void()
-    End
-
     Method OnLoading:Void()
     End
 

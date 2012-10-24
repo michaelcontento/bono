@@ -33,9 +33,6 @@ Class TouchEmitter Implements Observable, AppObserver
     Field retainSize:Int = RETAIN_UNLIMITED
     Field active:Bool = True
 
-    Method OnCreate:Void()
-    End
-
     Method OnLoading:Void()
     End
 

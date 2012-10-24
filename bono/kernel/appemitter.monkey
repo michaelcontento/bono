@@ -15,7 +15,6 @@ Class AppEmitter Extends App Implements Observable
 
     Field runCalled:Bool
     Field onCreateCatched:Bool
-    Field onCreateDispatched:Bool
     Field observers:List<AppObserver> = New List<AppObserver>()
     Field deltatimer:DeltaTimer
     Field fps:Int
@@ -43,13 +42,13 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnCreate:Int()
-        deltatimer = New DeltaTimer(fps)
         onCreateCatched = True
-        DispatchOnCreate()
+        deltatimer = New DeltaTimer(fps)
         Return 0
     End
 
     Method OnLoading:Int()
+        If Not (runCalled And onCreateCatched) Then Return 0
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnLoading()
         End
@@ -57,6 +56,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnUpdate:Int()
+        If Not (runCalled And onCreateCatched) Then Return 0
         deltatimer.OnUpdate()
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnUpdate(deltatimer)
@@ -65,6 +65,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnResume:Int()
+        If Not (runCalled And onCreateCatched) Then Return 0
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnResume()
         End
@@ -72,6 +73,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnSuspend:Int()
+        If Not (runCalled And onCreateCatched) Then Return 0
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnSuspend()
         End
@@ -79,6 +81,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnRender:Int()
+        If Not (runCalled And onCreateCatched) Then Return 0
         Cls(0, 0, 0)
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnRender()
@@ -88,20 +91,5 @@ Class AppEmitter Extends App Implements Observable
 
     Method Run:Void()
         runCalled = True
-        DispatchOnCreate()
-    End
-
-    Private
-
-    Method DispatchOnCreate:Void()
-        If Not runCalled Then Return
-        If Not onCreateCatched Then Return
-
-        If onCreateDispatched Then Return
-        onCreateDispatched = True
-
-        For Local observer:AppObserver = EachIn GetObservers()
-            observer.OnCreate()
-        End
     End
 End

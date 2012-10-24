@@ -16,9 +16,6 @@ Class ColorBlend Extends BaseDisplayObject Implements AppObserver
         Self.color = color
     End
 
-    Method OnCreate:Void()
-    End
-
     Method OnLoading:Void()
     End
 

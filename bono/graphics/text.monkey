@@ -28,15 +28,11 @@ Class Text Extends BaseDisplayObject Implements AppObserver
 
         Self.name = name
         Self.pos = pos
-    End
 
-    Method OnCreate:Void()
         If Not angelFontStore.Contains(name)
             angelFontStore.Set(name, New AngelFont())
             angelFontStore.Get(name).LoadFont(name)
         End
-
-        text = _text
     End
 
     Method OnLoading:Void()

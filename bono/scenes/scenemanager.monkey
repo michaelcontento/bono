@@ -11,9 +11,6 @@ Class SceneManager Implements AppObserver
     Private
 
     Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
-    Field created:StringSet = New StringSet()
-    Field onCreateCaught:Bool
-    Field pendingGoto:String
     Field _current:Sceneable
     Field _currentName:String
     Field _previous:Sceneable
@@ -24,16 +21,6 @@ Class SceneManager Implements AppObserver
     Field appEmitter:AppEmitter
     Field keyEmitter:KeyEmitter
     Field touchEmitter:TouchEmitter
-
-    Method OnCreate:Void()
-        onCreateCaught = True
-        appEmitter.RemoveObserver(Self)
-
-        If pendingGoto.Length() > 0
-            Goto(pendingGoto)
-            pendingGoto = ""
-        End
-    End
 
     Method OnLoading:Void()
     End
@@ -53,10 +40,10 @@ Class SceneManager Implements AppObserver
     Method New(fps:Int=AppEmitter.DEFAULT_FPS)
         touchEmitter = New TouchEmitter()
         keyEmitter = New KeyEmitter()
+
         appEmitter = New AppEmitter(fps)
         appEmitter.AddObserver(keyEmitter)
         appEmitter.AddObserver(touchEmitter)
-        appEmitter.AddObserver(Self)
         appEmitter.Run()
     End
 
@@ -79,10 +66,6 @@ Class SceneManager Implements AppObserver
 
     Method Goto:Void(name:String)
         If name = _currentName Then Return
-        If Not onCreateCaught
-            pendingGoto = name
-            Return
-        End
 
         ChangeCurrentAndPrevious(name)
         HandlePreviousLeave()
@@ -125,11 +108,6 @@ Class SceneManager Implements AppObserver
     End
 
     Method HandleCurrentEnter:Void()
-        If Not created.Contains(_currentName) Then
-            AppObserver(_current).OnCreate()
-            created.Insert(_currentName)
-        End
-
         _current.OnSceneEnter()
         If AppObserver(_current) Then appEmitter.AddObserver(AppObserver(_current))
         If KeyObserver(_current) Then keyEmitter.AddObserver(KeyObserver(_current))
