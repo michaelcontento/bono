@@ -20,11 +20,12 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     Field image:Image
     Field imageName:String
     Field _scale:Vector2D = New Vector2D(1, 1)
+    Field _halign:Int = Align.LEFT
+    Field _valign:Int = Align.TOP
+    Field renderPos:Vector2D
 
     Public
 
-    Field halign:Int = Align.LEFT
-    Field valign:Int = Align.TOP
     Field frameSpeed:Int
     Field loopAnimation:Bool
     Field rotation:Float
@@ -53,10 +54,7 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     End
 
     Method OnRender:Void()
-        Local renderPos:Vector2D = pos.Copy()
-        Align.AdjustHorizontal(renderPos, Self, halign)
-        Align.AdjustVertical(renderPos, Self, valign)
-
+        If Not renderPos Then CalculateRenderPos()
         If color Then color.Activate()
         DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
         If color Then color.Deactivate()
@@ -109,7 +107,40 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
         Return imageName
     End
 
+    Method halign:Int() Property
+        Return _halign
+    End
+
+    Method halign:Void(newAlign:Int) Property
+        _halign = newAlign
+        renderPos = Null
+    End
+
+    Method valign:Int() Property
+        Return _valign
+    End
+
+    Method valign:Void(newAlign:Int) Property
+        _valign = newAlign
+        renderPos = Null
+    End
+
+    Method pos:Void(newPos:Vector2D) Property
+        Super.pos(newPos)
+        renderPos = Null
+    End
+
+    Method pos:Vector2D() Property
+        Return Super.pos()
+    End
+
     Private
+
+    Method CalculateRenderPos:Void()
+        renderPos = pos.Copy()
+        Align.AdjustHorizontal(renderPos, Self, halign)
+        Align.AdjustVertical(renderPos, Self, valign)
+    End
 
     Method LoadImage:Void()
         If frameSize
