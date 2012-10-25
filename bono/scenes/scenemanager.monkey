@@ -7,7 +7,7 @@ Import bono.kernel
 
 Public
 
-Class SceneManager Implements AppObserver
+Class SceneManager
     Private
 
     Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
@@ -22,21 +22,6 @@ Class SceneManager Implements AppObserver
     Field keyEmitter:KeyEmitter
     Field touchEmitter:TouchEmitter
 
-    Method OnLoading:Void()
-    End
-
-    Method OnUpdate:Void(deltatimer:DeltaTimer)
-    End
-
-    Method OnRender:Void()
-    End
-
-    Method OnResume:Void()
-    End
-
-    Method OnSuspend:Void()
-    End
-
     Method New(fps:Int=AppEmitter.DEFAULT_FPS)
         touchEmitter = New TouchEmitter()
         keyEmitter = New KeyEmitter()
@@ -44,7 +29,6 @@ Class SceneManager Implements AppObserver
         appEmitter = New AppEmitter(fps)
         appEmitter.AddObserver(keyEmitter)
         appEmitter.AddObserver(touchEmitter)
-        appEmitter.Run()
     End
 
     Method Add:Void(name:String, scene:Sceneable)

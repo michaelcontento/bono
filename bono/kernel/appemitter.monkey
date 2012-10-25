@@ -13,7 +13,6 @@ Public
 Class AppEmitter Extends App Implements Observable
     Private
 
-    Field runCalled:Bool
     Field onCreateCatched:Bool
     Field observers:List<AppObserver> = New List<AppObserver>()
     Field deltatimer:DeltaTimer
@@ -48,7 +47,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnLoading:Int()
-        If Not (runCalled And onCreateCatched) Then Return 0
+        If Not onCreateCatched Then Return 0
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnLoading()
         End
@@ -56,7 +55,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnUpdate:Int()
-        If Not (runCalled And onCreateCatched) Then Return 0
+        If Not onCreateCatched Then Return 0
         deltatimer.OnUpdate()
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnUpdate(deltatimer)
@@ -65,7 +64,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnResume:Int()
-        If Not (runCalled And onCreateCatched) Then Return 0
+        If Not onCreateCatched Then Return 0
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnResume()
         End
@@ -73,7 +72,7 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnSuspend:Int()
-        If Not (runCalled And onCreateCatched) Then Return 0
+        If Not onCreateCatched Then Return 0
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnSuspend()
         End
@@ -81,15 +80,11 @@ Class AppEmitter Extends App Implements Observable
     End
 
     Method OnRender:Int()
-        If Not (runCalled And onCreateCatched) Then Return 0
+        If Not onCreateCatched Then Return 0
         Cls(0, 0, 0)
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnRender()
         End
         Return 0
-    End
-
-    Method Run:Void()
-        runCalled = True
     End
 End
