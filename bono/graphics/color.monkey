@@ -61,6 +61,10 @@ Class Color
         Return New Color(red, green, blue, alpha)
     End
 
+    Method ToString:String()
+        Return "(Red: " + red + " Green: " + green + " Blue: " + blue + " Alpha: " + alpha + ")"
+    End
+
     Method alpha:Void(alpha:Float) Property
         _alpha = alpha
         If _alpha > 1.0 Then _alpha = 1.0 / 255.0 * _alpha
