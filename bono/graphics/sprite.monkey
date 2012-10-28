@@ -75,8 +75,8 @@ Class Sprite Extends BaseDisplayObject
     End
 
     Method Collide:Bool(checkPos:Vector2D)
-        If checkPos.x < GetPosition().x Or checkPos.x > GetPosition().x + size.x Then Return False
-        If checkPos.y < GetPosition().y Or checkPos.y > GetPosition().y + size.y Then Return False
+        If checkPos.x < GetPosition().x Or checkPos.x > GetPosition().x + GetSize().x Then Return False
+        If checkPos.y < GetPosition().y Or checkPos.y > GetPosition().y + GetSize().y Then Return False
         Return True
     End
 

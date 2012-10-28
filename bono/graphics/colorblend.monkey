@@ -11,15 +11,15 @@ Public
 
 Class ColorBlend Extends BaseDisplayObject
     Method New(color:Color=New Color())
-        size = Device.GetSize()
-        Self.color = color
+        SetSize(Device.GetSize())
+        SetColor(color)
     End
 
     Method OnRender:Void()
         PushMatrix()
-            color.Activate()
-            DrawRect(pos.x, pos.y, size.x, size.y)
-            color.Deactivate()
+            GetColor().Activate()
+            DrawRect(GetPosition().x, GetPosition().y, GetSize().x, GetSize().y)
+            GetColor().Deactivate()
         PopMatrix()
     End
 End
