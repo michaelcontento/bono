@@ -53,7 +53,6 @@ Class Text Extends BaseDisplayObject
 
     Method text:Void(newText:String) Property
         _text = newText
-        If Not angelFont Then Return
 
         Local width:Float = angelFont.TextWidth(newText)
         Local height:Float = angelFont.TextHeight(newText)
