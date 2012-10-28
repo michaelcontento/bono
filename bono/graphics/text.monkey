@@ -43,11 +43,11 @@ Class Text Extends BaseDisplayObject
         GetColor().Deactivate()
     End
 
-    Method TextWidth:Int(char:String)
+    Method GetTextWidth:Int(char:String)
         Return angelFont.TextWidth(char)
     End
 
-    Method TextHeight:Int(char:String)
+    Method GetTextHeight:Int(char:String)
         Return angelFont.TextHeight(char)
     End
 
