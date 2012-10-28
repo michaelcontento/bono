@@ -74,12 +74,6 @@ Class Sprite Extends BaseDisplayObject
         currentFrame = 0
     End
 
-    Method Collide:Bool(checkPos:Vector2D)
-        If checkPos.x < GetPosition().x Or checkPos.x > GetPosition().x + GetSize().x Then Return False
-        If checkPos.y < GetPosition().y Or checkPos.y > GetPosition().y + GetSize().y Then Return False
-        Return True
-    End
-
     Method animationIsDone:Bool() Property
         If loopAnimation Then Return False
         Return (currentFrame = frameCount)

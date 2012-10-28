@@ -21,6 +21,12 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, AppObserve
 
     Public
 
+    Method Collide:Bool(checkPos:Vector2D)
+        If checkPos.x < GetPosition().x Or checkPos.x > GetPosition().x + GetSize().x Then Return False
+        If checkPos.y < GetPosition().y Or checkPos.y > GetPosition().y + GetSize().y Then Return False
+        Return True
+    End
+
     ' --- AppObserver
     Method OnLoading:Void()
     End
