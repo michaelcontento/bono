@@ -19,11 +19,14 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
     Field offset:Vector2D = New Vector2D()
     Field carousel:Carousel
     Field lastItemPixelX:Float
+    Field momentumX:Float
+    Field offsetMaxX:Float
 
     Public
 
     Field padding:Vector2D = New Vector2D()
     Field maxMoveDistanceForClicks:Float = 3
+    Field frictionCoefficient:Float = 0.9
 
     Method SetCarousel:Void(carousel:Carousel)
         Self.carousel = carousel
@@ -47,12 +50,20 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
 
         lastItemPixelX = carousel.GetItems().Last().GetPosition().x
         lastItemPixelX += carousel.GetItems().Last().GetSize().x
+
+        offsetMaxX = carousel.GetPosition().x + carousel.GetSize().x
+        offsetMaxX -= lastItemPixelX
+        offsetMaxX -= padding.x
+    End
+
+    Method GetCurrentIndex:Void()
     End
 
     Method OnRender:Void()
+        ApplyMomentum()
+
         Local pos:Vector2D = carousel.GetPosition()
         Local size:Vector2D = carousel.GetSize()
-
         PushMatrix()
             SetScissor(pos.x, pos.y, size.x, size.y)
             Translate(offset.x, offset.y)
@@ -70,35 +81,48 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
 
     Method OnTouchDown:Void(event:TouchEvent)
         touched = True
+        momentumX = 0
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
         If Not touched Then Return
         offset.x += event.prevDelta.x
-        offset.x = Min(0.0, offset.x)
-
-        Local maxX:Float = carousel.GetPosition().x + carousel.GetSize().x
-        maxX -= lastItemPixelX
-        maxX -= padding.x
-        offset.x = Max(maxX, offset.x)
+        CheckOffsetBoundaries()
     End
 
     Method OnTouchUp:Void(event:TouchEvent)
         If Not touched Then Return
         touched = False
 
-        If event.startDelta.Length() > maxMoveDistanceForClicks Then Return
+        If event.startDelta.Length() < maxMoveDistanceForClicks
+            Local item:BaseDisplayObject = GetTouchedItem(event)
+            If Not item Then Return
 
-        Local item:BaseDisplayObject = GetTouchedItem(event)
-        If Not item Then Return
+            Local handler:CarouselHandler = CarouselHandler(item)
+            If Not handler Then Return
 
-        Local handler:CarouselHandler = CarouselHandler(item)
-        If Not handler Then Return
-
-        handler.OnCarouselSelect()
+            handler.OnCarouselSelect()
+        Else
+            momentumX = event.prevDelta.x
+        End
     End
 
     Private
+
+    Method ApplyMomentum:Void()
+        If Abs(momentumX) = 0 Then Return
+
+        offset.x += momentumX
+        CheckOffsetBoundaries()
+
+        momentumX *= frictionCoefficient
+        If Abs(momentumX) <= 0.05 Then momentumX = 0
+    End
+
+    Method CheckOffsetBoundaries:Void()
+        offset.x = Min(0.0, offset.x)
+        offset.x = Max(offsetMaxX, offset.x)
+    End
 
     Method GetTouchedItem:BaseDisplayObject(event:TouchEvent)
         Local result:BaseDisplayObject
