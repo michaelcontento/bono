@@ -88,21 +88,20 @@ Class Handler Implements AppObserver, TouchObserver, KeyObserver
 End
 
 Function Main:Int()
+    Local appEmitter:AppEmitter = New AppEmitter()
+
     Local handler:Handler = New Handler()
+    appEmitter.AddObserver(handler)
 
     Local touchEmitter:TouchEmitter = New TouchEmitter()
     touchEmitter.AddObserver(handler)
     touchEmitter.retainSize = 250
     touchEmitter.minDistance = 0
+    appEmitter.AddObserver(touchEmitter)
 
     Local keyEmitter:KeyEmitter = New KeyEmitter()
     keyEmitter.AddObserver(handler)
-
-    Local appEmitter:AppEmitter = New AppEmitter()
-    appEmitter.AddObserver(touchEmitter)
     appEmitter.AddObserver(keyEmitter)
-    appEmitter.AddObserver(handler)
-    appEmitter.Run()
 
     Return 0
 End

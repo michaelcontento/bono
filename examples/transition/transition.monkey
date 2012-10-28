@@ -166,7 +166,6 @@ Function Main:Int()
     Local appEmitter:AppEmitter = New AppEmitter()
     appEmitter.AddObserver(touchEmitter)
     appEmitter.AddObserver(handler)
-    appEmitter.Run()
 
     Return 0
 End

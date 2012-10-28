@@ -2,23 +2,37 @@ Strict
 
 Import bono
 
-Class MenuScene Extends BaseScene
+Class MenuScene Extends BaseScene Implements TouchObserver
     Method OnTouchDown:Void(event:TouchEvent)
-        sceneManager.Goto("game")
+        GetSceneManager().Goto("game")
+    End
+
+    Method OnTouchMove:Void(event:TouchEvent)
+    End
+
+    Method OnTouchUp:Void(event:TouchEvent)
     End
 
     Method OnSceneEnter:Void()
         Print "OnSceneEnter: MenuScene"
+        Super.OnSceneEnter()
     End
 
     Method OnSceneLeave:Void()
         Print "OnSceneLeave: MenuScene"
+        Super.OnSceneLeave()
     End
 End
 
-Class GameScene Extends BaseScene
+Class GameScene Extends BaseScene Implements KeyObserver
     Method OnKeyDown:Void(event:KeyEvent)
-        sceneManager.Goto("menu")
+        GetSceneManager().Goto("menu")
+    End
+
+    Method OnKeyPress:Void(event:KeyEvent)
+    End
+
+    Method OnKeyUp:Void(event:KeyEvent)
     End
 End
 
