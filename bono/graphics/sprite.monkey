@@ -10,7 +10,7 @@ Import mojo.graphics
 
 Public
 
-Class Sprite Extends BaseDisplayObject Implements AppObserver
+Class Sprite Extends BaseDisplayObject
     Private
 
     Field currentFrame:Int
@@ -42,15 +42,6 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
 
         SetNameAndPos(imageName, pos)
         LoadImage()
-    End
-
-    Method OnLoading:Void()
-    End
-
-    Method OnResume:Void()
-    End
-
-    Method OnSuspend:Void()
     End
 
     Method OnRender:Void()

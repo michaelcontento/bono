@@ -11,7 +11,7 @@ Import bono.vendor.angelfont
 
 Public
 
-Class Text Extends BaseDisplayObject Implements AppObserver
+Class Text Extends BaseDisplayObject
     Private
 
     Global angelFontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
@@ -31,9 +31,6 @@ Class Text Extends BaseDisplayObject Implements AppObserver
             angelFontStore.Set(name, New AngelFont())
             angelFontStore.Get(name).LoadFont(name)
         End
-    End
-
-    Method OnLoading:Void()
     End
 
     Method OnRender:Void()

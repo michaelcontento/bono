@@ -3,6 +3,7 @@ Strict
 Private
 
 Import bono.utils
+Import bono.kernel
 Import color
 Import colorable
 Import positionable
@@ -10,7 +11,7 @@ Import sizeable
 
 Public
 
-Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
+Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, AppObserver Abstract
     Private
 
     Field color:Color
@@ -19,6 +20,22 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
     Field center:Vector2D
 
     Public
+
+    ' --- AppObserver
+    Method OnLoading:Void()
+    End
+
+    Method OnUpdate:Void(deltatimer:DeltaTimer)
+    End
+
+    Method OnRender:Void()
+    End
+
+    Method OnResume:Void()
+    End
+
+    Method OnSuspend:Void()
+    End
 
     ' --- Colorable
     Method SetColor:Void(newColor:Color)
