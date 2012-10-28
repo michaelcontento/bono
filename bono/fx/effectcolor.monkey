@@ -33,10 +33,10 @@ Class EffectColor Extends List<Colorable> Implements Effect
         current.alpha = (stop.alpha - start.alpha) * progress + start.alpha
 
         For Local obj:Colorable = EachIn Self
-            obj.color.red   = current.red
-            obj.color.green = current.green
-            obj.color.blue  = current.blue
-            obj.color.alpha = current.alpha
+            obj.GetColor().red   = current.red
+            obj.GetColor().green = current.green
+            obj.GetColor().blue  = current.blue
+            obj.GetColor().alpha = current.alpha
         End
     End
 End

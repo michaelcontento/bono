@@ -19,9 +19,9 @@ Class Align Abstract
         Case LEFT
             ' Default alignment - nothing to do here
         Case RIGHT
-            pos.x -= object.size.x
+            pos.x -= object.GetSize().x
         Case CENTER
-            pos.x -= object.size.x / 2
+            pos.x -= object.GetSize().x / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
@@ -32,9 +32,9 @@ Class Align Abstract
         Case TOP
             ' Default alignment - nothing to do here
         Case BOTTOM
-            pos.y -= object.size.y
+            pos.y -= object.GetSize().y
         Case CENTER
-            pos.y -= object.size.y / 2
+            pos.y -= object.GetSize().y / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End

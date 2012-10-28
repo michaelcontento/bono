@@ -7,7 +7,7 @@ Import bono.utils
 Public
 
 Interface Sizeable
-    Method size:Vector2D() Property
-    Method size:Void(newSize:Vector2D) Property
-    Method center:Vector2D() Property
+    Method GetSize:Vector2D()
+    Method SetSize:Void(newSize:Vector2D)
+    Method GetCenter:Vector2D()
 End

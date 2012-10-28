@@ -55,9 +55,9 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
 
     Method OnRender:Void()
         If Not renderPos Then CalculateRenderPos()
-        If color Then color.Activate()
+        GetColor().Activate()
         DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
-        If color Then color.Deactivate()
+        GetColor().Deactivate()
     End
 
     Method OnUpdate:Void(deltaTimer:DeltaTimer)
@@ -84,8 +84,8 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     End
 
     Method Collide:Bool(checkPos:Vector2D)
-        If checkPos.x < pos.x Or checkPos.x > pos.x + size.x Then Return False
-        If checkPos.y < pos.y Or checkPos.y > pos.y + size.y Then Return False
+        If checkPos.x < GetPosition().x Or checkPos.x > GetPosition().x + size.x Then Return False
+        If checkPos.y < GetPosition().y Or checkPos.y > GetPosition().y + size.y Then Return False
         Return True
     End
 
@@ -99,7 +99,7 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     End
 
     Method scale:Void(newScale:Vector2D) Property
-        If image Then size = size.Div(_scale).Mul(newScale)
+        If image Then GetSize().Div(_scale).Mul(newScale)
         _scale = newScale
     End
 
@@ -125,19 +125,15 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
         renderPos = Null
     End
 
-    Method pos:Void(newPos:Vector2D) Property
-        Super.pos(newPos)
+    Method SetPosition:Void(newPos:Vector2D)
+        Super.SetPosition(newPos)
         renderPos = Null
-    End
-
-    Method pos:Vector2D() Property
-        Return Super.pos()
     End
 
     Private
 
     Method CalculateRenderPos:Void()
-        renderPos = pos.Copy()
+        renderPos = GetPosition().Copy()
         Align.AdjustHorizontal(renderPos, Self, halign)
         Align.AdjustVertical(renderPos, Self, valign)
     End
@@ -145,19 +141,19 @@ Class Sprite Extends BaseDisplayObject Implements AppObserver
     Method LoadImage:Void()
         If frameSize
             image = graphics.LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
-            size = frameSize.Copy()
+            SetSize(frameSize.Copy())
         Else
             image = graphics.LoadImage(imageName)
-            size = New Vector2D(image.Width(), image.Height())
+            SetSize(New Vector2D(image.Width(), image.Height()))
         End
 
         If Not image Then Error("Unable to load: " + imageName)
-        size.Mul(scale)
+        GetSize().Mul(scale)
     End
 
     Method SetNameAndPos:Void(imageName:String, pos:Vector2D=Null)
         Self.imageName = imageName
         If Not pos Then pos = New Vector2D(0, 0)
-        Self.pos = pos
+        Self.SetPosition(pos)
     End
 End

@@ -13,46 +13,46 @@ Public
 Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
     Private
 
-    Field _color:Color
-    Field _pos:Vector2D
-    Field _size:Vector2D
-    Field _center:Vector2D
+    Field color:Color
+    Field pos:Vector2D
+    Field size:Vector2D
+    Field center:Vector2D
 
     Public
 
     ' --- Colorable
-    Method color:Void(color:Color) Property
-        _color = color
+    Method SetColor:Void(newColor:Color)
+        color = newColor
     End
 
-    Method color:Color() Property
-        If Not _color Then _color = New Color()
-        Return _color
+    Method GetColor:Color()
+        If Not color Then color = New Color()
+        Return color
     End
 
     ' --- Positionable
-    Method pos:Vector2D() Property
-        If _pos = Null Then _pos = New Vector2D(0, 0)
-        Return _pos
+    Method GetPosition:Vector2D()
+        If pos = Null Then pos = New Vector2D(0, 0)
+        Return pos
     End
 
-    Method pos:Void(newPos:Vector2D) Property
-        _pos = newPos
+    Method SetPosition:Void(newPos:Vector2D)
+        pos = newPos
     End
 
     ' --- Sizeable
-    Method size:Vector2D() Property
-        If _size = Null Then Error("Size not set yet.")
-        Return _size
+    Method GetSize:Vector2D()
+        If size = Null Then Error("Size not set yet.")
+        Return size
     End
 
-    Method size:Void(newSize:Vector2D) Property
-        _size = newSize
-        _center = newSize.Copy().Div(2)
+    Method SetSize:Void(newSize:Vector2D)
+        size = newSize
+        center = newSize.Copy().Div(2)
     End
 
-    Method center:Vector2D() Property
-        If _center = Null Then Error("No size set and center therefore unset.")
-        Return _center
+    Method GetCenter:Vector2D()
+        If center = Null Then Error("No size set and center therefore unset.")
+        Return center
     End
 End

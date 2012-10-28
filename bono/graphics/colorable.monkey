@@ -7,6 +7,6 @@ Import color
 Public
 
 Interface Colorable
-    Method color:Void(color:Color) Property
-    Method color:Color() Property
+    Method SetColor:Void(color:Color)
+    Method GetColor:Color()
 End
