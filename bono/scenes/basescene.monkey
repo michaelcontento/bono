@@ -21,6 +21,10 @@ Class BaseScene Implements Sceneable Abstract
 
     Public
 
+    Method New()
+        appObserverFan.Add(Self)
+    End
+
     Method OnLoading:Void()
     End
 
