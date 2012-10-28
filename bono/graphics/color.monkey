@@ -10,13 +10,13 @@ Class Color
     Private
 
     Field oldColor:Color
+    Field _alpha:Float
 
     Public
 
     Field red:Float
     Field green:Float
     Field blue:Float
-    Field _alpha:Float
 
     Method New(red:Float=255, green:Float=255, blue:Float=255, alpha:Float=1)
         Self.red = red
