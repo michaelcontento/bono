@@ -64,8 +64,11 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
 
         Local pos:Vector2D = carousel.GetPosition()
         Local size:Vector2D = carousel.GetSize()
+
+        Local oldScissor:Float[] = GetScissor()
+        SetScissor(pos.x, pos.y, size.x, size.y)
+
         PushMatrix()
-            SetScissor(pos.x, pos.y, size.x, size.y)
             Translate(offset.x, offset.y)
 
             For Local item:BaseDisplayObject = EachIn carousel.GetItems()
@@ -77,6 +80,8 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
                 item.OnRender()
             End
         PopMatrix()
+
+        SetScissor(oldScissor[0], oldScissor[1], oldScissor[2], oldScissor[3])
     End
 
     Method OnTouchDown:Void(event:TouchEvent)
