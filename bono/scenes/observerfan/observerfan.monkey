@@ -20,4 +20,8 @@ Class ObserverFan Abstract
     Method ObjectEnumerator:list.Enumerator<Object>()
         Return childs.ObjectEnumerator()
     End
+
+    Method Count:Int()
+        Return childs.Count()
+    End
 End
