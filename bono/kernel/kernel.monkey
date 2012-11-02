@@ -3,6 +3,7 @@ Strict
 Public
 
 Import appemitter
+Import appemitterscaled
 Import appobserver
 Import deltatimer
 Import keyemitter

@@ -19,14 +19,17 @@ Class SceneManager
     Public
 
     Field appEmitter:AppEmitter
-    Field keyEmitter:KeyEmitter
-    Field touchEmitter:TouchEmitter
+    Field keyEmitter:KeyEmitter = New KeyEmitter()
+    Field touchEmitter:TouchEmitter = New TouchEmitter()
 
     Method New(fps:Int=AppEmitter.DEFAULT_FPS)
-        touchEmitter = New TouchEmitter()
-        keyEmitter = New KeyEmitter()
-
         appEmitter = New AppEmitter(fps)
+        appEmitter.AddObserver(keyEmitter)
+        appEmitter.AddObserver(touchEmitter)
+    End
+
+    Method New(appEmitter:AppEmitter)
+        Self.appEmitter = appEmitter
         appEmitter.AddObserver(keyEmitter)
         appEmitter.AddObserver(touchEmitter)
     End
