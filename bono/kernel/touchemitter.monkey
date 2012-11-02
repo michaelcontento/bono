@@ -23,12 +23,12 @@ Class TouchEmitter Implements Observable, AppObserver
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
+    Field scale:Vector2D = New Vector2D(1, 1)
 
     Public
 
     Const MAX_TOUCH_FINGERS:Int = 31
     Const RETAIN_UNLIMITED:Int = -1
-    Field scale:Vector2D = New Vector2D(1, 1)
     Field minDistance:Float = 0
     Field retainSize:Int = RETAIN_UNLIMITED
     Field active:Bool = True
@@ -48,6 +48,7 @@ Class TouchEmitter Implements Observable, AppObserver
     Method OnUpdate:Void(deltatimer:DeltaTimer)
         If Not active Then Return
 
+        scale = MatrixHelper.GetScale()
         ReadTouch()
         ProcessTouch()
     End
