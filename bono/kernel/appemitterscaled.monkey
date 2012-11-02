@@ -34,7 +34,6 @@ Class AppEmitterScaled Extends AppEmitter
         If counter >= counterThreshold
             scale = Device.GetSize().Copy().Div(size)
             counter = 0
-            Print "check"
         End
 
         Return Super.OnUpdate()
