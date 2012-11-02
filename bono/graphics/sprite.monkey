@@ -115,6 +115,14 @@ Class Sprite Extends BaseDisplayObject
         renderPos = Null
     End
 
+    Method Collide:Bool(checkPos:Vector2D)
+        Local offset:Vector2D = New Vector2D()
+        Align.AdjustHorizontal(offset, Self, halign)
+        Align.AdjustVertical(offset, Self, valign)
+
+        Return Super.Collide(checkPos.Copy().Sub(offset))
+    End
+
     Private
 
     Method CalculateRenderPos:Void()
