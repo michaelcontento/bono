@@ -66,7 +66,7 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
         Local size:Vector2D = carousel.GetSize()
 
         Local oldScissor:Float[] = GetScissor()
-        SetScissor(pos.x, pos.y, size.x, size.y)
+        MatrixHelper.SetScissorScaled(pos, size)
 
         PushMatrix()
             Translate(offset.x, offset.y)
