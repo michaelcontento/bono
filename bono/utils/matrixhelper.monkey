@@ -14,13 +14,19 @@ Class MatrixHelper Abstract
 
     Public
 
-    Function SetScissorScaled:Void(x:Float, y:Float, width:Float, height:Float)
+    Function SetScissorRelative:Void(x:Float, y:Float, width:Float, height:Float)
         Local scale:Vector2D = GetScale()
-        graphics.SetScissor(x * scale.x, y * scale.y, width * scale.x, height * scale.y)
+        Local translate:Vector2D = GetTranslate()
+
+        graphics.SetScissor(
+            (scale.x * x) + translate.x,
+            (scale.y * y) + translate.y,
+            scale.x * width,
+            scale.y * height)
     End
 
-    Function SetScissorScaled:Void(pos:Vector2D, size:Vector2D)
-        SetScissorScaled(pos.x, pos.y, size.x, size.y)
+    Function SetScissorRelative:Void(pos:Vector2D, size:Vector2D)
+        SetScissorRelative(pos.x, pos.y, size.x, size.y)
     End
 
     Function SetScissor:Void(pos:Vector2D, size:Vector2D)
