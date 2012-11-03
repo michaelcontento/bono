@@ -88,16 +88,16 @@ Class SceneManager
     Method HandlePreviousLeave:Void()
         If Not _previous Then Return
 
-        _previous.OnSceneLeave()
         If AppObserver(_previous) Then appEmitter.RemoveObserver(AppObserver(_previous))
         If KeyObserver(_previous) Then keyEmitter.RemoveObserver(KeyObserver(_previous))
         If TouchObserver(_previous) Then touchEmitter.RemoveObserver(TouchObserver(_previous))
+        _previous.OnSceneLeave()
     End
 
     Method HandleCurrentEnter:Void()
-        _current.OnSceneEnter()
         If AppObserver(_current) Then appEmitter.AddObserver(AppObserver(_current))
         If KeyObserver(_current) Then keyEmitter.AddObserver(KeyObserver(_current))
         If TouchObserver(_current) Then touchEmitter.AddObserver(TouchObserver(_current))
+        _current.OnSceneEnter()
     End
 End
