@@ -67,4 +67,16 @@ Class BaseScene Implements Sceneable Abstract
         keyObserverFan.Remove(child)
         touchObserverFan.Remove(child)
     End
+
+    Method appObserver:AppObserverFan() Property
+        Return appObserverFan
+    End
+
+    Method keyObserver:KeyObserverFan() Property
+        Return keyObserverFan
+    End
+
+    Method touchObserver:TouchObserverFan() Property
+        Return touchObserver
+    End
 End
