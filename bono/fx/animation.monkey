@@ -38,12 +38,14 @@ Class Animation Extends List<Effect> Implements AppObserver
 
     Method Stop:Void()
         Pause()
-        Restart()
+        animationTime = duration
+        SetProgress(1)
     End
 
     Method Restart:Void()
         animationTime = 0
         SetProgress(0)
+        Start()
     End
 
     Method IsPlaying:Bool()
