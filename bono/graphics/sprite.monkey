@@ -31,17 +31,20 @@ Class Sprite Extends BaseDisplayObject
     Field rotation:Float
 
     Method New(imageName:String, pos:Vector2D=Null)
-        SetNameAndPos(imageName, pos)
+        Self.imageName = imageName
+
         LoadImage()
+        If pos Then SetPosition(pos)
     End
 
     Method New(imageName:String, frameSize:Vector2D, frameCount:Int, frameSpeed:Int, pos:Vector2D=Null)
+        Self.imageName = imageName
         Self.frameSize = frameSize
         Self.frameCount = frameCount
         Self.frameSpeed = frameSpeed
 
-        SetNameAndPos(imageName, pos)
         LoadImage()
+        If pos Then SetPosition(pos)
     End
 
     Method OnRender:Void()
@@ -142,11 +145,5 @@ Class Sprite Extends BaseDisplayObject
 
         If Not image Then Error("Unable to load: " + imageName)
         GetSize().Mul(scale)
-    End
-
-    Method SetNameAndPos:Void(imageName:String, pos:Vector2D=Null)
-        Self.imageName = imageName
-        If Not pos Then pos = New Vector2D(0, 0)
-        Self.SetPosition(pos)
     End
 End
