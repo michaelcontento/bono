@@ -37,6 +37,7 @@ Class KeyEmitter Implements Observable, AppObserver
     End
 
     Method OnSuspend:Void()
+        Reset()
     End
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
@@ -69,6 +70,10 @@ Class KeyEmitter Implements Observable, AppObserver
 
         keyboardEnabled = False
         input.DisableKeyboard()
+        Reset()
+    End
+
+    Method Reset:Void()
         keysActive.Clear()
         keyEvents.Clear()
         dispatchedKeyEvents.Clear()

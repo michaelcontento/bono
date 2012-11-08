@@ -43,6 +43,9 @@ Class TouchEmitter Implements Observable, AppObserver
     End
 
     Method OnSuspend:Void()
+        For Local i:Int = 0 Until _touchFingers
+            touchEvents[i] = Null
+        End
     End
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
