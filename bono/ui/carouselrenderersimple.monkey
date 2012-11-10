@@ -20,13 +20,15 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
     Field carousel:Carousel
     Field lastItemPixelX:Float
     Field momentumX:Float
+    Field touchMovement:Float
+    Field touchTime:Int
     Field offsetMaxX:Float
 
     Public
 
     Field padding:Vector2D = New Vector2D()
     Field maxMoveDistanceForClicks:Float = 3
-    Field frictionCoefficient:Float = 0.9
+    Field frictionCoefficient:Float = 0.8
 
     Method SetCarousel:Void(carousel:Carousel)
         Self.carousel = carousel
@@ -87,12 +89,19 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
     Method OnTouchDown:Void(event:TouchEvent)
         touched = True
         momentumX = 0
+        touchMovement = 0
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
         If Not touched Then Return
         offset.x += event.prevDelta.x
         CheckOffsetBoundaries()
+
+        If event.positions.Count() = 0 Then Return
+        If event.prevDelta.x = 0 Then Return
+
+        touchMovement += event.prevDelta.x
+        touchTime = event.endTime
     End
 
     Method OnTouchUp:Void(event:TouchEvent)
@@ -108,7 +117,11 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
 
             handler.OnCarouselSelect()
         Else
-            momentumX = event.prevDelta.x
+            If (Millisecs() - touchTime) < 50 And Abs(touchMovement) > 10
+                Local duration:Float = event.endTime - event.startTime
+                Local distance:Float = event.startDelta.x
+                momentumX = distance / duration * 30
+            End
         End
     End
 
