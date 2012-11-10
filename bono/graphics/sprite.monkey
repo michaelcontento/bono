@@ -89,6 +89,7 @@ Class Sprite Extends BaseDisplayObject
     Method scale:Void(newScale:Vector2D) Property
         If image Then GetSize().Div(_scale).Mul(newScale)
         _scale = newScale
+        renderPos = Null
     End
 
     Method filepath:String() Property
