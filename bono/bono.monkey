@@ -2,6 +2,7 @@ Strict
 
 Public
 
+Import ads
 Import fx
 Import graphics
 Import io
