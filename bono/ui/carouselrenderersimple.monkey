@@ -23,6 +23,8 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
     Field touchMovement:Float
     Field touchTime:Int
     Field offsetMaxX:Float
+    Field firstItem:Int
+    Field lastItem:Int
 
     Public
 
@@ -58,7 +60,14 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
         offsetMaxX -= padding.x
     End
 
-    Method GetCurrentIndex:Void()
+    Method GetPosition:Float()
+        If firstItem = 1 Then Return 0.0
+
+        Local totalItems:Int = carousel.GetItems().Count()
+        If lastItem = totalItems Then Return 1.0
+
+        Local currentItem:Float = firstItem + ((lastItem - firstItem) / 2.0)
+        Return currentItem / totalItems
     End
 
     Method OnRender:Void()
@@ -70,16 +79,25 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
         Local oldScissor:Float[] = GetScissor()
         MatrixHelper.SetScissorRelative(pos, size)
 
+        firstItem = carousel.GetItems().Count()
+        lastItem = 0
+
         PushMatrix()
             Translate(offset.x, offset.y)
 
+            Local counter:Int = 0
             For Local item:BaseDisplayObject = EachIn carousel.GetItems()
+                counter += 1
+
                 Local itemPosX:Float = item.GetPosition().x
                 itemPosX += offset.x
 
                 If itemPosX > pos.x + size.x Then Continue
                 If itemPosX + item.GetSize().x < pos.x Then Continue
+
                 item.OnRender()
+                firstItem = Min(firstItem, counter)
+                lastItem = Max(lastItem, counter)
             End
         PopMatrix()
 
