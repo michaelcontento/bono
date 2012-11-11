@@ -37,6 +37,10 @@ Class Carousel Extends BaseDisplayObject Implements TouchObserver
         Return itemList
     End
 
+    Method GetRenderer:CarouselRenderer()
+        Return renderer
+    End
+
     Method OnRender:Void()
         If doRecalculation
             doRecalculation = False
