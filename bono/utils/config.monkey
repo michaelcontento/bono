@@ -25,6 +25,10 @@ Class Config<T> Abstract
         Return fallback
     End
 
+    Function Keys:MapKeys<String,T>()
+        Return store.Keys()
+    End
+
     Function Set:Void(key:String, value:T)
         store.Set(key, value)
     End
