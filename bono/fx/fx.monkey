@@ -6,7 +6,9 @@ Import animation
 Import effect
 Import effectcolor
 Import effectcoloralpha
-Import fx
+Import particle
+Import particleemitter
+Import particlesystem
 Import transition
 Import transitionback
 Import transitionbounce

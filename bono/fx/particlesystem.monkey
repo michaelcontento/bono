@@ -1,0 +1,128 @@
+Strict
+
+Private
+
+Import bono.graphics
+Import bono.kernel
+Import bono.utils
+Import particle
+Import particleemitter
+
+Public
+
+Class ParticleSystem Implements AppObserver
+    Private
+
+    Field sprite:Sprite
+    Field emitters:Stack<ParticleEmitter> = New Stack<ParticleEmitter>()
+    Field particles:StringMap<List<Particle>> = New StringMap<List<Particle>>()
+    Field pool:Pool<Particle> = New Pool<Particle>()
+
+    Public
+
+    Method New(sprite:Sprite)
+        Self.sprite = sprite
+        sprite.SetHandle(sprite.GetCenter())
+    End
+
+    Method Add:Void(emitter:ParticleEmitter)
+        CheckEmitterName(emitter)
+        emitters.Push(emitter)
+        particles.Add(emitter.GetName(), New List<Particle>())
+    End
+
+    Method OnLoading:Void()
+    End
+
+    Method OnUpdate:Void(deltatimer:DeltaTimer)
+        RemoveFinishedEmitter()
+        LaunchNewParticles(deltatimer)
+        UpdateParticles(deltatimer)
+    End
+
+    Method OnRender:Void()
+        For Local emitter:ParticleEmitter = EachIn emitters
+            For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+                particle.Apply(sprite)
+                sprite.OnRender()
+            End
+        End
+    End
+
+    Method OnResume:Void()
+    End
+
+    Method OnSuspend:Void()
+    End
+
+    Method GetStats:String()
+        Local result:String = ""
+        result += "Emitter size: " + emitters.Length() + "~n"
+        result += "   Pool size: " + pool.Length() + "~n"
+        result += "-------------~n"
+
+        For Local emitter:ParticleEmitter = EachIn emitters
+            result += emitter.GetName()
+            result += ": "
+            result += GetParticlesForEmitter(emitter).Count()
+            result += "~n"
+        End
+
+        Return result
+    End
+
+    Private
+
+    Method CheckEmitterName:Void(emitter:ParticleEmitter)
+        Local name:String = emitter.GetName()
+
+        If name.Trim().Length() = 0
+            Error("Emitter name is empty")
+        End
+
+        If particles.Contains(name)
+            Error("There is already an emitter named " + name)
+        End
+    End
+
+    Method RemoveFinishedEmitter:Void()
+        For Local emitter:ParticleEmitter = EachIn emitters
+            If Not emitter.CanBeRemoved() Then Continue
+
+            For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+                pool.Put(particle)
+            End
+            emitters.RemoveEach(emitter)
+        End
+    End
+
+    Method LaunchNewParticles:Void(deltatimer:DeltaTimer)
+        For Local emitter:ParticleEmitter = EachIn emitters
+            For Local i:Int = 0 To emitter.GetLaunchAmount(deltatimer)
+                Local newParticle:Particle = pool.Get()
+                GetParticlesForEmitter(emitter).AddLast(newParticle)
+
+                newParticle.Reset()
+                emitter.OnParticleLaunch(deltatimer, newParticle)
+            End
+        End
+    End
+
+    Method UpdateParticles:Void(deltatimer:DeltaTimer)
+        For Local emitter:ParticleEmitter = EachIn emitters
+            For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+                particle.lifetime += deltatimer.frameTime
+                emitter.OnParticleUpdate(deltatimer, particle)
+
+                If Not particle.active
+                    GetParticlesForEmitter(emitter).Remove(particle)
+                    pool.Put(particle)
+                End
+            End
+        End
+    End
+
+    Method GetParticlesForEmitter:List<Particle>(emitter:ParticleEmitter)
+        Return particles.Get(emitter.GetName())
+    End
+End
