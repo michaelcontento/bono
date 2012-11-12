@@ -4,8 +4,6 @@ Import "native/device.${TARGET}.${LANG}"
 Import mojo.graphics
 Import vector2d
 
-Private
-
 Class DeviceNonNative Abstract
     Function GetSize:Vector2D()
         Return New Vector2D(DeviceWidth(), DeviceHeight())
