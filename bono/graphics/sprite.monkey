@@ -127,6 +127,10 @@ Class Sprite Extends BaseDisplayObject
         Return Super.Collide(checkPos.Copy().Sub(offset))
     End
 
+    Method SetHandle:Void(pos:Vector2D)
+        image.SetHandle(pos.x, pos.y)
+    End
+
     Private
 
     Method CalculateRenderPos:Void()
