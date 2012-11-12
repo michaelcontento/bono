@@ -1,14 +1,22 @@
 #include <ctime>
 
-class Device {
+class Device
+{
 public:
-    int static GetTimestamp() {
+    int static GetTimestamp()
+    {
         return std::time(0);
     }
 
-    void static OpenUrl(const String url) {
+    void static OpenUrl(const String url)
+    {
         String cmd("open ");
         cmd += url;
         system(cmd.ToCString<char>());
+    }
+
+    String static GetLanguage()
+    {
+        return "en";
     }
 };
