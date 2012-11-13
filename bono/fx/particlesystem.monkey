@@ -32,6 +32,12 @@ Class ParticleSystem Implements AppObserver
         particles.Add(emitter.GetName(), New List<Particle>())
     End
 
+    Method Clear:Void()
+        For Local emitter:ParticleEmitter = EachIn emitters
+            RemoveEmitter(emitter)
+        End
+    End
+
     Method OnLoading:Void()
     End
 
