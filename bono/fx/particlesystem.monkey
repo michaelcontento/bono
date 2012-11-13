@@ -109,7 +109,8 @@ Class ParticleSystem Implements AppObserver
     End
 
     Method LaunchNewParticles:Void(deltatimer:DeltaTimer, emitter:ParticleEmitter)
-        For Local i:Int = 0 To emitter.GetLaunchAmount(deltatimer)
+        Local amount:Int = emitter.GetLaunchAmount(deltatimer)
+        For Local i:Int = 0 To amount
             Local newParticle:Particle = pool.Get()
             GetParticlesForEmitter(emitter).AddLast(newParticle)
 
