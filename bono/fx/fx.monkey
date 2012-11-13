@@ -8,6 +8,7 @@ Import effectcolor
 Import effectcoloralpha
 Import particle
 Import particleemitter
+Import particleemittercircle
 Import particlesystem
 Import transition
 Import transitionback
