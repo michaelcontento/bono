@@ -39,6 +39,13 @@ Class Vector2D
         Return New Vector2D(x, y)
     End
 
+    Method Copy:Vector2D(v2:Vector2D)
+        x = v2.x
+        y = v2.y
+
+        Return Self
+    End
+
     Method Normalize:Vector2D()
         Local length:Float = Length()
         If length = 0 Then Return Self
