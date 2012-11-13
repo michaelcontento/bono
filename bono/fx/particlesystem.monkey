@@ -17,6 +17,7 @@ Class ParticleSystem Implements AppObserver
     Field emitters:Stack<ParticleEmitter> = New Stack<ParticleEmitter>()
     Field particles:StringMap<List<Particle>> = New StringMap<List<Particle>>()
     Field pool:Pool<Particle> = New Pool<Particle>()
+    Field oldParticlePos:Vector2D = New Vector2D()
 
     Public
 
@@ -111,10 +112,15 @@ Class ParticleSystem Implements AppObserver
     Method UpdateParticles:Void(deltatimer:DeltaTimer)
         For Local emitter:ParticleEmitter = EachIn emitters
             For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
-                particle.lifetime += deltatimer.frameTime
+                oldParticlePos.x = particle.position.x
+                oldParticlePos.y = particle.position.y
                 emitter.OnParticleUpdate(deltatimer, particle)
 
-                If Not particle.active
+                If particle.active
+                    particle.lifetime += deltatimer.frameTime
+                    particle.previousPosition.x = oldParticlePos.x
+                    particle.previousPosition.y = oldParticlePos.y
+                Else
                     GetParticlesForEmitter(emitter).Remove(particle)
                     pool.Put(particle)
                 End
