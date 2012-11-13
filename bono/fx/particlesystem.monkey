@@ -38,7 +38,11 @@ Class ParticleSystem Implements AppObserver
     Method OnUpdate:Void(deltatimer:DeltaTimer)
         For Local emitter:ParticleEmitter = EachIn emitters
             If emitter.CanBeRemoved()
-                RemoveFinishedEmitter(emitter)
+                If GetParticlesForEmitter(emitter).Count() = 0
+                    RemoveEmitter(emitter)
+                Else
+                    UpdateParticles(deltatimer, emitter)
+                End
             Else
                 LaunchNewParticles(deltatimer, emitter)
                 UpdateParticles(deltatimer, emitter)
@@ -91,7 +95,7 @@ Class ParticleSystem Implements AppObserver
         End
     End
 
-    Method RemoveFinishedEmitter:Void(emitter:ParticleEmitter)
+    Method RemoveEmitter:Void(emitter:ParticleEmitter)
         For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
             pool.Put(particle)
         End
