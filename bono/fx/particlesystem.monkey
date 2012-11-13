@@ -36,9 +36,14 @@ Class ParticleSystem Implements AppObserver
     End
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
-        RemoveFinishedEmitter()
-        LaunchNewParticles(deltatimer)
-        UpdateParticles(deltatimer)
+        For Local emitter:ParticleEmitter = EachIn emitters
+            If emitter.CanBeRemoved()
+                RemoveFinishedEmitter(emitter)
+            Else
+                LaunchNewParticles(deltatimer, emitter)
+                UpdateParticles(deltatimer, emitter)
+            End
+        End
     End
 
     Method OnRender:Void()
@@ -86,44 +91,36 @@ Class ParticleSystem Implements AppObserver
         End
     End
 
-    Method RemoveFinishedEmitter:Void()
-        For Local emitter:ParticleEmitter = EachIn emitters
-            If Not emitter.CanBeRemoved() Then Continue
+    Method RemoveFinishedEmitter:Void(emitter:ParticleEmitter)
+        For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+            pool.Put(particle)
+        End
+        emitters.RemoveEach(emitter)
+    End
 
-            For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+    Method LaunchNewParticles:Void(deltatimer:DeltaTimer, emitter:ParticleEmitter)
+        For Local i:Int = 0 To emitter.GetLaunchAmount(deltatimer)
+            Local newParticle:Particle = pool.Get()
+            GetParticlesForEmitter(emitter).AddLast(newParticle)
+
+            newParticle.Reset()
+            emitter.OnParticleLaunch(deltatimer, newParticle)
+        End
+    End
+
+    Method UpdateParticles:Void(deltatimer:DeltaTimer, emitter:ParticleEmitter)
+        For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+            oldParticlePos.x = particle.position.x
+            oldParticlePos.y = particle.position.y
+            emitter.OnParticleUpdate(deltatimer, particle)
+
+            If particle.active
+                particle.lifetime += deltatimer.frameTime
+                particle.previousPosition.x = oldParticlePos.x
+                particle.previousPosition.y = oldParticlePos.y
+            Else
+                GetParticlesForEmitter(emitter).Remove(particle)
                 pool.Put(particle)
-            End
-            emitters.RemoveEach(emitter)
-        End
-    End
-
-    Method LaunchNewParticles:Void(deltatimer:DeltaTimer)
-        For Local emitter:ParticleEmitter = EachIn emitters
-            For Local i:Int = 0 To emitter.GetLaunchAmount(deltatimer)
-                Local newParticle:Particle = pool.Get()
-                GetParticlesForEmitter(emitter).AddLast(newParticle)
-
-                newParticle.Reset()
-                emitter.OnParticleLaunch(deltatimer, newParticle)
-            End
-        End
-    End
-
-    Method UpdateParticles:Void(deltatimer:DeltaTimer)
-        For Local emitter:ParticleEmitter = EachIn emitters
-            For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
-                oldParticlePos.x = particle.position.x
-                oldParticlePos.y = particle.position.y
-                emitter.OnParticleUpdate(deltatimer, particle)
-
-                If particle.active
-                    particle.lifetime += deltatimer.frameTime
-                    particle.previousPosition.x = oldParticlePos.x
-                    particle.previousPosition.y = oldParticlePos.y
-                Else
-                    GetParticlesForEmitter(emitter).Remove(particle)
-                    pool.Put(particle)
-                End
             End
         End
     End
