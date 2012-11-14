@@ -34,8 +34,12 @@ Class ParticleSystem Implements AppObserver
 
     Method Clear:Void()
         For Local emitter:ParticleEmitter = EachIn emitters
-            RemoveEmitter(emitter)
+            For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
+                pool.Put(particle)
+            End
+            GetParticlesForEmitter(emitter).Clear()
         End
+        emitters.Clear()
     End
 
     Method OnLoading:Void()
@@ -45,7 +49,7 @@ Class ParticleSystem Implements AppObserver
         For Local emitter:ParticleEmitter = EachIn emitters
             If emitter.CanBeRemoved()
                 If GetParticlesForEmitter(emitter).Count() = 0
-                    RemoveEmitter(emitter)
+                    emitters.RemoveEach(emitter)
                 Else
                     UpdateParticles(deltatimer, emitter)
                 End
@@ -99,13 +103,6 @@ Class ParticleSystem Implements AppObserver
         If particles.Contains(name)
             Error("There is already an emitter named " + name)
         End
-    End
-
-    Method RemoveEmitter:Void(emitter:ParticleEmitter)
-        For Local particle:Particle = EachIn GetParticlesForEmitter(emitter)
-            pool.Put(particle)
-        End
-        emitters.RemoveEach(emitter)
     End
 
     Method LaunchNewParticles:Void(deltatimer:DeltaTimer, emitter:ParticleEmitter)
