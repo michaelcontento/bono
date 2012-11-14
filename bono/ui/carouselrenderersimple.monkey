@@ -161,7 +161,6 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
     End
 
     Method GetTouchedItem:BaseDisplayObject(event:TouchEvent)
-        Local result:BaseDisplayObject
         ' Offset is negative and we need to use Sub() here instead of Add()
         Local checkPos:Vector2D = event.pos.Copy().Sub(offset)
 
