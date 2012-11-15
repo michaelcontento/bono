@@ -42,7 +42,6 @@ Class AppEmitter Extends App Implements Observable
 
     Method OnCreate:Int()
         onCreateCatched = True
-        deltatimer = New DeltaTimer(fps)
         Return 0
     End
 
@@ -56,7 +55,10 @@ Class AppEmitter Extends App Implements Observable
 
     Method OnUpdate:Int()
         If Not onCreateCatched Then Return 0
+
+        If Not deltatimer Then deltatimer = New DeltaTimer(fps)
         deltatimer.OnUpdate()
+
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnUpdate(deltatimer)
         End
@@ -65,6 +67,7 @@ Class AppEmitter Extends App Implements Observable
 
     Method OnResume:Int()
         If Not onCreateCatched Then Return 0
+        deltatimer.Play()
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnResume()
         End
@@ -73,6 +76,7 @@ Class AppEmitter Extends App Implements Observable
 
     Method OnSuspend:Int()
         If Not onCreateCatched Then Return 0
+        deltatimer.Pause()
         For Local observer:AppObserver = EachIn GetObservers()
             observer.OnSuspend()
         End

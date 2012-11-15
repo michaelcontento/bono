@@ -16,7 +16,6 @@ Class DeltaTimer
     Field targetFps:Float
     Field paused:Bool
     Field pauseOffset:Float
-    Field pauseStartMillisecs:Float
 
     Public
 
@@ -36,18 +35,17 @@ Class DeltaTimer
 
     Method Play:Void()
         If Not paused Then Return
-
-        Local pauseDuration:Float = Millisecs() - pauseStartMillisecs
-        pauseOffset += pauseDuration
-
         paused = False
+
+        lastMillisecs = Millisecs() - pauseOffset
     End
 
     Method Pause:Void()
         If paused Then Return
-
-        pauseStartMillisecs = Millisecs()
         paused = True
+
+        Local now:Float = Millisecs()
+        pauseOffset = now - lastMillisecs
     End
 
     Method IsPaused:Bool()
