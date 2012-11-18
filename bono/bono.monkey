@@ -3,6 +3,7 @@ Strict
 Public
 
 Import ads
+Import analytics
 Import fx
 Import graphics
 Import io
