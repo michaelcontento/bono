@@ -2,6 +2,11 @@ import android.net.Uri;
 
 class Device
 {
+    static String GetLanguage()
+    {
+        return Locale.getDefault().getLanguage();
+    }
+
     static int GetTimestamp()
     {
         return (int) (System.currentTimeMillis() / 1000);
