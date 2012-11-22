@@ -2,8 +2,9 @@ Strict
 
 Private
 
-Import bono.kernel
 Import bono.graphics
+Import bono.helper
+Import bono.kernel
 Import bono.utils
 Import carousel
 Import carouselhandler

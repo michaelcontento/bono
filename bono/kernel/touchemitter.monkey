@@ -3,6 +3,7 @@ Strict
 Private
 
 Import appobserver
+Import bono.helper
 Import bono.utils
 Import deltatimer
 Import mojo.input

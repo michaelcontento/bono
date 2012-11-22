@@ -2,8 +2,8 @@ Strict
 
 Private
 
+Import bono.utils
 Import mojo.graphics
-Import vector2d
 
 Public
 
