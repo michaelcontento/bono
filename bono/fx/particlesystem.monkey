@@ -23,7 +23,6 @@ Class ParticleSystem Implements AppObserver
 
     Method New(sprite:Sprite)
         Self.sprite = sprite
-        sprite.SetHandle(sprite.GetCenter())
     End
 
     Method Add:Void(emitter:ParticleEmitter)

@@ -23,6 +23,8 @@ Class Sprite Extends BaseDisplayObject
     Field _halign:Int = Align.LEFT
     Field _valign:Int = Align.TOP
     Field renderPos:Vector2D
+    Global cacheImage:StringMap<Image> = New StringMap<Image>()
+    Global cacheSize:StringMap<Vector2D> = New StringMap<Vector2D>()
 
     Public
 
@@ -127,25 +129,44 @@ Class Sprite Extends BaseDisplayObject
         Return Super.Collide(checkPos.Copy().Sub(offset))
     End
 
-    Method SetHandle:Void(pos:Vector2D)
-        image.SetHandle(pos.x, pos.y)
-    End
-
     Private
 
     Method CalculateRenderPos:Void()
-        renderPos = GetPosition().Copy()
+        renderPos = GetPosition().Copy().Add(GetCenter())
         Align.AdjustHorizontal(renderPos, Self, halign)
         Align.AdjustVertical(renderPos, Self, valign)
     End
 
+    Method CacheSet:Void(name:String, image:Image, size:Vector2D)
+        cacheImage.Set(name, image)
+        cacheSize.Set(name, size)
+    End
+
+    Method CacheGetSize:Vector2D(name:String)
+        Return cacheSize.Get(name)
+    End
+
+    Method CacheGetImage:Image(name:String)
+        Return cacheImage.Get(name)
+    End
+
     Method LoadImage:Void()
-        If frameSize
-            image = graphics.LoadImage(imageName, frameSize.x, frameSize.y, frameCount)
-            SetSize(frameSize.Copy())
-        Else
-            image = graphics.LoadImage(imageName)
-            SetSize(New Vector2D(image.Width(), image.Height()))
+        ' Try the cache first ...
+        image = CacheGetImage(imageName)
+        If image
+            SetSize(CacheGetSize(imageName))
+        End
+
+        ' ... but handle misses aswell
+        If Not image
+            If frameSize
+                image = graphics.LoadImage(imageName, frameSize.x, frameSize.y, frameCount, Image.MidHandle)
+                SetSize(frameSize.Copy())
+            Else
+                image = graphics.LoadImage(imageName, 1, Image.MidHandle)
+                SetSize(New Vector2D(image.Width(), image.Height()))
+            End
+            CacheSet(imageName, image, GetSize())
         End
 
         If Not image Then Error("Unable to load: " + imageName)
