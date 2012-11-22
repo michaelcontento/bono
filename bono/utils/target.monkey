@@ -1,7 +1,7 @@
 Strict
 
 #BONO_ANDROID_MARKET="google"
-#If Not BONO_ANDROID_MARKET="google" And Not BONO_ANDROID_MARKET="amazon"
+#If Not (BONO_ANDROID_MARKET="google") And Not (BONO_ANDROID_MARKET="amazon")
 #Error "Invalid BONO_ANDROID_MARKET setting - must be 'google' or 'amazon'"
 #End
 
