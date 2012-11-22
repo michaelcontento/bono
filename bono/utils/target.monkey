@@ -1,6 +1,23 @@
 Strict
 
+#BONO_ANDROID_MARKET="google"
+#If Not BONO_ANDROID_MARKET="google" And Not BONO_ANDROID_MARKET="amazon"
+#Error "Invalid BONO_ANDROID_MARKET setting - must be 'google' or 'amazon'"
+#End
+
 Class Target Abstract
+
+#If BONO_ANDROID_MARKET="google"
+    Const IS_MARKET_GOOGLE:Bool = True
+#Else
+    Const IS_MARKET_GOOGLE:Bool = False
+#End
+
+#If BONO_ANDROID_MARKET="amazon"
+    Const IS_MARKET_AMAZON:Bool = True
+#Else
+    Const IS_MARKET_AMAZON:Bool = False
+#End
 
 #If TARGET="android"
     Const IS_ANDROID:Bool = True
