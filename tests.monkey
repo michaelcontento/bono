@@ -1,7 +1,11 @@
 Strict
 
+Private
+
 Import bono
 Import tests.utils.vector2dtest
+
+Public
 
 Function Main:Int()
     Local suite:TestSuite = New TestSuite()
