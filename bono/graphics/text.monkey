@@ -7,7 +7,7 @@ Import basedisplayobject
 Import bono.graphics
 Import bono.kernel
 Import bono.utils
-Import bono.vendor.angelfont
+Import vendor.angelfont
 
 Public
 
