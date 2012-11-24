@@ -24,9 +24,9 @@ Class AssertTest Extends TestCase
             AssertEquals(1, 2)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("two integers are equal", ex.ToString())
-            AssertStringContains("Expected: 1", ex.ToString())
-            AssertStringContains("Actual  : 2", ex.ToString())
+            AssertStringContains("two integers are equal", ex)
+            AssertStringContains("Expected: 1", ex)
+            AssertStringContains("Actual  : 2", ex)
         End
     End
 
@@ -35,10 +35,10 @@ Class AssertTest Extends TestCase
             AssertEquals(1.2, 2.3)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("two floats are equal", ex.ToString())
+            AssertStringContains("two floats are equal", ex)
             ' Only check to the decimal seperator due to float precision
-            AssertStringContains("Expected: 1.", ex.ToString())
-            AssertStringContains("Actual  : 2.", ex.ToString())
+            AssertStringContains("Expected: 1.", ex)
+            AssertStringContains("Actual  : 2.", ex)
         End
     End
 
@@ -47,9 +47,9 @@ Class AssertTest Extends TestCase
             AssertEquals("foo", "bar")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("two strings are equal", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : bar", ex.ToString())
+            AssertStringContains("two strings are equal", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : bar", ex)
         End
     End
 
@@ -70,7 +70,7 @@ Class AssertTest Extends TestCase
             AssertNotEquals(1, 1)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("two integers are NOT equal", ex.ToString())
+            AssertStringContains("two integers are NOT equal", ex)
         End
     End
 
@@ -79,7 +79,7 @@ Class AssertTest Extends TestCase
             AssertNotEquals(1.2, 1.2)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("two floats are NOT equal", ex.ToString())
+            AssertStringContains("two floats are NOT equal", ex)
         End
     End
 
@@ -88,7 +88,7 @@ Class AssertTest Extends TestCase
             AssertNotEquals("foo", "foo")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("two strings are NOT equal", ex.ToString())
+            AssertStringContains("two strings are NOT equal", ex)
         End
     End
 
@@ -105,7 +105,7 @@ Class AssertTest Extends TestCase
             AssertGreaterThan(2, 1)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(1 + " is greater than " + 2, ex.ToString())
+            AssertStringContains(1 + " is greater than " + 2, ex)
         End
     End
 
@@ -114,7 +114,7 @@ Class AssertTest Extends TestCase
             AssertGreaterThan(2.0, 1.0)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(1.0 + " is greater than " + 2.0, ex.ToString())
+            AssertStringContains(1.0 + " is greater than " + 2.0, ex)
         End
     End
 
@@ -133,7 +133,7 @@ Class AssertTest Extends TestCase
             AssertGreaterThanOrEqual(2, 1)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(1 + " is greater than or equal to " + 2, ex.ToString())
+            AssertStringContains(1 + " is greater than or equal to " + 2, ex)
         End
     End
 
@@ -142,7 +142,7 @@ Class AssertTest Extends TestCase
             AssertGreaterThanOrEqual(2.0, 1.0)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(1.0 + " is greater than or equal to " + 2.0, ex.ToString())
+            AssertStringContains(1.0 + " is greater than or equal to " + 2.0, ex)
         End
     End
 
@@ -164,7 +164,7 @@ Class AssertTest Extends TestCase
             AssertLessThan(1, 2)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(2 + " is less than " + 1, ex.ToString())
+            AssertStringContains(2 + " is less than " + 1, ex)
         End
     End
 
@@ -173,7 +173,7 @@ Class AssertTest Extends TestCase
             AssertLessThan(1.0, 2.0)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(2.0 + " is less than " + 1.0, ex.ToString())
+            AssertStringContains(2.0 + " is less than " + 1.0, ex)
         End
     End
 
@@ -187,7 +187,7 @@ Class AssertTest Extends TestCase
             AssertLessThanOrEqual(1, 2)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(2 + " is less than or equal to " + 1, ex.ToString())
+            AssertStringContains(2 + " is less than or equal to " + 1, ex)
         End
     End
 
@@ -196,7 +196,7 @@ Class AssertTest Extends TestCase
             AssertLessThanOrEqual(1.0, 2.0)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains(2.0 + " is less than or equal to " + 1.0, ex.ToString())
+            AssertStringContains(2.0 + " is less than or equal to " + 1.0, ex)
         End
     End
 
@@ -209,9 +209,9 @@ Class AssertTest Extends TestCase
             AssertStringStartsWith("foo", "...foo")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("a string starts with a given prefix", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : ...foo", ex.ToString())
+            AssertStringContains("a string starts with a given prefix", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : ...foo", ex)
         End
     End
 
@@ -224,9 +224,9 @@ Class AssertTest Extends TestCase
             AssertStringNotStartsWith("foo", "foo...")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("a string does NOT starts with a given prefix", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : foo...", ex.ToString())
+            AssertStringContains("a string does NOT starts with a given prefix", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : foo...", ex)
         End
     End
 
@@ -239,9 +239,9 @@ Class AssertTest Extends TestCase
             AssertStringEndsWith("foo", "foo...")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("a string ends with a given prefix", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : foo...", ex.ToString())
+            AssertStringContains("a string ends with a given prefix", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : foo...", ex)
         End
     End
 
@@ -254,9 +254,9 @@ Class AssertTest Extends TestCase
             AssertStringNotEndsWith("foo", "...foo")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("a string does NOT ends with a given prefix", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : ...foo", ex.ToString())
+            AssertStringContains("a string does NOT ends with a given prefix", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : ...foo", ex)
         End
     End
 
@@ -269,9 +269,9 @@ Class AssertTest Extends TestCase
             AssertStringContains("foo", "...bar...")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("a string contains a given sub-string", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : ...bar...", ex.ToString())
+            AssertStringContains("a string contains a given sub-string", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : ...bar...", ex)
         End
     End
 
@@ -284,9 +284,9 @@ Class AssertTest Extends TestCase
             AssertStringNotContains("foo", "...foo...")
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("a string does NOT contains a given sub-string", ex.ToString())
-            AssertStringContains("Expected: foo", ex.ToString())
-            AssertStringContains("Actual  : ...foo...", ex.ToString())
+            AssertStringContains("a string does NOT contains a given sub-string", ex)
+            AssertStringContains("Expected: foo", ex)
+            AssertStringContains("Actual  : ...foo...", ex)
         End
     End
 
@@ -299,7 +299,7 @@ Class AssertTest Extends TestCase
             AssertTrue(False)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("false is true", ex.ToString())
+            AssertStringContains("false is true", ex)
         End
     End
 
@@ -312,7 +312,7 @@ Class AssertTest Extends TestCase
             AssertFalse(True)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("true is false", ex.ToString())
+            AssertStringContains("true is false", ex)
         End
     End
 
@@ -325,7 +325,7 @@ Class AssertTest Extends TestCase
             AssertNull(New Object())
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("some object is null", ex.ToString())
+            AssertStringContains("some object is null", ex)
         End
     End
 
@@ -338,7 +338,7 @@ Class AssertTest Extends TestCase
             AssertNotNull(Null)
             Fail("AssertionFailedException expected")
         Catch ex:AssertionFailedException
-            AssertStringContains("some object is NOT null", ex.ToString())
+            AssertStringContains("some object is NOT null", ex)
         End
     End
 End
