@@ -47,7 +47,7 @@ Class TestRunner
             Try
                 methodInfo.Invoke(test, [])
             Catch ex:AssertionFailedException
-                listener.AddFailure(classInfo, methodInfo)
+                listener.AddFailure(classInfo, methodInfo, ex.ToString())
             Catch ex:TestSkippedException
                 listener.AddSkippedTest(classInfo, methodInfo, ex.ToString())
             Catch ex:TestIncompleteException

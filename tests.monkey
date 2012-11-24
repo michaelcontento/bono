@@ -4,6 +4,7 @@ Private
 
 Import bono
 Import tests.utils.vector2dtest
+Import tests.tests.asserttest
 
 Public
 
