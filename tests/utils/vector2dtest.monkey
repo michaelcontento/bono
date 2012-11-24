@@ -13,7 +13,7 @@ Class Vector2DTest Extends TestCase
         AssertEquals(34.0, vec.y)
     End
 
-    Method TestInstantiaWithoutArguments:Void()
+    Method TestInstantiateWithoutArguments:Void()
         Local vec:Vector2D = New Vector2D()
         AssertEquals(0.0, vec.x)
         AssertEquals(0.0, vec.y)
