@@ -10,6 +10,7 @@ Import src.graphics
 Import src.helper
 Import src.io
 Import src.kernel
+Import src.payment
 Import src.scenes
 Import src.tests
 Import src.ui
