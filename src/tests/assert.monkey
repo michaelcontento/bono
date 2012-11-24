@@ -62,6 +62,11 @@ Class Assert Abstract
         Fail(actual + " is greater than or equal to " + expected)
     End
 
+    Function AssertGreaterThanOrEqual:Void(expected:Float, actual:Float)
+        If expected <= actual Then Return
+        Fail(actual + " is greater than or equal to " + expected)
+    End
+
     Function AssertLessThan:Void(expected:Int, actual:Int)
         If expected > actual Then Return
         Fail(actual + " is less than " + expected)
@@ -73,6 +78,11 @@ Class Assert Abstract
     End
 
     Function AssertLessThanOrEqual:Void(expected:Int, actual:Int)
+        If expected >= actual Then Return
+        Fail(actual + " is less than or equal to " + expected)
+    End
+
+    Function AssertLessThanOrEqual:Void(expected:Float, actual:Float)
         If expected >= actual Then Return
         Fail(actual + " is less than or equal to " + expected)
     End
