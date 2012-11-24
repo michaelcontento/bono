@@ -167,4 +167,8 @@ Class AssertTest Extends TestCase
     Method TestAssertNotNull:Void()
         AssertNotNull(New Object())
     End
+
+    Method TestIncomplete:Void()
+        MarkTestIncomplete("Not all messages are tested")
+    End
 End

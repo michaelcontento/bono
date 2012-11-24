@@ -55,4 +55,8 @@ Class Vector2DTest Extends TestCase
 
         AssertEquals("(12.0, 34.0)", vec.ToString())
     End
+
+    Method TestIncomplete:Void()
+        MarkTestIncomplete("Not all methods are tested")
+    End
 End
