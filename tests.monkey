@@ -3,8 +3,10 @@ Strict
 Private
 
 Import bono
-Import tests.utils.vector2dtest
 Import tests.tests.asserttest
+Import tests.tests.testcasetest
+Import tests.tests.testsuitetest
+Import tests.utils.vector2dtest
 
 Public
 

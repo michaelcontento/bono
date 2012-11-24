@@ -19,12 +19,17 @@ Class TestSuite
         runnerStack.Push(runner)
     End
 
-    Method Autodiscover:Void()
+    Method Autodiscover:Int()
+        Local testsFound:Int
+
         For Local classInfo:ClassInfo = EachIn GetClasses()
             If classInfo.Name().EndsWith("Test")
+                testsFound += 1
                 runnerStack.Push(New TestRunner(classInfo.Name()))
             End
         End
+
+        Return testsFound
     End
 
     Method Run:Void(listener:TestListener)
