@@ -16,7 +16,7 @@ Class TestListenerSimple Implements TestListener
     Field currentClass:ClassInfo
     Field currentMethod:MethodInfo
     Field result:Int = PASSED
-    Field numPasses:Int
+    Field numTests:Int
     Field failureMessages:StringMap<String> = New StringMap<String>()
     Field skipMessages:StringMap<String> = New StringMap<String>()
     Field incompleteMessages:StringMap<String> = New StringMap<String>()
@@ -29,12 +29,14 @@ Class TestListenerSimple Implements TestListener
     Public
 
     Method StartTestSuite:Void(suite:TestSuite)
+        Print "Tests within this testsuite:~n"
     End
 
     Method StartTest:Void(classInfo:ClassInfo, methodInfo:MethodInfo)
         currentClass = classInfo
         currentMethod = methodInfo
         result = PASSED
+        numTests += 1
     End
 
     Method AddFailure:Void(classInfo:ClassInfo, methodInfo:MethodInfo, message:String)
@@ -53,9 +55,7 @@ Class TestListenerSimple Implements TestListener
     End
 
     Method EndTest:Void(classInfo:ClassInfo, methodInfo:MethodInfo)
-        If result = PASSED Then numPasses += 1
         PrintResult()
-
         currentClass = Null
         currentMethod = Null
     End
@@ -103,7 +103,7 @@ Class TestListenerSimple Implements TestListener
         PrintMessages(failureMessages, "failure")
 
         PrintSummary()
-        Print "Tests: "      + numPasses                  +
+        Print "Tests: "      + numTests                   +
             ", Failed: "     + failureMessages.Count()    +
             ", Skipped: "    + skipMessages.Count()       +
             ", Incomplete: " + incompleteMessages.Count() +
