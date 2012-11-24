@@ -3,6 +3,7 @@ Strict
 Private
 
 Import bono.src.exceptions
+Import bono.src.utils
 Import reflection
 Import testlistener
 Import testsuite
@@ -32,7 +33,9 @@ Class TestReportSimple Implements TestListener
     Field verbose:Bool
 
     Method StartTestSuite:Void(suite:TestSuite)
-        Print "Tests within this testsuite:~n"
+        Print "Running " + Target.CONFIG +
+            " " + Target.LANG + "/" + Target.TARGET +
+            " tests on " + Target.HOST + ":~n"
     End
 
     Method StartTest:Void(classInfo:ClassInfo, methodInfo:MethodInfo)
