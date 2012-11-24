@@ -3,6 +3,7 @@ Strict
 Private
 
 Import assert
+Import testfailedexception
 Import testincompleteexception
 Import testskippedexception
 
@@ -21,5 +22,9 @@ Class TestCase Extends Assert Abstract
 
     Method MarkTestIncomplete:Void(message:String="")
         Throw New TestIncompleteException(message)
+    End
+
+    Method Fail:Void(message:String)
+        Throw New TestFailedException(message)
     End
 End

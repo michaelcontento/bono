@@ -2,7 +2,17 @@ Strict
 
 Private
 
-Import bono.src.exceptions
+Import assertionfailedexception
+
+Function Fail:Void(message:String)
+    Throw New AssertionFailedException("Failed asserting that " + message)
+End
+
+Function FailWithDetails:Void(message:String, expected:String, actual:String)
+    Fail(message + "~n" +
+        "Expected: " + expected + "~n" +
+        "Actual  : " + actual)
+End
 
 Public
 
@@ -127,17 +137,5 @@ Class Assert Abstract
     Function AssertNotNull:Void(obj:Object)
         If obj <> Null Then Return
         Fail("some object is NOT null")
-    End
-
-    Private
-
-    Function Fail:Void(message:String)
-        Throw New AssertionFailedException("Failed asserting that " + message)
-    End
-
-    Function FailWithDetails:Void(message:String, expected:String, actual:String)
-        Fail(message + "~n" +
-            "Expected: " + expected + "~n" +
-            "Actual  : " + actual)
     End
 End

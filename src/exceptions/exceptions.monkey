@@ -2,7 +2,6 @@ Strict
 
 Public
 
-Import assertionfailedexception
 Import exception
 Import exceptions
 Import invalidargumentexception

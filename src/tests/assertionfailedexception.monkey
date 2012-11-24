@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import exception
+Import bono.src.exceptions
 
 Public
 

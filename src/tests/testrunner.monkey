@@ -2,9 +2,11 @@ Strict
 
 Private
 
+Import assertionfailedexception
 Import bono.src.exceptions
 Import reflection
 Import testcase
+Import testfailedexception
 Import testincompleteexception
 Import testlistener
 Import testskippedexception
@@ -47,6 +49,7 @@ Class TestRunner
             Try
                 methodInfo.Invoke(test, [])
             Catch ex:AssertionFailedException
+            Catch ex:TestFailedException
                 listener.AddFailure(classInfo, methodInfo, ex.ToString())
             Catch ex:TestSkippedException
                 listener.AddSkippedTest(classInfo, methodInfo, ex.ToString())
