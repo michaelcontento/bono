@@ -10,7 +10,7 @@ Import testcase
 Import testfailedexception
 Import testincompleteexception
 Import testlistener
-Import testlistenersimple
+Import testreportsimple
 Import testrunner
 Import testskippedexception
 Import testsuite

@@ -9,7 +9,7 @@ Import testsuite
 
 Public
 
-Class TestListenerSimple Implements TestListener
+Class TestReportSimple Implements TestListener
     Private
 
     Field lastClass:ClassInfo
@@ -20,6 +20,7 @@ Class TestListenerSimple Implements TestListener
     Field failureMessages:StringMap<String> = New StringMap<String>()
     Field skipMessages:StringMap<String> = New StringMap<String>()
     Field incompleteMessages:StringMap<String> = New StringMap<String>()
+    Field printCache:String = "    "
 
     Const PASSED:Int = 0
     Const FAILED:Int = 1
@@ -27,6 +28,8 @@ Class TestListenerSimple Implements TestListener
     Const INCOMPLETE:Int = 3
 
     Public
+
+    Field verbose:Bool
 
     Method StartTestSuite:Void(suite:TestSuite)
         Print "Tests within this testsuite:~n"
@@ -61,6 +64,7 @@ Class TestListenerSimple Implements TestListener
     End
 
     Method EndTestSuite:Void(suite:TestSuite)
+        FlushPrintCache()
         PrintStats()
 
         failureMessages.Clear()
@@ -72,12 +76,30 @@ Class TestListenerSimple Implements TestListener
 
     Method PrintResult:Void()
         If Not lastClass Or Not (lastClass.Name() = currentClass.Name())
-            If lastClass Then Print ""
+            If lastClass
+                FlushPrintCache()
+                Print ""
+            End
             Print "  " + currentClass.Name()
         End
         lastClass = currentClass
 
-        Print "    " + currentMethod.Name() + " " + GetResultText()
+        If verbose
+            Print "    " + currentMethod.Name() + " " + GetResultText()
+        Else
+            printCache += GetResultDot()
+            FlushPrintCacheIfRequired()
+        End
+    End
+
+    Method FlushPrintCache:Void()
+        If verbose Then Return
+        Print printCache
+        printCache = "    "
+    End
+
+    Method FlushPrintCacheIfRequired:Void(len:Int=80)
+        If printCache.Length() >= len Then FlushPrintCache()
     End
 
     Method GetResultText:String()
@@ -90,6 +112,21 @@ Class TestListenerSimple Implements TestListener
             Return "[SKIPPED]"
         Case INCOMPLETE
             Return "[INCOMPLETE]"
+        Default
+            Throw New RuntimeException("Invalid result id: " + result)
+        End
+    End
+
+    Method GetResultDot:String()
+        Select result
+        Case PASSED
+            Return "."
+        Case FAILED
+            Return "F"
+        Case SKIPPED
+            Return "S"
+        Case INCOMPLETE
+            Return "I"
         Default
             Throw New RuntimeException("Invalid result id: " + result)
         End
