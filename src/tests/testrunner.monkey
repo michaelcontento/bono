@@ -48,8 +48,9 @@ Class TestRunner
             listener.StartTest(classInfo, methodInfo)
             Try
                 methodInfo.Invoke(test, [])
-            Catch ex:AssertionFailedException
             Catch ex:TestFailedException
+                listener.AddFailure(classInfo, methodInfo, ex.ToString())
+            Catch ex:AssertionFailedException
                 listener.AddFailure(classInfo, methodInfo, ex.ToString())
             Catch ex:TestSkippedException
                 listener.AddSkippedTest(classInfo, methodInfo, ex.ToString())
