@@ -3,6 +3,9 @@ Strict
 Private
 
 Import bono
+Import tests.payment.paymentmanagertest
+Import tests.payment.paymentprovideraliastest
+Import tests.payment.paymentproviderautounlocktest
 Import tests.tests.asserttest
 Import tests.tests.testcasetest
 Import tests.tests.testsuitetest

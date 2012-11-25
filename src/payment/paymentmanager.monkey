@@ -2,6 +2,7 @@ Strict
 
 Private
 
+Import paymentprovider
 Import paymentprovideralias
 
 Public
@@ -9,28 +10,33 @@ Public
 Class PaymentManager
     Private
 
-    Field provider:PaymentProviderAlias
+    Field provider:PaymentProvider
     Global instance:PaymentManager
 
     Public
 
     Field idPrefix:String = ""
+    Field idAlias:StringMap<String> = New StringMap<String>()
+
+    Method New(provider:PaymentProvider)
+        Self.provider = provider
+    End
 
     Method IsPurchased:Bool(id:String)
-        Local result:Bool = GetProvider().IsPurchased(idPrefix + id)
+        Local result:Bool = GetProvider().IsPurchased(ResolveId(id))
 
         If result
-            DebugLog("IsPurchased", id + " => True")
+            DebugLog("IsPurchased", ResolveId(id) + " => True")
         Else
-            DebugLog("IsPurchased", id + " => False")
+            DebugLog("IsPurchased", ResolveId(id) + " => False")
         End
 
         Return result
     End
 
     Method Purchase:Void(id:String)
-        DebugLog("Purchase", id)
-        GetProvider().Purchase(idPrefix + id)
+        DebugLog("Purchase", ResolveId(id))
+        GetProvider().Purchase(ResolveId(id))
     End
 
     Method IsProcessing:Bool()
@@ -40,21 +46,31 @@ Class PaymentManager
     Method RestorePreviousPurchases:Void()
         #If TARGET="ios"
         DebugLog("RestorePreviousPurchases")
-        GetProvider().RestorePreviousPurchases()
+        PaymentProviderAlias(GetProvider()).RestorePreviousPurchases()
         #End
     End
 
-    Method GetProvider:PaymentProviderAlias()
-        If Not provider Then provider = New PaymentProviderAlias()
+    Method GetProvider:PaymentProvider()
         Return provider
     End
 
     Function GetInstance:PaymentManager()
-        If Not instance Then instance = New PaymentManager()
+        If Not instance
+            instance = New PaymentManager(New PaymentProviderAlias())
+        End
+
         Return instance
     End
 
     Private
+
+    Method ResolveId:String(id:String)
+        If idAlias.Contains(id)
+            Return idPrefix + idAlias.Get(id)
+        Else
+            Return idPrefix + id
+        End
+    End
 
     Method DebugLog:Void(func:String, message:String="")
         #If CONFIG="debug"
