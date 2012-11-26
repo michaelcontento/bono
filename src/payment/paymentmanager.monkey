@@ -44,8 +44,8 @@ Class PaymentManager
     End
 
     Method RestorePreviousPurchases:Void()
-        #If TARGET="ios"
         DebugLog("RestorePreviousPurchases")
+        #If TARGET="ios"
         PaymentProviderAlias(GetProvider()).RestorePreviousPurchases()
         #End
     End
