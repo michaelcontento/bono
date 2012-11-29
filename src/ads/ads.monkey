@@ -1,5 +1,0 @@
-Strict
-
-Public
-
-Import revmob

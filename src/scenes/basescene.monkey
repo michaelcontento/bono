@@ -5,9 +5,7 @@ Private
 Import bono.src.kernel
 Import scenemanager
 Import sceneable
-Import observerfan.appobserverfan
-Import observerfan.touchobserverfan
-Import observerfan.keyobserverfan
+Import helper
 
 Public
 
