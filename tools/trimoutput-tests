@@ -3,7 +3,7 @@
 tmpfile=$(mktemp "/tmp/bono-$(basename $0).XXXXX")
 cat > $tmpfile
 
-grep '** BUILD SUCCEEDED **' $tmpfile > /dev/null
+grep '\*\* BUILD SUCCEEDED \*\*' $tmpfile > /dev/null
 if [ $? -eq 0 ]; then
     cat $tmpfile \
         | awk '/Running /,/--DONT-FIND-THIS-AND-PRINT-TILL-EOF--/' \
