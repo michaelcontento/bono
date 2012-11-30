@@ -9,7 +9,7 @@ tests:
 	@$(MONKEY_PATH)/bin/trans_macos \
 		-config=$(CONFIG) \
 		-target=$(TARGET) \
-		-run testrunner.monkey | ./tools/trimoutput-tests
+		-run testrunner.monkey | ./tools/trimoutput-tests.sh
 
 lint:
 	@echo "Running pep8 for all python files ..."
