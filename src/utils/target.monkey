@@ -33,16 +33,24 @@ Class Target Abstract
 
 #If HOST="winnt"
     Const HOST:String = "winnt"
+    Const IS_MAC:Bool = False
+    Const IS_WIN:Bool = True
 #ElseIf HOST="macos"
     Const HOST:String = "macos"
+    Const IS_MAC:Bool = True
+    Const IS_WIN:Bool = False
 #Else
     #Error "BONO: Unknown HOST in utils.Target"
 #End
 
 #If CONFIG="debug"
     Const CONFIG:String = "debug"
+    Const IS_DEBUG:Bool = True
+    Const IS_RELEASE:Bool = False
 #ElseIf CONFIG="release"
     Const CONFIG:String = "release"
+    Const IS_DEBUG:Bool = False
+    Const IS_RELEASE:Bool = True
 #Else
     #Error "BONO: Unknown CONFIG in utils.Target"
 #End

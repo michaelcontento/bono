@@ -1,0 +1,7 @@
+Strict
+
+Public
+
+Import payment.paymentmanagertest
+Import payment.paymentprovideraliastest
+Import payment.paymentproviderautounlocktest
