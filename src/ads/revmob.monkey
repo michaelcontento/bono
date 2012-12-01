@@ -1,11 +1,5 @@
 Strict
 
-Private
-
-Import "native/revmobbridge.${TARGET}.${LANG}"
-
-Extern
-
 #If TARGET="ios"
 
 ' You need to include the following frameworks to your project:
@@ -16,6 +10,12 @@ Extern
 '
 ' Whereas the last three are standard apple frameworks and the first one can be
 ' found here: http://sdk.revmob.com/ios
+
+Private
+
+Import "native/revmobbridge.${TARGET}.${LANG}"
+
+Extern
 
 Class Revmob Abstract
     Function StartSession:Void(id:String)="RevmobBridge::StartSession"
@@ -64,6 +64,12 @@ End
 '             </LinearLayout>
 '         </RelativeLayout>
 '     </FrameLayout>
+
+Private
+
+Import "native/revmobbridge.${TARGET}.${LANG}"
+
+Extern
 
 Class Revmob Abstract
     Function StartSession:Void(id:String)="RevmobBridge.StartSession"
