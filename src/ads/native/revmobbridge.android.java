@@ -36,14 +36,8 @@ class RevmobBridge
 
     public static void OpenAdLink()
     {
-        /* TODO !!
-        String url = "https://play.google.com/store/apps/developer?id=Jochen+Heizmann";
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        MonkeyGame.activity.startActivity(i);
         if (revmob == null) { return; }
         revmob.openAdLink(MonkeyGame.activity);
-        */
     }
 
     public static void ShowPopup()
