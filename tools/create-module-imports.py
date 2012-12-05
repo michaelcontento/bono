@@ -5,7 +5,15 @@ from jinja2 import Template
 import sys
 
 SKIP_DIRS = ["native"]
-NON_AUTOLOAD_MODULES = ["ads", "analytics"]
+NON_AUTOLOAD_MODULES = ["ads", "analytics", "payment"]
+NON_AUTOLOAD_FILES = {
+    "payment": [
+        "paymentproviderandroidgoogle",
+        "paymentproviderandroidamazon",
+        "paymentproviderappleios",
+        "paymentproviderautounlock"
+    ]
+}
 MONKEY = Template("""Strict
 
 Public
@@ -28,8 +36,15 @@ def walkdir(dirpath, proc_func, rec_func):
 
 
 def create_import_files(dirname):
+    def is_valid(module, filename):
+        try:
+            return filename not in NON_AUTOLOAD_FILES[module]
+        except:
+            return True
+
     def process(dirpath):
         filenames = [x.stripext().name for x in dirpath.files()]
+        filenames = [x for x in filenames if is_valid(dirpath.name, x)]
         rendered = MONKEY.render(filenames=filenames, module=dirpath.name)
         (dirpath + ".monkey").write_text(rendered)
 
