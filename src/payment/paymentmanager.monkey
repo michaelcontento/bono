@@ -50,6 +50,13 @@ Class PaymentManager
         #End
     End
 
+    Method SetPublicKey:Void(key:String)
+        DebugLog("SetPublicKey")
+        #If TARGET="android" And BONO_ANDROID_MARKET="google"
+        PaymentProviderAlias(GetProvider()).publicKey = key
+        #End
+    End
+
     Method GetProvider:PaymentProvider()
         Return provider
     End

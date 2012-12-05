@@ -3,19 +3,61 @@ Strict
 Private
 
 Import paymentprovider
+Import bono.src.exceptions
+Import "native/paymentwrapper-google.android.java"
+
+Private Extern
+
+Class PaymentWrapper
+    Method Init:Void()
+    Method Purchase:Void(productId:String)
+    Method IsBought:Bool(id:String)
+    Method IsPurchaseInProgress:Bool()
+End
+
+Class Security="com.payment.Security"
+    Function SetPublicKey:Void(k:String)="com.payment.Security.SetPublicKey"
+End
 
 Public
 
 Class PaymentProviderAndroidGoogle Implements PaymentProvider
+    Private
+
+    Field wrapper:PaymentWrapper
+
+    Public
+
+    Field publicKey:String
+
     Method IsProcessing:Bool()
-        Return False
+        Initialize()
+        Return wrapper.IsPurchaseInProgress()
     End
 
     Method Purchase:Void(id:String)
+        Initialize()
+        wrapper.Purchase(id)
     End
 
     Method IsPurchased:Bool(id:String)
-        Return False
+        Initialize()
+        Return wrapper.IsBought(id)
+    End
+
+    Private
+
+    Method Initialize:Void()
+        If wrapper Then Return
+
+        If Not publicKey
+            Throw New RuntimeException("Please configure " +
+                "PaymentProviderAndroidGoogle.publicKey with your " +
+                "public key first.")
+        End
+
+        wrapper = New PaymentWrapper()
+        wrapper.Init()
+        Security.SetPublicKey(publicKey)
     End
 End
-

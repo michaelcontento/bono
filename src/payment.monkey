@@ -5,7 +5,3 @@ Public
 Import payment.paymentmanager
 Import payment.paymentprovider
 Import payment.paymentprovideralias
-Import payment.paymentproviderandroidamazon
-Import payment.paymentproviderandroidgoogle
-Import payment.paymentproviderappleios
-Import payment.paymentproviderautounlock
