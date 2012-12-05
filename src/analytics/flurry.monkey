@@ -24,21 +24,27 @@ End
 
 #Else
 
+Private
+
+Import bono.src.utils
+
+Public
+
 Class Flurry Abstract
     Function StartSession:Void(id:String)
-        Print "[Flurry StartSession] id:" + id
+        If Target.IS_DEBUG Then Print "[Flurry StartSession] id:" + id
     End
 
     Function LogEvent:Void(name:String)
-        Print "[Flurry LogEvent] name:" + name
+        If Target.IS_DEBUG Then Print "[Flurry LogEvent] name:" + name
     End
 
     Function LogEventTimed:Void(name:String)
-        Print "[Flurry LogEventTimed] name:" + name
+        If Target.IS_DEBUG Then Print "[Flurry LogEventTimed] name:" + name
     End
 
     Function EndTimedEvent:Void(name:String)
-        Print "[Flurry EndTimedEvent] name:" + name
+        If Target.IS_DEBUG Then Print "[Flurry EndTimedEvent] name:" + name
     End
 End
 
