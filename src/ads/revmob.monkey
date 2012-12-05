@@ -99,41 +99,47 @@ End
 
 #Else
 
+Private
+
+Import bono.src.utils
+
+Public
+
 Class Revmob Abstract
     Function StartSession:Void(id:String)
-        Print "[Revmob StartSession]"
+        If Target.IS_DEBUG Then Print "[Revmob StartSession]"
     End
 
     Function ShowFullscreen:Void()
-        Print "[Revmob ShowFullscreen]"
+        If Target.IS_DEBUG Then Print "[Revmob ShowFullscreen]"
     End
 
     Function ShowBanner:Void()
-        Print "[Revmob ShowBanner]"
+        If Target.IS_DEBUG Then Print "[Revmob ShowBanner]"
     End
 
     Function HideBanner:Void()
-        Print "[Revmob HideBanner]"
+        If Target.IS_DEBUG Then Print "[Revmob HideBanner]"
     End
 
     Function OpenAdLink:Void()
-        Print "[Revmob OpenAdLink]"
+        If Target.IS_DEBUG Then Print "[Revmob OpenAdLink]"
     End
 
     Function ShowPopup:Void()
-        Print "[Revmob ShowPopup]"
+        If Target.IS_DEBUG Then Print "[Revmob ShowPopup]"
     End
 
     Function EnableTestingWithAds:Void()
-        Print "[Revmob EnableTestingWithAds]"
+        If Target.IS_DEBUG Then Print "[Revmob EnableTestingWithAds]"
     End
 
     Function EnableTestingWithoutAds:Void()
-        Print "[Revmob EnableTestingWithoutAds]"
+        If Target.IS_DEBUG Then Print "[Revmob EnableTestingWithoutAds]"
     End
 
     Function DisableTesting:Void()
-        Print "[Revmob DisableTesting]"
+        If Target.IS_DEBUG Then Print "[Revmob DisableTesting]"
     End
 End
 
