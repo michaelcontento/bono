@@ -48,6 +48,10 @@ Class PaymentManagerTest Extends TestCase
         AssertEquals("foo", provider.lastIdSeen)
     End
 
+    Method TestIsPaymentProvider:Void()
+        AssertNotNull(PaymentProvider(manager))
+    End
+
     Method TestPurchaseWithPrefix:Void()
         manager.idPrefix = "prefix."
         manager.Purchase("foo")

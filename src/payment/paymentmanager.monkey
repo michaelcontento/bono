@@ -7,7 +7,7 @@ Import paymentprovideralias
 
 Public
 
-Class PaymentManager
+Class PaymentManager Implements PaymentProvider
     Private
 
     Field provider:PaymentProvider
