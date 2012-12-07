@@ -14,11 +14,11 @@ helper you get:
 
 1. Singleton behaviour (`PaymentManager.GetInstance()`)
 2. Logging to stdout if `Target.IS_DEBUG` is true
-3. Handling of some provider specific methods
-4. ID-Prefix
-5. ID-Aliasing
+3. Clean API 
+4. ID prefixing
+5. ID aliasing
 
-### Specific provider method handling?
+### Clean API?
 
 Just a short example:
 
@@ -32,7 +32,7 @@ Just a short example:
         PaymentProviderAppleIos(provider).RestorePreviousPurchases()
     End
 
-### ID-Prefix?
+### ID prefixing?
 
 Your IAP IDs are prefix with your reversed domain name (e.g. `com.example.`)?
 And you don't want to repeat this prefix all the time? Take this:
@@ -42,9 +42,9 @@ And you don't want to repeat this prefix all the time? Take this:
         Print "Yay! com.example.foo has been purchased!"
     End
 
-### ID-Aliasing?
+### ID aliasing?
 
-This goes into the same direction as the ID-Prefix thing, but one small step
+This goes into the same direction as the ID prefixing thing, but one step
 further. Instead of a simple prefix we define "virtual names" that are used
 when talking with the payment provider. With this we can handle different IAP
 IDs on different targets without headache.
