@@ -62,7 +62,6 @@ Strict
 Import bono
 Import bono.src.payment
 
-
 Function Main:Int()
     ' --- SETUP
 	Local payment:PaymentManager = PaymentManager().GetInstance()
@@ -80,7 +79,6 @@ Function Main:Int()
 	Else
 	  Print "... not purchased :("
 	End
-
 
 	Return 0
 End
