@@ -2,6 +2,18 @@ Strict
 
 Private
 
+' 1) Download the official SDK: https://developer.amazon.com/sdk.html
+' 2) If there is no libs/ folder in build/android: create it!
+' 3) Copy the in-app-purchasing-*.jar from the SDK into the libs/ folder
+' 4) Put the following code inside the <application> tag of the AndroidManifest.xml
+'
+'    <receiver android:name="com.amazon.inapp.purchasing.ResponseReceiver" >
+'        <intent-filter>
+'            <action android:name="com.amazon.inapp.purchasing.NOTIFY"
+'                android:permission="com.amazon.inapp.purchasing.Permission.NOTIFY" />
+'        </intent-filter>
+'    </receiver>
+
 Import paymentprovider
 Import "native/paymentwrapper-amazon.android.java"
 

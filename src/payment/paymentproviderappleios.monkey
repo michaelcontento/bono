@@ -2,6 +2,8 @@ Strict
 
 Private
 
+' Just add Apple's StoreKit framework as a dependency to your project
+
 Import paymentprovider
 Import bono.vendor.iap
 
