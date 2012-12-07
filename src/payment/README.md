@@ -4,17 +4,72 @@ Handle in-app purchasing (IAP) in various markets with ease.
 
 ## Overview
 
-![Class diagramm](http://yuml.me/c91e5a6b)
+![Class diagramm](http://yuml.me/298873e0)
 
 ## Manager
 
-**TODO**
+This thing is just a helper to get a nice API, totally optional and can be
+skipped (just talk directly to the desired payment provider). But with this
+helper you get:
+
+1. Singleton behaviour (`PaymentManager.GetInstance()`)
+2. Logging to stdout if `Target.IS_DEBUG` is true
+3. Handling of some provider specific methods
+4. ID-Prefix
+5. ID-Aliasing
+
+### Specific provider method handling?
+
+Just a short example:
+
+    ' -- NICE API
+    PaymentManager.GetInstance().RestorePreviousPurchases()
+
+    ' -- NOT SO NICE ...
+    If Target.IS_IOS
+        Local manager:PaymentManager = PaymentManager.GetInstance()
+        Local provider:PaymentProvider = manager.GetProvider()
+        PaymentProviderAppleIos(provider).RestorePreviousPurchases()
+    End
+
+### ID-Prefix?
+
+Your IAP IDs are prefix with your reversed domain name (e.g. `com.example.`)?
+And you don't want to repeat this prefix all the time? Take this:
+
+    PaymentManager.GetInstance().idPrefix = "com.example."
+    If PaymentManager.GetInstance().IsPurchased("foo")
+        Print "Yay! com.example.foo has been purchased!"
+    End
+
+### ID-Aliasing?
+
+This goes into the same direction as the ID-Prefix thing, but one small step
+further. Instead of a simple prefix we define "virtual names" that are used
+when talking with the payment provider. With this we can handle different IAP
+IDs on different targets without headache.
+
+    ' -- ONE TIME SETUP
+    Local manager:PaymentManager = PaymentManager.GetInstance()
+    If Target.IS_IOS
+        manager.idAlias.Set("foo", "com.example.ios.foo")
+    ElseIf Target.IS_ANDROID
+        manager.isAlias.Set("foo", "com.example.android.foo")
+    End
+
+    ' -- AND SOMEWHERE ELSE
+    If manager.IsPurchased("foo") Then Print "Yay! Purchased!"
 
 ## Providers
 
-Most providers require some configuration stuff and third-party dependencies.
-Just take a look at the source of each provider to get a detailed description
-what need to be done OR keep an eye on [this][1].
+Providers are the heart of this whole module and are responsible for the
+communication between some native SDK and Monkey. And all this is done via a
+thin interface (currently three methods) so it should be easy to add new stuff
+in the future.
+
+**Important:** Most providers require some configuration stuff and third-party
+dependencies. Just take a look at the source of each provider to get a detailed
+description what need to be done OR keep an eye on [this][1].
 
 ### AppleIos
 
@@ -53,36 +108,34 @@ Monkey preprocessor magic, to the right provider for the current target.
 
 ## Example
 
-```
-Strict
+    Strict
 
-' -- CHANGE ANDROID MARKET
-#BONO_ANDROID_MARKET="amazon"
+    ' -- CHANGE ANDROID MARKET
+    #BONO_ANDROID_MARKET="amazon"
 
-Import bono
-Import bono.src.payment
+    Import bono
+    Import bono.src.payment
 
-Function Main:Int()
-    ' --- SETUP
-	Local payment:PaymentManager = PaymentManager().GetInstance()
-	payment.idAlias.Set("fullversion", "com.example.app.fullversion")
+    Function Main:Int()
+        ' --- SETUP
+        Local payment:PaymentManager = PaymentManager().GetInstance()
+        payment.idAlias.Set("fullversion", "com.example.app.fullversion")
 
-	' --- PURCHASE
-	payment.Purchase("fullversion")
-	While payment.IsProcessing()
-	  Print "processing ..."
-	End
+        ' --- PURCHASE
+        payment.Purchase("fullversion")
+        While payment.IsProcessing()
+          Print "processing ..."
+        End
 
-	' --- HANDLE STATE
-	If payment.IsPurchased("fullversion")
-	  Print "... purchased :)"
-	Else
-	  Print "... not purchased :("
-	End
+        ' --- HANDLE STATE
+        If payment.IsPurchased("fullversion")
+          Print "... purchased :)"
+        Else
+          Print "... not purchased :("
+        End
 
-	Return 0
-End
-```
+        Return 0
+    End
 
 ## Links
 
