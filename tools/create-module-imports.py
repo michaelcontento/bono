@@ -5,6 +5,7 @@ from jinja2 import Template
 import sys
 
 SKIP_DIRS = ["native"]
+SKIP_FILES = ["README"]
 NON_AUTOLOAD_MODULES = ["ads", "analytics", "payment"]
 NON_AUTOLOAD_FILES = {
     "payment": [
@@ -37,6 +38,9 @@ def walkdir(dirpath, proc_func, rec_func):
 
 def create_import_files(dirname):
     def is_valid(module, filename):
+        if filename.startswith(".") or filename in SKIP_FILES:
+            return False
+
         try:
             return filename not in NON_AUTOLOAD_FILES[module]
         except:
