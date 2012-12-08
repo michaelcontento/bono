@@ -6,10 +6,9 @@ Very simple test framework inspired (just a little bit) by [PHPUnit][].
 
 ![Class diagramm](http://yuml.me/5a92f96a)
 
-## TestCase
+### TestCase
 
-Everyt real test case must extend this class.
-
+Every real test case must extend this class.
 
 ### TestRunner
 
