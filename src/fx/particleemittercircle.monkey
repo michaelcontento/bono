@@ -68,6 +68,6 @@ Class ParticleEmitterCircle Implements ParticleEmitter
 
     Method GetNextAngel:Float()
         counter += 1
-        Return (360 / (particlesPerBurst + 1)) * counter
+        Return (360 / particlesPerBurst) * counter
     End
 End
