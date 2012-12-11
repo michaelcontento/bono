@@ -39,10 +39,12 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 }
 	
 - (void) paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions;
-- (void) paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error;
 - (void) failedTransaction: (SKPaymentTransaction *)transaction;
 - (void) completeTransaction: (SKPaymentTransaction *)transaction;
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction;
+
+- (void) paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error;
+- (void) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue;
 
 @end
 
@@ -125,6 +127,12 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 @implementation MKStoreObserver
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    [[MKStoreManager sharedManager] setIsPurchaseInProgress: NO];
+    NSLog(@"Error: %@", error);
+}
+
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
     [[MKStoreManager sharedManager] setIsPurchaseInProgress: NO];
 }
