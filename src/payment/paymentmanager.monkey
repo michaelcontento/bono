@@ -23,15 +23,7 @@ Class PaymentManager Implements PaymentProvider
     End
 
     Method IsPurchased:Bool(id:String)
-        Local result:Bool = GetProvider().IsPurchased(ResolveId(id))
-
-        If result
-            DebugLog("IsPurchased", ResolveId(id) + " => True")
-        Else
-            DebugLog("IsPurchased", ResolveId(id) + " => False")
-        End
-
-        Return result
+        Return GetProvider().IsPurchased(ResolveId(id))
     End
 
     Method Purchase:Void(id:String)
