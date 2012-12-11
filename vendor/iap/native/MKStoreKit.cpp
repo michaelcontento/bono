@@ -129,7 +129,7 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
 {
     [[MKStoreManager sharedManager] setIsPurchaseInProgress: NO];
-    NSLog(@"Error: %@", error);
+    NSLog(@"[MKStoreKit] Transactions failed: %@", error);
 }
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
@@ -144,26 +144,26 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 		switch (transaction.transactionState)
 		{
 			case SKPaymentTransactionStatePurchasing:
-//				NSLog(@"order start");
+				NSLog(@"[MKStoreKit] Order start");
 				[[MKStoreManager sharedManager] setIsPurchaseInProgress: YES];
 				break;
 				
 			case SKPaymentTransactionStatePurchased:	
-//				NSLog(@"state purchased");
+				NSLog(@"[MKStoreKit] State purchased");
 				[[MKStoreManager sharedManager] setIsPurchaseInProgress: NO];
 				[[MKStoreManager sharedManager] setPurchaseResult: 2];
                 [self completeTransaction:transaction];
                 break;
 				
             case SKPaymentTransactionStateFailed:
-//				NSLog(@"state failed");
+				NSLog(@"[MKStoreKit] State failed");
 				[[MKStoreManager sharedManager] setIsPurchaseInProgress: NO]; 
 				[[MKStoreManager sharedManager] setPurchaseResult: 3];
                 [self failedTransaction:transaction];
                 break;
 				
             case SKPaymentTransactionStateRestored:
-//				NSLog(@"State restored");
+				NSLog(@"[MKStoreKit] State restored");
 				[[MKStoreManager sharedManager] setIsPurchaseInProgress: NO];
 				[[MKStoreManager sharedManager] setPurchaseResult: 4];
                 [self restoreTransaction:transaction];
@@ -181,27 +181,27 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 	switch (transaction.error.code) 
 	{
 		case SKErrorPaymentCancelled:
-			NSLog(@"SKErrorPaymentCancelled");
+			NSLog(@"[MKStoreKit] SKErrorPaymentCancelled");
 		break;
 		
 		case SKErrorUnknown:
-			NSLog(@"SKErrorUnknown");
+			NSLog(@"[MKStoreKit] SKErrorUnknown %@ | %@", transaction.error.localizedDescription, transaction.error.localizedFailureReason );
 		break;
 			
 		case SKErrorClientInvalid:
-			NSLog(@"SKErrorClientInvalid");
+			NSLog(@"[MKStoreKit] SKErrorClientInvalid");
 		break;
 			
 		case SKErrorPaymentInvalid:
-			NSLog(@"SKErrorPaymentInvalid");
+			NSLog(@"[MKStoreKit] SKErrorPaymentInvalid");
 		break;
 			
 		case SKErrorPaymentNotAllowed:
-			NSLog(@"SKErrorPaymentNotAllowed");
+			NSLog(@"[MKStoreKit] SKErrorPaymentNotAllowed");
 		break;
 			
 		default:
-			NSLog(@"## MISSING ERROR CODE TRANSCATION");
+			NSLog(@"[MKStoreKit] ## MISSING ERROR CODE TRANSCATION");
 			b_retry=true;
 			break;
 	}
@@ -222,9 +222,7 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 
 	[[SKPaymentQueue defaultQueue] finishTransaction: transaction];	
 
-	#ifndef NDEBUG
-	NSLog(@"IAP Purchase completed");
-	#endif
+	NSLog(@"[MKStoreKit] Purchased: %@", transaction.payment.productIdentifier);
 }
 
 - (void) restoreTransaction: (SKPaymentTransaction *)transaction
@@ -234,10 +232,9 @@ MKStoreKit function wrappers by Roman Budzowski (c) 21.07.2011
 	
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];	
 
-	#ifndef NDEBUG
-	NSLog(@"IAP Restore Purchases completed");
-	#endif
+	NSLog(@"[MKStoreKit] Restored: %@", transaction.originalTransaction.payment.productIdentifier);
 
+    [[MKStoreManager sharedManager] setIsPurchaseInProgress: YES];
 }
 
 @end
@@ -296,7 +293,7 @@ static MKStoreManager* _sharedStoreManager;
         if (_sharedStoreManager == nil) {
 						
 #if TARGET_IPHONE_SIMULATOR
-			NSLog(@"You are running in Simulator MKStoreKit runs only on devices");
+			NSLog(@"[MKStoreKit] You are running in Simulator MKStoreKit runs only on devices");
 #else
             _sharedStoreManager = [[self alloc] init];					
 #endif
@@ -309,9 +306,9 @@ static MKStoreManager* _sharedStoreManager;
 + (void)startManager 
 {
 	#if TARGET_IPHONE_SIMULATOR
-		NSLog(@"IAP doesn't run on simulator");
+		NSLog(@"[MKStoreKit] IAP doesn't run on simulator");
 	#else
-//NSLog(@"start manager");
+        NSLog(@"[MKStoreKit] start manager");
 		_sharedStoreManager.purchasableObjects = [[NSMutableArray alloc] init];
 		[_sharedStoreManager requestProductData];						
 		_sharedStoreManager.storeObserver = [[MKStoreObserver alloc] init];
@@ -397,12 +394,12 @@ static MKStoreManager* _sharedStoreManager;
 	for(int i=0;i<[self.purchasableObjects count];i++)
 	{		
 		SKProduct *product = [self.purchasableObjects objectAtIndex:i];
-		NSLog(@"Feature: %@, Cost: %f, ID: %@",[product localizedTitle],
+		NSLog(@"[MKStoreKit] Feature: %@, Cost: %f, ID: %@",[product localizedTitle],
 			  [[product price] doubleValue], [product productIdentifier]);
 	}
 	
 	for(NSString *invalidProduct in response.invalidProductIdentifiers)
-		NSLog(@"Problem in iTunes connect configuration for product: %@", invalidProduct);
+		NSLog(@"[MKStoreKit] Problem in iTunes connect configuration for product: %@", invalidProduct);
 #endif
 	
 	[request autorelease];
@@ -441,7 +438,7 @@ static MKStoreManager* _sharedStoreManager;
 		NSString *description = [NSString stringWithFormat:@"%@ (%@)",[product localizedTitle], formattedString];
 		
 #ifndef NDEBUG
-		NSLog(@"Product %d - %@", i, description);
+		NSLog(@"[MKStoreKit] Product %d - %@", i, description);
 #endif
 		[productDescriptions addObject: description];
 	}
@@ -469,7 +466,7 @@ static MKStoreManager* _sharedStoreManager;
 	
 	if ([SKPaymentQueue canMakePayments])
 	{
-//		NSLog(@"Trying to buy %@", featureId);
+		NSLog(@"[MKStoreKit] Trying to buy %@", featureId);
 		SKPayment *payment = [SKPayment paymentWithProductIdentifier:featureId];
 		[[SKPaymentQueue defaultQueue] addPayment:payment];
 	}
@@ -536,7 +533,7 @@ static MKStoreManager* _sharedStoreManager;
 	}
 
 	NSRange range = [productIdentifier rangeOfString: @"." options: NSBackwardsSearch];
-	if (range.location == NSNotFound) NSLog(@"invalid product id");
+	if (range.location == NSNotFound) NSLog(@"[MKStoreKit] invalid product id");
 
 	NSString *countText = [productIdentifier substringFromIndex:range.location+1];
 
@@ -564,12 +561,12 @@ static MKStoreManager* _sharedStoreManager;
 {
 
 #ifndef NDEBUG
-	NSLog(@"User cancelled transaction: %@", [transaction description]);
+	NSLog(@"[MKStoreKit] User cancelled transaction: %@", [transaction description]);
 
    if (transaction.error.code != SKErrorPaymentCancelled)
     {
 		if(transaction.error.code == SKErrorUnknown) {
-			NSLog(@"Unknown Error (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
+			NSLog(@"[MKStoreKit] Unknown Error (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
 			UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle :@"In-App-Purchase Error:"
 																	message: @"There was an error purchasing this item please try again."
 																  delegate : self cancelButtonTitle:@"OK"otherButtonTitles:nil];
@@ -578,7 +575,7 @@ static MKStoreManager* _sharedStoreManager;
 		}
 		
 		if(transaction.error.code == SKErrorClientInvalid) {
-			NSLog(@"Client invalid (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
+			NSLog(@"[MKStoreKit] Client invalid (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
 			UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle :@"In-App-Purchase Error:"
 																	message: @"There was an error purchasing this item please try again."
 																  delegate : self cancelButtonTitle:@"OK"otherButtonTitles:nil];
@@ -587,7 +584,7 @@ static MKStoreManager* _sharedStoreManager;
 		}
 		
 		if(transaction.error.code == SKErrorPaymentInvalid) {
-			NSLog(@"Payment invalid (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
+			NSLog(@"[MKStoreKit] Payment invalid (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
 			UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle :@"In-App-Purchase Error:"
 																	message: @"There was an error purchasing this item please try again."
 																  delegate : self cancelButtonTitle:@"OK"otherButtonTitles:nil];
@@ -596,7 +593,7 @@ static MKStoreManager* _sharedStoreManager;
 		}
 		
 		if(transaction.error.code == SKErrorPaymentNotAllowed) {
-			NSLog(@"Payment not allowed (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
+			NSLog(@"[MKStoreKit] Payment not allowed (%d), product: %@", (int)transaction.error.code, transaction.payment.productIdentifier);
 			UIAlertView *failureAlert = [[UIAlertView alloc] initWithTitle :@"In-App-Purchase Error:"
 																	message: @"There was an error purchasing this item please try again."
 																  delegate : self cancelButtonTitle:@"OK"otherButtonTitles:nil];
@@ -751,10 +748,6 @@ int isProductPurchased(String product) {
 void buyProduct(String product) {
 	NSString *kProductID = product.ToNSString();
 
-	#ifndef NDEBUG
-	NSLog(@"Trying to purchase: %@", kProductID);
-	#endif
-
 	[[MKStoreManager sharedManager] buyFeature:kProductID];
 }
 
@@ -789,7 +782,7 @@ bool canConsumeProduct(String product) {
 	NSString *kFeatureID = product.ToNSString();
 
 	#ifndef NDEBUG
-	NSLog(@"can consume product?: %@", kFeatureID);
+	NSLog(@"[MKStoreKit] can consume product?: %@", kFeatureID);
 	#endif
 
 	return [[MKStoreManager sharedManager] canConsumeProduct:kFeatureID];
@@ -820,6 +813,9 @@ void InitInAppPurchases(String bundleID, Array<String> prodList) {
 		[nsaProdList addObject: prodID];
 	}
 
+    NSLog(@"[MKStoreKit] BundleId: %@", bundleID.ToNSString());
+    NSLog(@"[MKStoreKit] Init %@", nsaProdList);
+
 	[[MKStoreManager sharedManager] setProductsList:[NSSet setWithArray:nsaProdList]];
 
 	[MKStoreManager startManager];
@@ -827,7 +823,7 @@ void InitInAppPurchases(String bundleID, Array<String> prodList) {
 
 
 void restorePurchasedProducts() {
-//	NSLog(@"trying to restore");
+	NSLog(@"[MKStoreKit] trying to restore");
 	[[MKStoreManager sharedManager] setIsPurchaseInProgress: YES];
 	[[MKStoreManager sharedManager] restorePreviousTransactions];
 }
