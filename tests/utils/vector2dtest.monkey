@@ -56,6 +56,13 @@ Class Vector2DTest Extends TestCase
         AssertEquals(2.8284270763397217, vecA.Distance(vecB))
     End
 
+    Method TestDistanceWithSecondVectorNotGreater:Void()
+        Local vecA:Vector2D = New Vector2D(1, 2)
+        Local vecB:Vector2D = New Vector2D(3, 4)
+
+        AssertEquals(2.8284270763397217, vecB.Distance(vecA))
+    End
+
     Method TestEqual:Void()
         Local firstVec:Vector2D = New Vector2D(12, 34)
         AssertTrue(firstVec.Equal(firstVec))

@@ -28,7 +28,7 @@ Class Vector2D
     End
 
     Method Distance:Float(v2:Vector2D)
-        Return Sqrt((v2.x - x)) + Sqrt((v2.y - y))
+        Return Sqrt(Pow(v2.x - x, 2.0) + Pow(v2.y - y, 2.0))
     End
 
     Method Equal:Bool(v2:Vector2D)
