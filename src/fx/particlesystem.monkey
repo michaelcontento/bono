@@ -39,6 +39,7 @@ Class ParticleSystem Implements AppObserver
             GetParticlesForEmitter(emitter).Clear()
         End
         emitters.Clear()
+        particles.Clear()
     End
 
     Method OnLoading:Void()
