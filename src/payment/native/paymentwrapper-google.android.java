@@ -2,6 +2,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import net.robotmedia.billing.BillingController;
+import net.robotmedia.billing.BillingController.IConfiguration;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
 import net.robotmedia.billing.model.Transaction.PurchaseState;
 import net.robotmedia.billing.BillingRequest.ResponseCode;
@@ -9,6 +10,7 @@ import net.robotmedia.billing.BillingRequest.ResponseCode;
 class PaymentWrapper
 {
     private static final String KEY_TRANSACTIONS_RESTORED = "net.robotmedia.billing.transactionsRestored";
+    private static String publicKey = "";
     private AbstractBillingObserver billingObserver;
     private boolean billingSupported = false;
     private Set<String> pendingItems = new HashSet<String>();
@@ -21,7 +23,7 @@ class PaymentWrapper
     public void Init(String publicKey)
     {
         BillingController.setDebug(true);
-        BillingController.setConfiguration(getConfiguration());
+        BillingController.setConfiguration(getConfiguration(publicKey));
 
         billingObserver = getBillingObserver();
         BillingController.registerObserver(billingObserver);
@@ -87,15 +89,17 @@ class PaymentWrapper
         };
     }
 
-    private BillingController.IConfiguration getConfiguration()
+    private IConfiguration getConfiguration(String publicKey)
     {
-        return new BillingController.IConfiguration() {
+        PaymentWrapper.publicKey = publicKey;
+
+        return new IConfiguration() {
             public byte[] getObfuscationSalt() {
                 return new byte[] {41, -90, -116, -41, 66, -53, 122, -110, -127, -96, -88, 77, 127, 115, 1, 73, 57, 110, 48, -116};
             }
 
             public String getPublicKey() {
-                return "TODO";
+                return PaymentWrapper.publicKey;
             }
         };
     }
