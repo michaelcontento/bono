@@ -1,4 +1,3 @@
-import android.util.Log;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
