@@ -9,14 +9,10 @@ Import "native/paymentwrapper-google.android.java"
 Private Extern
 
 Class PaymentWrapper
-    Method Init:Void()
+    Method Init:Void(publicKey:String)
     Method Purchase:Void(productId:String)
     Method IsBought:Bool(id:String)
     Method IsPurchaseInProgress:Bool()
-End
-
-Class Security="com.payment.Security"
-    Function SetPublicKey:Void(k:String)="com.payment.Security.SetPublicKey"
 End
 
 Public
@@ -57,7 +53,6 @@ Class PaymentProviderAndroidGoogle Implements PaymentProvider
         End
 
         wrapper = New PaymentWrapper()
-        wrapper.Init()
-        Security.SetPublicKey(publicKey)
+        wrapper.Init(publicKey)
     End
 End
