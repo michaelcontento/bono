@@ -1,0 +1,12 @@
+diff --git testrunner.build/android/build.xml testrunner.build/android/build.xml
+index 311d2a7..f4d5d98 100755
+--- testrunner.build/android/build.xml
++++ testrunner.build/android/build.xml
+@@ -88,4 +88,7 @@
+     <!-- version-tag: 1 -->
+     <import file="${sdk.dir}/tools/ant/build.xml" />
+ 
++    <copy todir="src">
++        <fileset dir="src_AndroidBillingLibrary"/>
++    </copy>
+ </project>

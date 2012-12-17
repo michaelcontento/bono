@@ -1,0 +1,3 @@
+[submodule "tools/wizard/android/files/payment/AndroidBillingLibrary"]
+	path = tools/wizard/android/files/payment/AndroidBillingLibrary
+	url = git://github.com/robotmedia/AndroidBillingLibrary.git
