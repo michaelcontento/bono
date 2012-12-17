@@ -1,206 +1,131 @@
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
-import com.payment.BillingService.RequestPurchase;
-import com.payment.BillingService.RestoreTransactions;
-import com.payment.Consts.PurchaseState;
-import com.payment.Consts;
-import com.payment.Consts.ResponseCode;
-import com.payment.PurchaseObserver;
-import com.payment.ResponseHandler;
-import com.payment.PurchaseDatabase;
-import android.database.Cursor;
+import net.robotmedia.billing.BillingController;
+import net.robotmedia.billing.BillingController.IConfiguration;
+import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.model.Transaction.PurchaseState;
+import net.robotmedia.billing.BillingRequest.ResponseCode;
 
-class MonkeyPurchaseObserver extends PurchaseObserver {
-    private static final String DB_INITIALIZED = "db_initialized";
+class PaymentWrapper
+{
+    private static final String KEY_TRANSACTIONS_RESTORED = "net.robotmedia.billing.transactionsRestored";
+    private static String publicKey = "";
+    private AbstractBillingObserver billingObserver;
+    private boolean billingSupported = false;
+    private Set<String> pendingItems = new HashSet<String>();
+    private Set<String> ownedItems = new HashSet<String>();
 
-    private PurchaseDatabase mPurchaseDatabase;
-    private Set<String> mOwnedItems = new HashSet<String>();
+    /**
+     * ---- MONKEY INTERFACE START ----
+     */
 
-    private com.payment.BillingService mBillingService;
-
-    protected boolean inProgress = false;
-
-    public void initDatabase()
+    public void Init(String publicKey)
     {
-        mPurchaseDatabase = new PurchaseDatabase(MonkeyGame.activity);
+        BillingController.setDebug(true);
+        BillingController.setConfiguration(getConfiguration(publicKey));
+
+        billingObserver = getBillingObserver();
+        BillingController.registerObserver(billingObserver);
+
+        BillingController.checkBillingSupported(MonkeyGame.activity);
+        BillingController.checkSubscriptionSupported(MonkeyGame.activity);
     }
 
-    public void destroy()
-    {
-        mPurchaseDatabase.close();
+    public boolean Purchase(String productId) {
+        pendingItems.add(productId);
+        BillingController.requestPurchase(MonkeyGame.activity, productId, true, null);
+        return false;
     }
 
-    public void SetBillingService(com.payment.BillingService bs)
-    {
-        mBillingService = bs;
-    }
-    public void SetInProgress(boolean p)
-    {
-        inProgress = p;
+    public boolean IsBought(String productId) {
+        return ownedItems.contains(productId);
     }
 
-    public boolean IsInProgress()
-    {
-        return inProgress;
-    }
-
-    public MonkeyPurchaseObserver(Handler handler) {
-        super(MonkeyGame.activity, handler);
-        // bb_std_lang.print("Payment purchaseobserver started!");
-        initDatabase();
-    }
-
-    @Override
-    public void onBillingSupported(boolean supported) {
-        // bb_std_lang.print("onBilling Support!");
-       restoreDatabase();
-    }
-
-    public boolean IsBought(String productId)
-    {
-        return mOwnedItems.contains(productId);
-    }
-
-    @Override
-    public void onRequestPurchaseResponse(RequestPurchase request,
-            ResponseCode responseCode) {
-        // bb_std_lang.print("Payment onRequestPurchaseResponse");
-        // bb_std_lang.print("Payment "  + request.mProductId + ": " + responseCode);
-        if (responseCode == ResponseCode.RESULT_OK) {
-          // bb_std_lang.print("Payment purchase was successfully sent to server");
-
-
-        } else if (responseCode == ResponseCode.RESULT_USER_CANCELED) {
-            SetInProgress(false);
-
-           // bb_std_lang.print("Payment user canceled purchase");
-
-
+    public boolean IsPurchaseInProgress() {
+        if (!billingSupported || !billingObserver.isTransactionsRestored()) {
+            return true;
         } else {
-            SetInProgress(false);
-
-           // bb_std_lang.print("Payment purchase failed");
-
-
+            return !pendingItems.isEmpty();
         }
     }
 
-    @Override
-    public void onRestoreTransactionsResponse(RestoreTransactions request,
-            ResponseCode responseCode) {
-        // bb_std_lang.print("Payment onRestoreTransactionsResponse");
-        if (responseCode == ResponseCode.RESULT_OK) {
-            if (Consts.DEBUG) {
-                //bb_std_lang.print(TAG, "completed RestoreTransactions request");
+    /**
+     * ---- MONKEY INTERFACE END ----
+     */
+
+    private AbstractBillingObserver getBillingObserver()
+    {
+        return new AbstractBillingObserver(MonkeyGame.activity) {
+            public void onBillingChecked(boolean supported) {
+                PaymentWrapper.this.onBillingChecked(supported);
             }
-            SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(DB_INITIALIZED, true);
-            edit.commit();
-            // bb_std_lang.print("set db initialized to TRUE");
-        } else {
-            if (Consts.DEBUG) {
-                SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor edit = prefs.edit();
-                edit.putBoolean(DB_INITIALIZED, true);
+
+            public void onPurchaseStateChanged(String itemId, PurchaseState state) {
+                PaymentWrapper.this.onPurchaseStateChanged(itemId, state);
+            }
+
+            public void onRequestPurchaseResponse(String itemId, ResponseCode response) {
+                PaymentWrapper.this.onRequestPurchaseResponse(itemId, response);
+            }
+
+            public void onSubscriptionChecked(boolean supported) {
+                // Ignored
+            }
+
+            @Override
+            public boolean isTransactionsRestored() {
+                final SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
+                return prefs.getBoolean(KEY_TRANSACTIONS_RESTORED, false);
+            }
+
+            @Override
+            public void onTransactionsRestored() {
+                final SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
+                final Editor edit = prefs.edit();
+                edit.putBoolean(KEY_TRANSACTIONS_RESTORED, true);
                 edit.commit();
-                // bb_std_lang.print("ResponseCode invalid");
             }
-        }
-        SetInProgress(false);
+        };
     }
 
-    private void restoreDatabase() {
-        // bb_std_lang.print("restoreDatabase");
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-        boolean initialized = prefs.getBoolean(DB_INITIALIZED, false);
-        if (!initialized) {
-            // bb_std_lang.print("restoreTransactions");
-            mBillingService.restoreTransactions();
-        }
+    private IConfiguration getConfiguration(String publicKey)
+    {
+        PaymentWrapper.publicKey = publicKey;
 
-        Cursor c = mPurchaseDatabase.queryAll();
-        try {
-            while (c.moveToNext()) {
-                int quantity = c.getInt(1);
-                if (quantity > 0) {
-                    // bb_std_lang.print("add item: " + c.getString(0));
-                    mOwnedItems.add(c.getString(0));
-                }
+        return new IConfiguration() {
+            public byte[] getObfuscationSalt() {
+                return new byte[] {41, -90, -116, -41, 66, -53, 122, -110, -127, -96, -88, 77, 127, 115, 1, 73, 57, 110, 48, -116};
             }
-        } finally {
-                Log.d("_DB", "_DB FINALLY");
-            if (c != null) {
-                c.close();
+
+            public String getPublicKey() {
+                return PaymentWrapper.publicKey;
             }
-        }
-     }
-
-
-    @Override
-    public void onPurchaseStateChange(PurchaseState purchaseState, String itemId,
-            int quantity, long purchaseTime, String developerPayload) {
-        // bb_std_lang.print("Payment -> onPurchaseStateChange");
-           //  bb_std_lang.print("onPurchaseStateChange() itemId: " + itemId + " " + purchaseState);
-
-        if (developerPayload == null) {
-
-        } else {
-
-        }
-
-        if (purchaseState == PurchaseState.PURCHASED) {
-            // bb_std_lang.print("Payment bought!!!! " + itemId);
-            SetInProgress(false);
-            //bb_std_lang.print("add to owned items!!!! " + itemId);
-            mOwnedItems.add(itemId);
-            //bb_std_lang.print("update db!!!! " + itemId);
-            mPurchaseDatabase.updatePurchasedItem(itemId, 1);
-            //bb_std_lang.print("done db!!!! " + itemId);
-        }
+        };
     }
-}
 
-class PaymentWrapper {
-    private MonkeyPurchaseObserver mPurchaseObserver;
-    private Handler mHandler;
-    private com.payment.BillingService mBillingService;
-
-    public void Init()
-    {
-        mHandler = new Handler();
-        mPurchaseObserver = new MonkeyPurchaseObserver(mHandler);
-        mBillingService = new com.payment.BillingService();
-        mBillingService.setContext(MonkeyGame.activity);
-        mPurchaseObserver.SetBillingService(mBillingService);
-
-        // Check if billing is supported.
-        ResponseHandler.register(mPurchaseObserver);
-        if (!mBillingService.checkBillingSupported()) {
-            // showDialog(DIALOG_CANNOT_CONNECT_ID);
+    public void onBillingChecked(boolean supported) {
+        billingSupported = supported;
+        if (billingSupported && !billingObserver.isTransactionsRestored()) {
+            BillingController.restoreTransactions(MonkeyGame.activity);
         }
     }
 
-    public boolean Purchase(String productId)
-    {
-        // android.test.purchased
-        // bb_std_lang.print("Purchase");
-        mPurchaseObserver.SetInProgress(true);
-        return mBillingService.requestPurchase(productId, null);
+    public void onPurchaseStateChanged(String itemId, PurchaseState state) {
+        pendingItems.remove(itemId);
+        if (state == PurchaseState.PURCHASED) {
+            ownedItems.add(itemId);
+        }
     }
 
-    public boolean IsBought(String productId)
-    {
-        return mPurchaseObserver.IsBought(productId);
+    public void onRequestPurchaseResponse(String itemId, ResponseCode response) {
+        pendingItems.remove(itemId);
+        if (ResponseCode.isResponseOk(response.ordinal())) {
+            ownedItems.add(itemId);
+        }
     }
 
-    public boolean IsPurchaseInProgress()
-    {
-        return mPurchaseObserver.IsInProgress();
-    }
-
-    protected void finalize() throws Throwable
-    {
-        mPurchaseObserver.destroy();
-        mBillingService.unbind();
+    protected void finalize() throws Throwable {
+        BillingController.unregisterObserver(billingObserver);
     }
 }
