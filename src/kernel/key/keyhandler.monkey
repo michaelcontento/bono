@@ -3,11 +3,10 @@ Strict
 Private
 
 Import keyevent
-Import observer
 
 Public
 
-Interface KeyObserver Extends Observer
+Interface Keyhandler
     Method OnKeyDown:Void(event:KeyEvent)
     Method OnKeyPress:Void(event:KeyEvent)
     Method OnKeyUp:Void(event:KeyEvent)

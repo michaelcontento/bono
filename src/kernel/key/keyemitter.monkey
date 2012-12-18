@@ -2,36 +2,25 @@ Strict
 
 Private
 
-Import appobserver
-Import deltatimer
+Import bono.src.kernel
 Import keyevent
-Import keyobserver
+Import keyhandler
 Import mojo.input
-Import observable
 
 Public
 
-Class KeyEmitter Implements Observable, AppObserver
+Class KeyEmitter Implements Updateable, Suspendable
     Private
 
-    Const DOWN:Int = 0
-    Const UP:Int = 1
-    Const PRESS:Int = 2
     Field keyboardEnabled:Bool
     Field keyEvents:IntMap<KeyEvent> = New IntMap<KeyEvent>()
     Field keysActive:IntSet = New IntSet()
     Field dispatchedKeyEvents:IntSet = New IntSet()
-    Field observers:List<KeyObserver> = New List<KeyObserver>()
 
     Public
 
     Field active:Bool = True
-
-    Method OnLoading:Void()
-    End
-
-    Method OnRender:Void()
-    End
+    Field handler:Keyhandler
 
     Method OnResume:Void()
     End
@@ -41,6 +30,8 @@ Class KeyEmitter Implements Observable, AppObserver
     End
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
+        If Not handler Then Return
+
         If Not active
             DisableKeyboard()
         Else
@@ -48,19 +39,6 @@ Class KeyEmitter Implements Observable, AppObserver
             ReadKeys()
             ProcessKeys()
         End
-    End
-
-    Method AddObserver:Void(observer:KeyObserver)
-        If observers.Contains(observer) Then Return
-        observers.AddLast(observer)
-    End
-
-    Method RemoveObserver:Void(observer:KeyObserver)
-        observers.RemoveEach(observer)
-    End
-
-    Method GetObservers:List<KeyObserver>()
-        Return observers
     End
 
     Private
@@ -89,17 +67,17 @@ Class KeyEmitter Implements Observable, AppObserver
     Method ProcessKeys:Void()
         For Local event:KeyEvent = EachIn keyEvents.Values()
             If Not dispatchedKeyEvents.Contains(event.code)
-                NotifyKey(DOWN, event)
+                handler.OnKeyDown(event)
                 dispatchedKeyEvents.Insert(event.code)
                 Continue
             End
 
             If Not keysActive.Contains(event.code)
-                NotifyKey(UP, event)
+                handler.OnKeyUp(event)
                 dispatchedKeyEvents.Remove(event.code)
                 keyEvents.Remove(event.code)
             Else
-                NotifyKey(PRESS, event)
+                handler.OnKeyPress(event)
             End
         End
     End
@@ -118,20 +96,5 @@ Class KeyEmitter Implements Observable, AppObserver
                 dispatchedKeyEvents.Remove(charCode)
             End
         Forever
-    End
-
-    Method NotifyKey:Void(mode:Int, event:KeyEvent)
-        For Local observer:KeyObserver = EachIn GetObservers()
-            Select mode
-            Case DOWN
-                observer.OnKeyDown(event)
-            Case UP
-                observer.OnKeyUp(event)
-            Case PRESS
-                observer.OnKeyPress(event)
-            Default
-                Error("Invalid mode " + mode + " for NotifyKey given")
-            End
-        End
     End
 End

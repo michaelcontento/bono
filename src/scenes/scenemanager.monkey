@@ -2,12 +2,12 @@ Strict
 
 Private
 
-Import sceneable
 Import bono.src.kernel
+Import sceneable
 
 Public
 
-Class SceneManager
+Class SceneManager Implements Renderable
     Private
 
     Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
@@ -18,20 +18,8 @@ Class SceneManager
 
     Public
 
-    Field appEmitter:AppEmitter
-    Field keyEmitter:KeyEmitter = New KeyEmitter()
-    Field touchEmitter:TouchEmitter = New TouchEmitter()
-
-    Method New(fps:Int=AppEmitter.DEFAULT_FPS)
-        appEmitter = New AppEmitter(fps)
-        appEmitter.AddObserver(keyEmitter)
-        appEmitter.AddObserver(touchEmitter)
-    End
-
-    Method New(appEmitter:AppEmitter)
-        Self.appEmitter = appEmitter
-        appEmitter.AddObserver(keyEmitter)
-        appEmitter.AddObserver(touchEmitter)
+    Method OnRender:Void()
+        If _current Then _current.OnRender()
     End
 
     Method Add:Void(name:String, scene:Sceneable)
@@ -40,7 +28,6 @@ Class SceneManager
         End
 
         scenes.Set(name, scene)
-        scene.SetSceneManager(Self)
     End
 
     Method Get:Sceneable(name:String)
@@ -55,8 +42,8 @@ Class SceneManager
         If name = _currentName Then Return
 
         ChangeCurrentAndPrevious(name)
-        HandlePreviousLeave()
-        HandleCurrentEnter()
+        If _previous Then _previous.OnSceneLeave()
+        If _current Then _current.OnSceneEnter()
     End
 
     Method current:Sceneable() Property
@@ -83,21 +70,5 @@ Class SceneManager
 
         _current = Get(name)
         _currentName = name
-    End
-
-    Method HandlePreviousLeave:Void()
-        If Not _previous Then Return
-
-        If AppObserver(_previous) Then appEmitter.RemoveObserver(AppObserver(_previous))
-        If KeyObserver(_previous) Then keyEmitter.RemoveObserver(KeyObserver(_previous))
-        If TouchObserver(_previous) Then touchEmitter.RemoveObserver(TouchObserver(_previous))
-        _previous.OnSceneLeave()
-    End
-
-    Method HandleCurrentEnter:Void()
-        If AppObserver(_current) Then appEmitter.AddObserver(AppObserver(_current))
-        If KeyObserver(_current) Then keyEmitter.AddObserver(KeyObserver(_current))
-        If TouchObserver(_current) Then touchEmitter.AddObserver(TouchObserver(_current))
-        _current.OnSceneEnter()
     End
 End

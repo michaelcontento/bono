@@ -2,16 +2,15 @@ Strict
 
 Public
 
-Import kernel.appemitter
-Import kernel.appemitterscaled
-Import kernel.appobserver
+Import kernel.app
 Import kernel.deltatimer
-Import kernel.keyemitter
-Import kernel.keyevent
-Import kernel.keyobserver
-Import kernel.observable
-Import kernel.observer
+Import kernel.director
+Import kernel.key
+Import kernel.renderable
+Import kernel.renderablefan
 Import kernel.soundmanager
-Import kernel.touchemitter
-Import kernel.touchevent
-Import kernel.touchobserver
+Import kernel.suspendable
+Import kernel.suspendablefan
+Import kernel.touch
+Import kernel.updateable
+Import kernel.updateablefan

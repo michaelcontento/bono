@@ -2,14 +2,11 @@ Strict
 
 Private
 
-Import scenemanager
 Import bono.src.kernel
 
 Public
 
-Interface Sceneable Extends AppObserver
+Interface Sceneable Extends Renderable
     Method OnSceneEnter:Void()
     Method OnSceneLeave:Void()
-    Method SetSceneManager:Void(sceneManager:SceneManager)
-    Method GetSceneManager:SceneManager()
 End

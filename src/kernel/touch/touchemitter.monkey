@@ -2,24 +2,18 @@ Strict
 
 Private
 
-Import appobserver
 Import bono.src.helper
 Import bono.src.utils
-Import deltatimer
+Import bono.src.kernel
 Import mojo.input
-Import observable
+Import touchable
 Import touchevent
-Import touchobserver
 
 Public
 
-Class TouchEmitter Implements Observable, AppObserver
+Class TouchEmitter Implements Updateable, Suspendable
     Private
 
-    Const DOWN:Int = 0
-    Const UP:Int = 1
-    Const MOVE:Int = 2
-    Field observers:List<TouchObserver> = New List<TouchObserver>()
     Field _touchFingers:Int = MAX_TOUCH_FINGERS
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
@@ -33,12 +27,7 @@ Class TouchEmitter Implements Observable, AppObserver
     Field minDistance:Float = 0
     Field retainSize:Int = RETAIN_UNLIMITED
     Field active:Bool = True
-
-    Method OnLoading:Void()
-    End
-
-    Method OnRender:Void()
-    End
+    Field handler:Touchable
 
     Method OnResume:Void()
     End
@@ -51,23 +40,11 @@ Class TouchEmitter Implements Observable, AppObserver
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
         If Not active Then Return
+        If Not handler Then Return
 
         scale = MatrixHelper.GetScale()
         ReadTouch()
         ProcessTouch()
-    End
-
-    Method AddObserver:Void(observer:TouchObserver)
-        If observers.Contains(observer) Then Return
-        observers.AddLast(observer)
-    End
-
-    Method RemoveObserver:Void(observer:TouchObserver)
-        observers.RemoveEach(observer)
-    End
-
-    Method GetObservers:List<TouchObserver>()
-        Return observers
     End
 
     Method touchFingers:Void(number:Int) Property
@@ -88,13 +65,13 @@ Class TouchEmitter Implements Observable, AppObserver
             If touchEvents[i] = Null Then Continue
 
             If Not touchDownDispatched[i]
-                NotifyTouch(DOWN, touchEvents[i].Copy())
+                handler.OnTouchDown(touchEvents[i].Copy())
                 touchDownDispatched[i] = True
             ElseIf Not isTouchDown[i]
-                NotifyTouch(UP, touchEvents[i])
+                handler.OnTouchUp(touchEvents[i].Copy())
                 touchEvents[i] = Null
             Else
-                NotifyTouch(MOVE, touchEvents[i])
+                handler.OnTouchMove(touchEvents[i])
             End
         End
     End
@@ -121,21 +98,6 @@ Class TouchEmitter Implements Observable, AppObserver
             If diffVector.Length() >= minDistance
                 touchEvents[i].Add(scaledVector)
                 If retainSize > -1 Then touchEvents[i].Trim(retainSize)
-            End
-        End
-    End
-
-    Method NotifyTouch:Void(mode:Int, event:TouchEvent)
-        For Local observer:TouchObserver = EachIn GetObservers()
-            Select mode
-            Case DOWN
-                observer.OnTouchDown(event)
-            Case UP
-                observer.OnTouchUp(event)
-            Case MOVE
-                observer.OnTouchMove(event)
-            Default
-                Error("Invalid mode " + mode + " for NotifyKey given")
             End
         End
     End

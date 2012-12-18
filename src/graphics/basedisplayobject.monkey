@@ -11,7 +11,7 @@ Import sizeable
 
 Public
 
-Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, AppObserver Abstract
+Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, Updateable, Renderable Abstract
     Private
 
     Field color:Color
@@ -27,20 +27,12 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, AppObserve
         Return True
     End
 
-    ' --- AppObserver
-    Method OnLoading:Void()
-    End
-
+    ' --- Updateable
     Method OnUpdate:Void(deltatimer:DeltaTimer)
     End
 
+    ' --- Renderable
     Method OnRender:Void()
-    End
-
-    Method OnResume:Void()
-    End
-
-    Method OnSuspend:Void()
     End
 
     ' --- Colorable

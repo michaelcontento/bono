@@ -2,12 +2,11 @@ Strict
 
 Private
 
-Import observer
 Import touchevent
 
 Public
 
-Interface TouchObserver Extends Observer
+Interface Touchable
     Method OnTouchDown:Void(event:TouchEvent)
     Method OnTouchMove:Void(event:TouchEvent)
     Method OnTouchUp:Void(event:TouchEvent)
