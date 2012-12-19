@@ -14,7 +14,7 @@ End
 
 Public
 
-Class TimedCallbackEmitter Implements AppObserver
+Class TimedCallbackEmitter Implements Updateable
     Private
 
     Field callbacks:List<CallbackNode> = New List<CallbackNode>()
@@ -47,9 +47,6 @@ Class TimedCallbackEmitter Implements AppObserver
         Return callbacks.Count()
     End
 
-    Method OnLoading:Void()
-    End
-
     Method OnUpdate:Void(deltatimer:DeltaTimer)
         For Local node:CallbackNode = EachIn callbacks
             node.ttl -= deltatimer.frameTime
@@ -58,15 +55,6 @@ Class TimedCallbackEmitter Implements AppObserver
             node.observer.OnTimedCallback(node.name)
             RemoveNode(node)
         End
-    End
-
-    Method OnRender:Void()
-    End
-
-    Method OnResume:Void()
-    End
-
-    Method OnSuspend:Void()
     End
 
     Private
