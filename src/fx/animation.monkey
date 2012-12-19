@@ -8,7 +8,7 @@ Import transition
 
 Public
 
-Class Animation Extends List<Effect> Implements AppObserver
+Class Animation Extends List<Effect> Implements Updateable
     Private
 
     Field animationTime:Float
@@ -50,18 +50,6 @@ Class Animation Extends List<Effect> Implements AppObserver
 
     Method IsPlaying:Bool()
         Return (Not finished)
-    End
-
-    Method OnLoading:Void()
-    End
-
-    Method OnRender:Void()
-    End
-
-    Method OnResume:Void()
-    End
-
-    Method OnSuspend:Void()
     End
 
     Method OnUpdate:Void(deltaTimer:DeltaTimer)

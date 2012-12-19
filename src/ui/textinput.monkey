@@ -8,7 +8,7 @@ Import bono.src.utils
 
 Public
 
-Class TextInput Extends Text Implements KeyObserver
+Class TextInput Extends Text Implements Keyhandler
     Private
 
     Field cursorPos:Int

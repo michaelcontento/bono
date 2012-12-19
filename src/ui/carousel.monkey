@@ -8,7 +8,7 @@ Import carouselrenderer
 
 Public
 
-Class Carousel Extends BaseDisplayObject Implements TouchObserver
+Class Carousel Extends BaseDisplayObject Implements Touchable
     Private
 
     Field itemList:List<BaseDisplayObject> = New List<BaseDisplayObject>()
@@ -16,7 +16,7 @@ Class Carousel Extends BaseDisplayObject Implements TouchObserver
     Field doRecalculation:Bool = True
     Field touched:Bool
     Field renderer:CarouselRenderer
-    Field isTouchObserver:Bool
+    Field isTouchable:Bool
 
     Public
 
@@ -30,7 +30,7 @@ Class Carousel Extends BaseDisplayObject Implements TouchObserver
         Self.renderer = renderer
 
         renderer.SetCarousel(Self)
-        If TouchObserver(renderer) Then isTouchObserver = True
+        If Touchable(renderer) Then isTouchable = True
     End
 
     Method GetItems:List<BaseDisplayObject>()
@@ -57,28 +57,28 @@ Class Carousel Extends BaseDisplayObject Implements TouchObserver
         doRecalculation = True
     End
 
-    ' --- TouchObserver
+    ' --- Touchable
     Method OnTouchDown:Void(event:TouchEvent)
-        If Not isTouchObserver Then Return
+        If Not isTouchable Then Return
         If Not Collide(event.pos) Then Return
         touched = True
 
-        TouchObserver(renderer).OnTouchDown(event)
+        Touchable(renderer).OnTouchDown(event)
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
-        If Not isTouchObserver Then Return
+        If Not isTouchable Then Return
         If Not touched Then Return
 
-        TouchObserver(renderer).OnTouchMove(event)
+        Touchable(renderer).OnTouchMove(event)
     End
 
     Method OnTouchUp:Void(event:TouchEvent)
-        If Not isTouchObserver Then Return
+        If Not isTouchable Then Return
         If Not touched Then Return
         touched = False
 
-        TouchObserver(renderer).OnTouchUp(event)
+        Touchable(renderer).OnTouchUp(event)
     End
 
     Private

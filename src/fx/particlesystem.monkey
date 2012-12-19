@@ -10,7 +10,7 @@ Import particleemitter
 
 Public
 
-Class ParticleSystem Implements AppObserver
+Class ParticleSystem Implements Updateable, Renderable
     Private
 
     Field sprite:Sprite
@@ -42,9 +42,6 @@ Class ParticleSystem Implements AppObserver
         particles.Clear()
     End
 
-    Method OnLoading:Void()
-    End
-
     Method OnUpdate:Void(deltatimer:DeltaTimer)
         For Local emitter:ParticleEmitter = EachIn emitters
             If emitter.CanBeRemoved()
@@ -67,12 +64,6 @@ Class ParticleSystem Implements AppObserver
                 sprite.OnRender()
             End
         End
-    End
-
-    Method OnResume:Void()
-    End
-
-    Method OnSuspend:Void()
     End
 
     Method GetStats:String()
