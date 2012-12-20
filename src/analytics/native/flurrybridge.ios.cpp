@@ -1,4 +1,4 @@
-#import "Flurry.h"
+#import <Flurry/Flurry.h>
 
 class FlurryBridge
 {
