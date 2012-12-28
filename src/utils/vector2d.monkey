@@ -39,7 +39,7 @@ Class Vector2D
         Return New Vector2D(x, y)
     End
 
-    Method Copy:Vector2D(v2:Vector2D)
+    Method Set:Vector2D(v2:Vector2D)
         x = v2.x
         y = v2.y
 

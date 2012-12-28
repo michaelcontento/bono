@@ -78,10 +78,10 @@ Class Vector2DTest Extends TestCase
         AssertTrue(vec.Equal(copyVec))
     End
 
-    Method TestCopyInPlace:Void()
+    Method TestSet:Void()
         Local vec:Vector2D = New Vector2D(12, 34)
         Local copyVec:Vector2D = New Vector2D(0, 0)
-        copyVec.Copy(vec)
+        copyVec.Set(vec)
 
         AssertTrue(vec.Equal(copyVec))
     End
