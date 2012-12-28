@@ -3,13 +3,10 @@ Strict
 Private
 
 Import app
-Import bono.src.scenes
-Import key
+Import sceneable
 Import suspendable
-Import suspendablefan
-Import touch
+Import renderable
 Import updateable
-Import updateablefan
 
 Public
 
@@ -17,87 +14,97 @@ Class Director
     Private
 
     Global instance:Director
-    Field sceneManager:SceneManager = New SceneManager()
-    Field keyhandlerFan:StringMap<KeyhandlerFan> = New StringMap<KeyhandlerFan>()
-    Field suspendableFan:StringMap<SuspendableFan> = New StringMap<SuspendableFan>()
-    Field touchableFan:StringMap<TouchableFan> = New StringMap<TouchableFan>()
-    Field updateableFan:StringMap<UpdateableFan> = New StringMap<UpdateableFan>()
+    Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
+    Field currentScene:Sceneable
+    Field currentSceneName:String
+    Field previousScene:Sceneable
+    Field previousSceneName:String
+    Field app:App
 
     Public
-
-    Field app:App
 
     Function Shared:Director()
         If Not instance Then instance = New Director()
         Return instance
     End
 
-    Method AddScene:Void(name:String, scene:Sceneable)
-        sceneManager.Add(name, scene)
+    Method SetApp:Void(app:App)
+        Self.app = app
+    End
 
-        If Not updateableFan.Contains(name)
-            keyhandlerFan.Set(name, New KeyhandlerFan())
-            suspendableFan.Set(name, New SuspendableFan())
-            touchableFan.Set(name, New TouchableFan())
-            updateableFan.Set(name, New UpdateableFan())
+    Method AddScene:Void(name:String, scene:Sceneable)
+        If scenes.Contains(name)
+            Error("There is already a scene named: " + name)
         End
+
+        scenes.Set(name, scene)
+    End
+
+    Method GetScene:Sceneable(name:String)
+        If Not scenes.Contains(name)
+            Error("Unknown scene name given: " + name)
+        End
+
+        Return scenes.Get(name)
     End
 
     Method GotoScene:Void(name:String)
-        If Not app Then Error("Please set Director.Shared().app first!")
-        sceneManager.Goto(name)
-        app.keyhandler = keyhandlerFan.Get(sceneManager.currentName)
-        app.renderable = sceneManager
-        app.suspendable = suspendableFan.Get(sceneManager.currentName)
-        app.touchable = touchableFan.Get(sceneManager.currentName)
-        app.updateable = updateableFan.Get(sceneManager.currentName)
+        If name = currentSceneName Then Return
+
+        SwapCurrentAndPrevious(name)
+        UpdateAppHandler(currentScene)
+
+        If previousScene Then previousScene.OnSceneLeave()
+        If currentScene Then currentScene.OnSceneEnter()
     End
 
-    Method AddUpdateable:Void(obj:Updateable)
-        EnsureActiveScene()
-        updateableFan.Get(sceneManager.currentName).Add(obj)
+    Method GetCurrentScene:Void()
+        Return currentScene
     End
 
-    Method RemoveUpdatable:Void(obj:Updateable)
-        EnsureActiveScene()
-        updateableFan.Get(sceneManager.currentName).Remove(obj)
+    Method GetCurrentSceneName:String()
+        Return currentSceneName
     End
 
-    Method AddSuspendable:Void(obj:Suspendable)
-        EnsureActiveScene()
-        suspendableFan.Get(sceneManager.currentName).Add(obj)
+    Method GetPreviousScene:Void()
+        Return previousScene
     End
 
-    Method RemoveSuspendable:Void(obj:Suspendable)
-        EnsureActiveScene()
-        suspendableFan.Get(sceneManager.currentName).Remove(obj)
+    Method GetPreviousSceneName:String()
+        Return previousSceneName
     End
 
-    Method AddTouchable:Void(obj:Touchable)
-        EnsureActiveScene()
-        touchableFan.Get(sceneManager.currentName).Add(obj)
-    End
-
-    Method RemoveTouchable:Void(obj:Touchable)
-        EnsureActiveScene()
-        touchableFan.Get(sceneManager.currentName).Remove(obj)
-    End
-
-    Method AddKeyhandler:Void(obj:Keyhandler)
-        EnsureActiveScene()
-        keyhandlerFan.Get(sceneManager.currentName).Add(obj)
-    End
-
-    Method RemoveKeyhandler:Void(obj:Keyhandler)
-        EnsureActiveScene()
-        keyhandlerFan.Get(sceneManager.currentName).Remove(obj)
+    Method GetApp:App()
+        Return app
     End
 
     Private
 
-    Method EnsureActiveScene:Void()
-        If Not sceneManager.currentName
-            Error("Please activate a scene with Director.Shared().GotoScene() first!")
+    Method SwapCurrentAndPrevious:Void(name:String)
+        previousScene = currentScene
+        previousSceneName = currentSceneName
+
+        currentScene = GetScene(name)
+        currentSceneName = name
+    End
+
+    Method UpdateAppHandler:Void(scene:Sceneable)
+        If Renderable(scene)
+            GetApp().renderable = Renderable(scene)
+        Else
+            GetApp().renderable = Null
+        End
+
+        If Suspendable(scene)
+            GetApp().suspendable = Suspendable(scene)
+        Else
+            GetApp().suspendable = Null
+        End
+
+        If Updateable(scene)
+            GetApp().updateable = Updateable(scene)
+        Else
+            GetApp().updateable = Null
         End
     End
 End

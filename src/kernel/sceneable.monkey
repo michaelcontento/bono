@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import bono.src.kernel
+Import renderable
 
 Public
 
