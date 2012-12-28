@@ -18,6 +18,7 @@ Class App Extends app.App Abstract
     Private
 
     Field timer:DeltaTimer
+    Field scaleVec:Vector2D
 
     Public
 
@@ -28,8 +29,13 @@ Class App Extends app.App Abstract
 
     Method Run:Void() Abstract
 
-    Method GetVirtualSize:Void()
+    Method GetVirtualSize:Vector2D()
         Return Device.GetSize()
+    End
+
+    Method TranslateSpace:Void(vec:Vector2D)
+        If Not scaleVec Then scaleVec = Device.GetSize().Div(GetVirtualSize())
+        vec.Div(scaleVec)
     End
 
     Method GetTargetFps:Int()

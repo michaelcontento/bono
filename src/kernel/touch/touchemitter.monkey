@@ -18,7 +18,6 @@ Class TouchEmitter Implements Updateable, Suspendable
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
-    Field scale:Vector2D = New Vector2D(1, 1)
 
     Public
 
@@ -42,7 +41,6 @@ Class TouchEmitter Implements Updateable, Suspendable
         If Not active Then Return
         If Not handler Then Return
 
-        scale = MatrixHelper.GetScale()
         ReadTouch()
         ProcessTouch()
     End
@@ -77,8 +75,8 @@ Class TouchEmitter Implements Updateable, Suspendable
     End
 
     Method ReadTouch:Void()
-        Local scaledVector:Vector2D
         Local diffVector:Vector2D
+        Local vector:Vector2D
         Local lastTouchDown:Bool
 
         For Local i:Int = 0 Until _touchFingers
@@ -92,11 +90,11 @@ Class TouchEmitter Implements Updateable, Suspendable
                 touchEvents[i] = New TouchEvent(i)
             End
 
-            scaledVector = New Vector2D(TouchX(i), TouchY(i)).Div(scale)
-            diffVector = scaledVector.Copy().Sub(touchEvents[i].prevPos)
+            vector = New Vector2D(TouchX(i), TouchY(i))
+            diffVector = vector.Copy().Sub(touchEvents[i].prevPos)
 
             If diffVector.Length() >= minDistance
-                touchEvents[i].Add(scaledVector)
+                touchEvents[i].Add(vector)
                 If retainSize > -1 Then touchEvents[i].Trim(retainSize)
             End
         End
