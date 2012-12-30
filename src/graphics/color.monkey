@@ -10,37 +10,40 @@ Class Color
     Private
 
     Field oldColor:Color
+    Field _red:Float
+    Field _green:Float
+    Field _blue:Float
     Field _alpha:Float
 
     Public
 
-    Field red:Float
-    Field green:Float
-    Field blue:Float
+    Const MIN:Float = 0.0
+    Const MAX:Float = 255.0
 
-    Method New(red:Float=255, green:Float=255, blue:Float=255, alpha:Float=1)
-        Self.red = red
-        Self.green = green
-        Self.blue = blue
-        Self.alpha = alpha
+    Method New(red:Float=MAX, green:Float=MAX, blue:Float=MAX, alpha:Float=MAX)
+        Self._red = red
+        Self._green = green
+        Self._blue = blue
+        Self._alpha = alpha
+        UpdateBounds()
     End
 
     Method Reset:Void()
-        red = 255
-        green = 255
-        blue = 255
-        alpha = 1.0
+        _red = MAX
+        _green = MAX
+        _blue = MAX
+        _alpha = MAX
     End
 
     Method Randomize:Void()
-        red = 255 * Rnd()
-        green = 255 * Rnd()
-        blue = 255 * Rnd()
-        alpha = Rnd()
+        _red = MAX * Rnd()
+        _green = MAX * Rnd()
+        _blue = MAX * Rnd()
+        _alpha = MAX * Rnd()
     End
 
     Method Activate:Void()
-        If Not oldColor Then oldColor = New Color(0, 0, 0, 0)
+        If Not oldColor Then oldColor = New Color(MIN, MIN, MIN, MIN)
 
         Local colorStack:Float[] = GetColor()
         oldColor.red = colorStack[0]
@@ -58,26 +61,104 @@ Class Color
     End
 
     Method Copy:Color()
-        Return New Color(red, green, blue, alpha)
+        Return New Color(_red, _green, _blue, _alpha)
+    End
+
+    Method Equals:Bool(color:Color)
+        If Not (color.red = _red) Then Return False
+        If Not (color.green = _green) Then Return False
+        If Not (color.blue = _blue) Then Return False
+        If Not (color.alpha = _alpha) Then Return False
+        Return True
     End
 
     Method ToString:String()
-        Return "(Red: " + red + " Green: " + green + " Blue: " + blue + " Alpha: " + alpha + ")"
+        Return "(Red: " + _red + " Green: " + _green + " Blue: " + _blue + " Alpha: " + alphaFloat + ")"
     End
 
-    Method alpha:Void(alpha:Float) Property
-        _alpha = alpha
-        If _alpha > 1.0 Then _alpha = 1.0 / 255.0 * _alpha
+    Method red:Float() Property
+        Return _red
+    End
+
+    Method red:Void(value:Float) Property
+        _red = value
+        UpdateBounds()
+    End
+
+    Method redFloat:Float() Property
+        Return _red / MAX
+    End
+
+    Method redFloat:Void(value:Float) Property
+        _red = MAX * value
+        UpdateBounds()
+    End
+
+    Method green:Float() Property
+        Return _green
+    End
+
+    Method green:Void(value:Float) Property
+        _green = value
+        UpdateBounds()
+    End
+
+    Method greenFloat:Float() Property
+        Return _green / MAX
+    End
+
+    Method greenFloat:Void(value:Float) Property
+        _green = MAX * value
+        UpdateBounds()
+    End
+
+    Method blue:Float() Property
+        Return _blue
+    End
+
+    Method blue:Void(value:Float) Property
+        _blue = value
+        UpdateBounds()
+    End
+
+    Method blueFloat:Float() Property
+        Return _blue / MAX
+    End
+
+    Method blueFloat:Void(value:Float) Property
+        _blue = MAX * value
+        UpdateBounds()
     End
 
     Method alpha:Float() Property
         Return _alpha
     End
 
+    Method alpha:Void(value:Float) Property
+        _alpha = value
+        UpdateBounds()
+    End
+
+    Method alphaFloat:Float() Property
+        Return _alpha / MAX
+    End
+
+    Method alphaFloat:Void(value:Float) Property
+        _alpha = MAX * value
+        UpdateBounds()
+    End
+
     Private
+
+    Method UpdateBounds:Void()
+        _red = Clamp(_red, MIN, MAX)
+        _green = Clamp(_green, MIN, MAX)
+        _blue = Clamp(_blue, MIN, MAX)
+        _alpha = Clamp(_alpha, MIN, MAX)
+    End
 
     Method Set:Void(color:Color)
         SetColor(color.red, color.green, color.blue)
-        SetAlpha(color.alpha)
+        SetAlpha(color.alphaFloat)
     End
 End
