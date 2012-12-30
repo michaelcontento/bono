@@ -3,7 +3,6 @@ Strict
 Private
 
 Import bono.src.utils
-Import bono.src.kernel
 Import color
 Import colorable
 Import positionable
@@ -11,7 +10,7 @@ Import sizeable
 
 Public
 
-Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, Updateable, Renderable Abstract
+Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
     Private
 
     Field color:Color
@@ -25,14 +24,6 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, Updateable
         If checkPos.x < GetPosition().x Or checkPos.x > GetPosition().x + GetSize().x Then Return False
         If checkPos.y < GetPosition().y Or checkPos.y > GetPosition().y + GetSize().y Then Return False
         Return True
-    End
-
-    ' --- Updateable
-    Method OnUpdate:Void(deltatimer:DeltaTimer)
-    End
-
-    ' --- Renderable
-    Method OnRender:Void()
     End
 
     ' --- Colorable

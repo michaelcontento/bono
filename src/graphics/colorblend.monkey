@@ -3,23 +3,21 @@ Strict
 Private
 
 Import basedisplayobject
-Import bono.src.utils
+Import bono.src.kernel
 Import color
 Import mojo.graphics
 
 Public
 
-Class ColorBlend Extends BaseDisplayObject
+Class ColorBlend Extends BaseDisplayObject Implements Renderable
     Method New(color:Color=New Color())
-        SetSize(Device.GetSize())
+        SetSize(Director.Shared().GetApp().GetVirtualSize())
         SetColor(color)
     End
 
     Method OnRender:Void()
-        PushMatrix()
-            GetColor().Activate()
-            DrawRect(GetPosition().x, GetPosition().y, GetSize().x, GetSize().y)
-            GetColor().Deactivate()
-        PopMatrix()
+        GetColor().Activate()
+        DrawRect(GetPosition().x, GetPosition().y, GetSize().x, GetSize().y)
+        GetColor().Deactivate()
     End
 End

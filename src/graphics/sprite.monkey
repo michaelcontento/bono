@@ -10,7 +10,7 @@ Import mojo.graphics
 
 Public
 
-Class Sprite Extends BaseDisplayObject
+Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Private
 
     Field currentFrame:Int
@@ -18,6 +18,7 @@ Class Sprite Extends BaseDisplayObject
     Field frameSize:Vector2D
     Field frameTimer:Int
     Field image:Image
+    Field renderPos:Vector2D = New Vector2D()
     Field imageName:String
     Field _scale:Vector2D = New Vector2D(1, 1)
     Global cacheImage:StringMap<Image> = New StringMap<Image>()
@@ -46,8 +47,8 @@ Class Sprite Extends BaseDisplayObject
 
     Method OnRender:Void()
         GetColor().Activate()
-        Local pos:Vector2D = GetPosition.Copy().Add(GetCenter())
-        DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
+        renderPos.Set(GetPosition()).Add(GetCenter())
+        DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
         GetColor().Deactivate()
     End
 

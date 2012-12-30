@@ -10,7 +10,7 @@ Import bono.vendor.angelfont
 
 Public
 
-Class Text Extends BaseDisplayObject
+Class Text Extends BaseDisplayObject Implements Renderable
     Private
 
     Global angelFontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
