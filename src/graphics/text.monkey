@@ -2,7 +2,6 @@ Strict
 
 Private
 
-Import align
 Import basedisplayobject
 Import bono.src.graphics
 Import bono.src.kernel
@@ -20,9 +19,6 @@ Class Text Extends BaseDisplayObject
 
     Public
 
-    Field halign:Int = Align.LEFT
-    Field valign:Int = Align.TOP
-
     Method New(name:String, pos:Vector2D=Null)
         Self.name = name
         If Not (pos = Null) Then SetPosition(pos)
@@ -34,12 +30,8 @@ Class Text Extends BaseDisplayObject
     End
 
     Method OnRender:Void()
-        Local renderPos:Vector2D = GetPosition().Copy()
-        Align.AdjustHorizontal(renderPos, Self, halign)
-        Align.AdjustVertical(renderPos, Self, valign)
-
         GetColor().Activate()
-        angelFont.DrawText(_text, renderPos.x, renderPos.y)
+        angelFont.DrawText(_text, GetPosition().x, GetPosition().y)
         GetColor().Deactivate()
     End
 

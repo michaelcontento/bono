@@ -3,8 +3,9 @@ Strict
 Private
 
 Import bono.src.utils
-Import sprite
+Import positionable
 Import sizeable
+Import sprite
 
 Public
 
@@ -15,35 +16,57 @@ Class Align Abstract
     Const RIGHT:Int = 3
     Const CENTER:Int = 4
 
-    Function AdjustHorizontal:Void(pos:Vector2D, object:Sizeable, mode:Int)
-        Local scale:Float = 1
-        If Sprite(object) Then scale = Sprite(object).scale.x
+    Function Horizontal:Void(object:Object, mode:Int)
+        CheckInterfaces(object)
+        Local scale:Float = GetScale(object).x
 
         Select mode
         Case LEFT
             ' Default alignment - nothing to do here
         Case RIGHT
-            pos.x -= object.GetSize().x / scale
+            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x / scale
         Case CENTER
-            pos.x -= object.GetSize().x / scale / 2
+            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x / scale / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
     End
 
-    Function AdjustVertical:Void(pos:Vector2D, object:Sizeable, mode:Int)
-        Local scale:Float = 1
-        If Sprite(object) Then scale = Sprite(object).scale.y
+    Function Vertical:Void(object:Object, mode:Int)
+        CheckInterfaces(object)
+        Local scale:Float = GetScale(object).y
 
         Select mode
         Case TOP
             ' Default alignment - nothing to do here
         Case BOTTOM
-            pos.y -= object.GetSize().y / scale
+            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y / scale
         Case CENTER
-            pos.y -= object.GetSize().y / scale / 2
+            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y / scale / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
+    End
+
+    Function Centered:Void(object:Sizeable)
+        Horizontal(object, CENTER)
+        Vertical(object, CENTER)
+    End
+
+    Private
+
+    Function CheckInterfaces:Void(object:Object)
+        If Not Sizeable(object)
+            Error("Given object must implement Sizeable")
+        End
+
+        If Not Positionable(object)
+            Error("Given object must implement Positionable")
+        End
+    End
+
+    Function GetScale:Vector2D(object:Object)
+        If Sprite(object) Then Return Sprite(object).scale
+        Return New Vector2D(1, 1)
     End
 End

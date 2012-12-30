@@ -20,9 +20,6 @@ Class Sprite Extends BaseDisplayObject
     Field image:Image
     Field imageName:String
     Field _scale:Vector2D = New Vector2D(1, 1)
-    Field _halign:Int = Align.LEFT
-    Field _valign:Int = Align.TOP
-    Field renderPos:Vector2D
     Global cacheImage:StringMap<Image> = New StringMap<Image>()
     Global cacheSize:StringMap<Vector2D> = New StringMap<Vector2D>()
 
@@ -36,7 +33,6 @@ Class Sprite Extends BaseDisplayObject
         Self.imageName = imageName
 
         LoadImage()
-        If pos Then SetPosition(pos)
     End
 
     Method New(imageName:String, frameSize:Vector2D, frameCount:Int, frameSpeed:Int, pos:Vector2D=Null)
@@ -46,13 +42,12 @@ Class Sprite Extends BaseDisplayObject
         Self.frameSpeed = frameSpeed
 
         LoadImage()
-        If pos Then SetPosition(pos)
     End
 
     Method OnRender:Void()
-        If Not renderPos Then CalculateRenderPos()
         GetColor().Activate()
-        DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
+        Local pos:Vector2D = GetPosition.Copy().Add(GetCenter())
+        DrawImage(image, pos.x, pos.y, rotation, scale.x, scale.y, currentFrame)
         GetColor().Deactivate()
     End
 
@@ -91,51 +86,13 @@ Class Sprite Extends BaseDisplayObject
     Method scale:Void(newScale:Vector2D) Property
         If image Then GetSize().Div(_scale).Mul(newScale)
         _scale = newScale
-        renderPos = Null
     End
 
     Method filepath:String() Property
         Return imageName
     End
 
-    Method halign:Int() Property
-        Return _halign
-    End
-
-    Method halign:Void(newAlign:Int) Property
-        _halign = newAlign
-        renderPos = Null
-    End
-
-    Method valign:Int() Property
-        Return _valign
-    End
-
-    Method valign:Void(newAlign:Int) Property
-        _valign = newAlign
-        renderPos = Null
-    End
-
-    Method SetPosition:Void(newPos:Vector2D)
-        Super.SetPosition(newPos)
-        renderPos = Null
-    End
-
-    Method Collide:Bool(checkPos:Vector2D)
-        Local offset:Vector2D = New Vector2D()
-        Align.AdjustHorizontal(offset, Self, halign)
-        Align.AdjustVertical(offset, Self, valign)
-
-        Return Super.Collide(checkPos.Copy().Sub(offset))
-    End
-
     Private
-
-    Method CalculateRenderPos:Void()
-        renderPos = GetPosition().Copy().Add(GetCenter())
-        Align.AdjustHorizontal(renderPos, Self, halign)
-        Align.AdjustVertical(renderPos, Self, valign)
-    End
 
     Method CacheSet:Void(name:String, image:Image, size:Vector2D)
         cacheImage.Set(name, image)
