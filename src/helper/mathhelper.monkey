@@ -4,8 +4,8 @@ Public
 
 Class MathHelper Abstract
     Function Round:Int(given:Float)
-        If given > 0.5 Then Return Floor(given)
-        Return Ceil(given)
+        If given > 0.5 Then Return Ceil(given)
+        Return Floor(given)
     End
 
     Function ModF:Float(left:Float, right:Float)
