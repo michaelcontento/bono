@@ -3,6 +3,7 @@ Strict
 Private
 
 Import mojo.graphics
+Import bono.src.helper
 
 Public
 
@@ -20,11 +21,15 @@ Class Color
     Const MIN:Float = 0.0
     Const MAX:Float = 255.0
 
+    Method New(hex:String)
+        FromHex(hex)
+    End
+
     Method New(red:Float=MAX, green:Float=MAX, blue:Float=MAX, alpha:Float=MAX)
-        Self._red = red
-        Self._green = green
-        Self._blue = blue
-        Self._alpha = alpha
+        _red = red
+        _green = green
+        _blue = blue
+        _alpha = alpha
         UpdateBounds()
     End
 
@@ -62,6 +67,23 @@ Class Color
 
     Method Copy:Color()
         Return New Color(_red, _green, _blue, _alpha)
+    End
+
+    Method FromHex:Void(hex:String)
+        If hex.StartsWith("#") Then hex = hex[1..]
+        Local value:Int = MathHelper.HexToInt(hex)
+
+        _red = value Shr 16 & $0000ff
+        _green = value Shr 8 & $0000ff
+        _blue = value & $0000ff
+        _alpha = MAX
+    End
+
+    Method ToHex:String()
+        Return "#" +
+            MathHelper.IntToHex(_red) +
+            MathHelper.IntToHex(_green) +
+            MathHelper.IntToHex(_blue)
     End
 
     Method Equals:Bool(color:Color)
