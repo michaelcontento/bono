@@ -12,4 +12,8 @@ Class StringHelper Abstract
         ArrayHelper.Randomize(split)
         Return "".Join(split)
     End
+
+    Function CountLines:Int(input:String)
+        Return input.Split("~n").Length()
+    End
 End
