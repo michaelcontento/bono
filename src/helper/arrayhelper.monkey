@@ -14,4 +14,27 @@ Class ArrayHelper<T> Abstract
             input[randomIdx] = swap
         End
     End
+
+    Function CreateArray:T[][](rows:Int, cols:Int)
+        Local a:T[][] = New T[rows][]
+
+        For Local i:Int = 0 Until rows
+            a[i] = New T[cols]
+        End
+
+        Return a
+    End
+
+    Function CreateArray:T[][][](x:Int, y:Int, z:Int)
+        Local a:T[][][] = New T[x][][]
+
+        For Local i:Int = 0 Until x
+            a[i] = New T[y][]
+            For Local j:Int = 0 Until z
+                a[i][j] = New T[z]
+            End
+        End
+
+        Return a
+    End
 End
