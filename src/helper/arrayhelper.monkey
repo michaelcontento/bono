@@ -20,7 +20,7 @@ Class ArrayHelper<T> Abstract
 
         For Local i:Int = 0 Until rows
             a[i] = New T[cols]
-        End For
+        End
 
         Return a
     End
@@ -32,7 +32,7 @@ Class ArrayHelper<T> Abstract
             a[i] = New T[y][]
             For Local j:Int = 0 Until z
                 a[i][j] = New T[z]
-            Next
+            End
         End
 
         Return a
