@@ -93,6 +93,16 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         Return imageName
     End
 
+    Method DrawImageRect:Void(pos:Vector2D, rectPos:Vector2D, rectSize:Vector2D)
+        DrawImageRect(pos.x, pos.y, rectPos.x, rectPos.y, rectSize.x, rectSize.y)
+    End
+
+    Method DrawImageRect:Void(x:Float, y:Float, srcX:Float, srcY:Float, srcWidth:Float, srcHeight:Float)
+        x += GetCenter().x
+        y += GetCenter().y
+        graphics.DrawImageRect(image, x, y, srcX, srcY, srcWidth, srcHeight, rotation, scale.x, scale.y, currentFrame)
+    End
+
     Private
 
     Method CacheSet:Void(name:String, image:Image, size:Vector2D)
