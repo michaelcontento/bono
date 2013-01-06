@@ -9,8 +9,12 @@ Class KeyEvent
     Public
 
     Method New(code:Int)
-        _code = code
-        _char = String.FromChar(_code)
+        Self.code = code
+    End
+
+    Method code:Void(newCode:Int) Property
+        _code = newCode
+        _char = String.FromChar(newCode)
     End
 
     Method code:Int() Property

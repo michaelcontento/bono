@@ -13,9 +13,12 @@ Class KeyEmitter Implements Updateable, Suspendable
     Private
 
     Field keyboardEnabled:Bool
-    Field keyEvents:IntMap<KeyEvent> = New IntMap<KeyEvent>()
-    Field keysActive:IntSet = New IntSet()
-    Field dispatchedKeyEvents:IntSet = New IntSet()
+    Field event:KeyEvent = New KeyEvent()
+    Field lastMode:Bool[255]
+
+    Const UP:Int = 0
+    Const DOWN:Int = 1
+    Const PRESS:Int = 2
 
     Public
 
@@ -36,7 +39,6 @@ Class KeyEmitter Implements Updateable, Suspendable
             DisableKeyboard()
         Else
             EnableKeyboard()
-            ReadKeys()
             ProcessKeys()
         End
     End
@@ -52,9 +54,9 @@ Class KeyEmitter Implements Updateable, Suspendable
     End
 
     Method Reset:Void()
-        keysActive.Clear()
-        keyEvents.Clear()
-        dispatchedKeyEvents.Clear()
+        For Local i:Int = 0 Until lastMode.Length()
+            lastMode[i] = False
+        End
     End
 
     Method EnableKeyboard:Void()
@@ -65,36 +67,33 @@ Class KeyEmitter Implements Updateable, Suspendable
     End
 
     Method ProcessKeys:Void()
-        For Local event:KeyEvent = EachIn keyEvents.Values()
-            If Not dispatchedKeyEvents.Contains(event.code)
-                handler.OnKeyDown(event)
-                dispatchedKeyEvents.Insert(event.code)
-                Continue
-            End
+        Local mode:Bool
+        For Local i:Int = 0 Until lastMode.Length()
+            mode = (KeyDown(i) = 1)
 
-            If Not keysActive.Contains(event.code)
-                handler.OnKeyUp(event)
-                dispatchedKeyEvents.Remove(event.code)
-                keyEvents.Remove(event.code)
+            If mode = lastMode[i]
+                If mode Then DispatchEvent(i, PRESS)
             Else
-                handler.OnKeyPress(event)
+                lastMode[i] = mode
+                If mode
+                    DispatchEvent(i, DOWN)
+                Else
+                    DispatchEvent(i, UP)
+                End
             End
         End
     End
 
-    Method ReadKeys:Void()
-        keysActive.Clear()
-        Local charCode:Int
+    Method DispatchEvent:Void(code:Int, mode:Int)
+        event.code = code
 
-        Repeat
-            charCode = GetChar()
-            If Not charCode Then Return
-
-            keysActive.Insert(charCode)
-            If Not keyEvents.Contains(charCode)
-                keyEvents.Add(charCode, New KeyEvent(charCode))
-                dispatchedKeyEvents.Remove(charCode)
-            End
-        Forever
+        Select mode
+        Case UP
+            handler.OnKeyUp(event)
+        Case DOWN
+            handler.OnKeyDown(event)
+        Case PRESS
+            handler.OnKeyPress(event)
+        End
     End
 End
