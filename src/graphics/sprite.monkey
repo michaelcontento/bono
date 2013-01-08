@@ -47,7 +47,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
 
     Method OnRender:Void()
         GetColor().Activate()
-        renderPos.Set(GetPosition()).Add(GetCenter())
+        renderPos.Set(GetCenter()).Mul(scale).Add(GetPosition())
         DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
         GetColor().Deactivate()
     End
