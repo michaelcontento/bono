@@ -129,15 +129,20 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         If Not image
             If frameSize
                 image = graphics.LoadImage(imageName, frameSize.x, frameSize.y, frameCount, Image.MidHandle)
+                FailIfImageNotLoaded()
                 SetSize(frameSize.Copy())
             Else
                 image = graphics.LoadImage(imageName, 1, Image.MidHandle)
+                FailIfImageNotLoaded()
                 SetSize(New Vector2D(image.Width(), image.Height()))
             End
             CacheSet(imageName, image, GetSize())
         End
 
-        If Not image Then Error("Unable to load: " + imageName)
         GetSize().Mul(scale)
+    End
+
+    Method FailIfImageNotLoaded:Void()
+        If Not image Then Error("Unable to load: " + imageName)
     End
 End
