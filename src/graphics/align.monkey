@@ -24,9 +24,9 @@ Class Align Abstract
         Case LEFT
             ' Default alignment - nothing to do here
         Case RIGHT
-            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x / scale
+            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x * scale
         Case CENTER
-            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x / scale / 2
+            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x * scale / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
@@ -40,9 +40,9 @@ Class Align Abstract
         Case TOP
             ' Default alignment - nothing to do here
         Case BOTTOM
-            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y / scale
+            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y * scale
         Case CENTER
-            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y / scale / 2
+            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y * scale / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
