@@ -3,6 +3,10 @@ Strict
 Public
 
 Class ArrayHelper<T> Abstract
+    Function RandomChoice:T(options:T[])
+        Return options[Int(Rnd(0, options.Length()))]
+    End
+
     Function Randomize:Void(input:T[])
         Local len:Int = input.Length()
 
