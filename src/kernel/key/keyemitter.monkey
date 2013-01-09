@@ -15,6 +15,7 @@ Class KeyEmitter Implements Updateable, Suspendable
     Field keyboardEnabled:Bool
     Field event:KeyEvent = New KeyEvent()
     Field lastMode:Bool[255]
+    Field dirty:Bool
 
     Const UP:Int = 0
     Const DOWN:Int = 1
@@ -24,6 +25,7 @@ Class KeyEmitter Implements Updateable, Suspendable
 
     Field active:Bool = True
     Field handler:Keyhandler
+    Field showKeyboard:Bool = True
 
     Method OnResume:Void()
     End
@@ -33,13 +35,16 @@ Class KeyEmitter Implements Updateable, Suspendable
     End
 
     Method OnUpdate:Void(deltatimer:DeltaTimer)
-        If Not handler Then Return
-
-        If Not active
-            DisableKeyboard()
-        Else
+        If showKeyboard
             EnableKeyboard()
+        Else
+            DisableKeyboard()
+        End
+
+        If active And handler
             ProcessKeys()
+        Else
+            Reset()
         End
     End
 
@@ -47,27 +52,31 @@ Class KeyEmitter Implements Updateable, Suspendable
 
     Method DisableKeyboard:Void()
         If Not keyboardEnabled Then Return
-
         keyboardEnabled = False
+
         input.DisableKeyboard()
-        Reset()
+    End
+
+    Method EnableKeyboard:Void()
+        If keyboardEnabled Then Return
+        keyboardEnabled = True
+
+        input.EnableKeyboard()
     End
 
     Method Reset:Void()
+        If Not dirty Then Return
+        dirty = False
+
         For Local i:Int = 0 Until lastMode.Length()
             lastMode[i] = False
         End
     End
 
-    Method EnableKeyboard:Void()
-        If keyboardEnabled Then Return
-
-        keyboardEnabled = True
-        input.EnableKeyboard()
-    End
-
     Method ProcessKeys:Void()
         Local mode:Bool
+        dirty = True
+
         For Local i:Int = 0 Until lastMode.Length()
             mode = (KeyDown(i) = 1)
 
