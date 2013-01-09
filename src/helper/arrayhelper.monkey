@@ -34,7 +34,7 @@ Class ArrayHelper<T> Abstract
 
         For Local i:Int = 0 Until x
             a[i] = New T[y][]
-            For Local j:Int = 0 Until z
+            For Local j:Int = 0 Until y
                 a[i][j] = New T[z]
             End
         End
