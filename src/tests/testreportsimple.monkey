@@ -78,7 +78,7 @@ Class TestReportSimple Implements TestListener
     Private
 
     Method PrintResult:Void()
-        If Not lastClass Or Not (lastClass.Name() = currentClass.Name())
+        If verbose And (Not lastClass Or Not (lastClass.Name() = currentClass.Name()))
             If lastClass
                 FlushPrintCache()
                 Print ""
