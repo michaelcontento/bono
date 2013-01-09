@@ -6,7 +6,7 @@ Public
     #Print "Bono: PaymentProviderAlias set to PaymentProviderAppleIos"
     Import paymentproviderappleios
     Alias PaymentProviderAlias = PaymentProviderAppleIos
-#ElseIf TARGET="glfw"
+#ElseIf TARGET="glfw" Or TARGET="html5"
     #Print "Bono: PaymentProviderAlias set to PaymentProviderAutoUnlock"
     Import paymentproviderautounlock
     Alias PaymentProviderAlias = PaymentProviderAutoUnlock
