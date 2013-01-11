@@ -8,6 +8,7 @@ Import graphics.clearscene
 Import graphics.color
 Import graphics.colorable
 Import graphics.colorblend
+Import graphics.fpscounter
 Import graphics.positionable
 Import graphics.sizeable
 Import graphics.sprite
