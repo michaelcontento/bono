@@ -3,6 +3,8 @@ Strict
 Public
 
 Import kernel.app
+Import kernel.contentscaler
+Import kernel.contentscalerfull
 Import kernel.deltatimer
 Import kernel.director
 Import kernel.key

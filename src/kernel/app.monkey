@@ -4,6 +4,7 @@ Private
 
 Import bono.src.utils
 Import brl.asyncevent
+Import contentscaler
 Import deltatimer
 Import director
 Import mojo.app
@@ -23,6 +24,7 @@ Class App Extends app.App Abstract
     Public
 
     Const DEFAULT_FPS:Int = 60
+    Field contentScaler:ContentScaler
     Field renderable:Renderable
     Field suspendable:Suspendable
     Field updateable:Updateable
@@ -54,7 +56,9 @@ Class App Extends app.App Abstract
     Method OnRender:Int()
         Cls(0, 0, 0)
         UpdateAsyncEvents()
+        If contentScaler Then contentScaler.OnRenderPre(Self)
         If renderable Then renderable.OnRender()
+        If contentScaler Then contentScaler.OnRenderPost(Self)
         Return 0
     End
 
