@@ -30,7 +30,7 @@ Class TestCaseTest Extends TestCase
             test.MarkTestSkipped()
             Fail("TestSkippedException expected")
         Catch ex:TestSkippedException
-            AssertEquals("", ex)
+            AssertEquals("", ex.message)
         End
     End
 
@@ -40,7 +40,7 @@ Class TestCaseTest Extends TestCase
             test.MarkTestSkipped("foo bar")
             Fail("TestSkippedException expected")
         Catch ex:TestSkippedException
-            AssertEquals("foo bar", ex)
+            AssertEquals("foo bar", ex.message)
         End
     End
 
@@ -50,7 +50,7 @@ Class TestCaseTest Extends TestCase
             test.MarkTestIncomplete()
             Fail("TestIncompleteException expected")
         Catch ex:TestIncompleteException
-            AssertEquals("", ex)
+            AssertEquals("", ex.message)
         End
     End
 
@@ -60,7 +60,7 @@ Class TestCaseTest Extends TestCase
             test.MarkTestIncomplete("foo bar")
             Fail("TestIncompleteException expected")
         Catch ex:TestIncompleteException
-            AssertEquals("foo bar", ex)
+            AssertEquals("foo bar", ex.message)
         End
     End
 
@@ -70,7 +70,7 @@ Class TestCaseTest Extends TestCase
             test.Fail("foo bar")
             Error("TestFailedException expected")
         Catch ex:TestFailedException
-            AssertEquals("foo bar", ex)
+            AssertEquals("foo bar", ex.message)
         End
     End
 End
