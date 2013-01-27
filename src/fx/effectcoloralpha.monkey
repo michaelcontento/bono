@@ -16,7 +16,7 @@ Class EffectColorAlpha Extends List<Colorable> Implements Effect
     Public
 
     Method New()
-        Error("Wrong constructor. Use New(Float, Float)")
+        Throw New InvalidConstructorException("use New(Float, Float)")
     End
 
     Method New(start:Float, stop:Float)

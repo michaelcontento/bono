@@ -21,7 +21,7 @@ Class Carousel Extends BaseDisplayObject Implements Touchable
     Field displayBorder:Bool
 
     Method New()
-        Error("Wrong constructor. Use New(CarouselRenderer)")
+        Throw New InvalidConstructorException("use New(CarouselRenderer)")
     End
 
     Method New(renderer:CarouselRenderer)

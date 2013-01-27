@@ -16,7 +16,7 @@ Class EffectColor Extends List<Colorable> Implements Effect
     Public
 
     Method New()
-        Error("Wrong constructor. Use New(Color, Color)")
+        Throw New InvalidConstructorException("use New(Color, Color)")
     End
 
     Method New(start:Color, stop:Color)

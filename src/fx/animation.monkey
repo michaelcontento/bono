@@ -17,7 +17,7 @@ Class Animation Extends List<Effect> Implements Updateable
     Public
 
     Method New()
-        Error("Wrong constructor. Use New(Float, Transition)")
+        Throw New InvalidConstructorException("use New(Float, Transition)")
     End
 
     Method New(duration:Float, transition:Transition)
