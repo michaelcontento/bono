@@ -4,28 +4,36 @@ Private
 
 Import app
 Import bono.src.helper
-Import contentscaler
-Import mojo.graphics
 Import bono.src.utils
+Import contentscaler
 
 Public
 
 Class ContentScalerFull Implements ContentScaler
     Private
 
-    Field usedScale:Vector2D
+    Field scaleVec:Vector2D
 
     Public
 
-    Method OnRenderPre:Void(app:App)
-        If Not usedScale
-            usedScale = Device.GetSize().Copy()
-            usedScale.Div(app.GetVirtualSize())
-        End
+    Method TranslateSpace:Void(app:App, vec:Vector2D)
+        InitScaleVector(app)
+        vec.Div(scaleVec)
+    End
 
-        MatrixHelper.Scale(usedScale)
+    Method OnRenderPre:Void(app:App)
+        InitScaleVector(app)
+        MatrixHelper.Scale(scaleVec)
     End
 
     Method OnRenderPost:Void(app:App)
+    End
+
+    Private
+
+    Method InitScaleVector:Void(app:App)
+        If Not scaleVec
+            scaleVec = Device.GetSize().Div(app.GetVirtualSize())
+        End
     End
 End

@@ -19,25 +19,27 @@ Class App Extends app.App Abstract
     Private
 
     Field timer:DeltaTimer
-    Field scaleVec:Vector2D
+    Field contentScaler:ContentScaler
 
     Public
 
     Const DEFAULT_FPS:Int = 60
-    Field contentScaler:ContentScaler
     Field renderable:Renderable
     Field suspendable:Suspendable
     Field updateable:Updateable
 
     Method Run:Void() Abstract
 
+    Method GetContentScaler:ContentScaler()
+        Return Null
+    End
+
     Method GetVirtualSize:Vector2D()
         Return Device.GetSize()
     End
 
     Method TranslateSpace:Void(vec:Vector2D)
-        If Not scaleVec Then scaleVec = Device.GetSize().Div(GetVirtualSize())
-        vec.Div(scaleVec)
+        If contentScaler Then contentScaler.TranslateSpace(Self, vec)
     End
 
     Method GetTargetFps:Int()
@@ -47,6 +49,7 @@ Class App Extends app.App Abstract
     Method OnCreate:Int()
         SetUpdateRate(GetTargetFps())
         timer = New DeltaTimer(GetTargetFps())
+        contentScaler = GetContentScaler()
 
         Director.Shared().SetApp(Self)
         Run()
