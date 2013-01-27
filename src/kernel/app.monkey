@@ -33,7 +33,7 @@ Class App Extends app.App Abstract
     End
 
     Method TranslateSpace:Vector2D(vec:Vector2D)
-        If Not contentScaler Then Return vec
+        If Not contentScaler Then Return vec.Copy()
         Return contentScaler.TranslateSpace(Self, vec)
     End
 
