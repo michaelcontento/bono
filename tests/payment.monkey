@@ -2,6 +2,6 @@ Strict
 
 Public
 
-Import payment.paymentmanagertest
-Import payment.paymentprovideraliastest
-Import payment.paymentproviderautounlocktest
+Import bono.tests.payment.paymentmanagertest
+Import bono.tests.payment.paymentprovideraliastest
+Import bono.tests.payment.paymentproviderautounlocktest

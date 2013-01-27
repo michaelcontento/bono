@@ -2,6 +2,6 @@ Strict
 
 Public
 
-Import helper.arrayhelpertest
-Import helper.mathhelpertest
-Import helper.stringhelpertest
+Import bono.tests.helper.arrayhelpertest
+Import bono.tests.helper.mathhelpertest
+Import bono.tests.helper.stringhelpertest

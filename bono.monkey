@@ -2,12 +2,12 @@ Strict
 
 Public
 
-Import src.exceptions
-Import src.fx
-Import src.graphics
-Import src.helper
-Import src.io
-Import src.kernel
-Import src.tests
-Import src.ui
-Import src.utils
+Import bono.src.exceptions
+Import bono.src.fx
+Import bono.src.graphics
+Import bono.src.helper
+Import bono.src.io
+Import bono.src.kernel
+Import bono.src.tests
+Import bono.src.ui
+Import bono.src.utils

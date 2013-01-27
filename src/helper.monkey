@@ -2,7 +2,7 @@ Strict
 
 Public
 
-Import helper.arrayhelper
-Import helper.mathhelper
-Import helper.matrixhelper
-Import helper.stringhelper
+Import bono.src.helper.arrayhelper
+Import bono.src.helper.mathhelper
+Import bono.src.helper.matrixhelper
+Import bono.src.helper.stringhelper

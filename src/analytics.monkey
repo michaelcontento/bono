@@ -2,4 +2,4 @@ Strict
 
 Public
 
-Import analytics.flurry
+Import bono.src.analytics.flurry

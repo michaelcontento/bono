@@ -2,6 +2,6 @@ Strict
 
 Public
 
-Import sprites.invalidspriteatlasxmlexception
-Import sprites.sprite
-Import sprites.spriteatlas
+Import bono.src.graphics.sprites.invalidspriteatlasxmlexception
+Import bono.src.graphics.sprites.sprite
+Import bono.src.graphics.sprites.spriteatlas

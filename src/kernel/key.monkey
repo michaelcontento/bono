@@ -2,7 +2,7 @@ Strict
 
 Public
 
-Import key.keyemitter
-Import key.keyevent
-Import key.keyhandler
-Import key.keyhandlerfan
+Import bono.src.kernel.key.keyemitter
+Import bono.src.kernel.key.keyevent
+Import bono.src.kernel.key.keyhandler
+Import bono.src.kernel.key.keyhandlerfan

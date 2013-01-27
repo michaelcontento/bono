@@ -2,23 +2,23 @@ Strict
 
 Public
 
-Import fx.animation
-Import fx.effect
-Import fx.effectcolor
-Import fx.effectcoloralpha
-Import fx.particle
-Import fx.particleemitter
-Import fx.particleemittercircle
-Import fx.particlesystem
-Import fx.transition
-Import fx.transitionback
-Import fx.transitionbounce
-Import fx.transitioncirc
-Import fx.transitioncubic
-Import fx.transitionelastic
-Import fx.transitionexpo
-Import fx.transitionlinear
-Import fx.transitionquad
-Import fx.transitionquart
-Import fx.transitionrandom
-Import fx.transitionsine
+Import bono.src.fx.animation
+Import bono.src.fx.effect
+Import bono.src.fx.effectcolor
+Import bono.src.fx.effectcoloralpha
+Import bono.src.fx.particle
+Import bono.src.fx.particleemitter
+Import bono.src.fx.particleemittercircle
+Import bono.src.fx.particlesystem
+Import bono.src.fx.transition
+Import bono.src.fx.transitionback
+Import bono.src.fx.transitionbounce
+Import bono.src.fx.transitioncirc
+Import bono.src.fx.transitioncubic
+Import bono.src.fx.transitionelastic
+Import bono.src.fx.transitionexpo
+Import bono.src.fx.transitionlinear
+Import bono.src.fx.transitionquad
+Import bono.src.fx.transitionquart
+Import bono.src.fx.transitionrandom
+Import bono.src.fx.transitionsine

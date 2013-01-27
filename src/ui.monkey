@@ -2,8 +2,8 @@ Strict
 
 Public
 
-Import ui.carousel
-Import ui.carouselhandler
-Import ui.carouselrenderer
-Import ui.carouselrenderersimple
-Import ui.textinput
+Import bono.src.ui.carousel
+Import bono.src.ui.carouselhandler
+Import bono.src.ui.carouselrenderer
+Import bono.src.ui.carouselrenderersimple
+Import bono.src.ui.textinput

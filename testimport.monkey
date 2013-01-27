@@ -2,8 +2,8 @@ Strict
 
 Public
 
-Import tests.graphics
-Import tests.helper
-Import tests.payment
-Import tests.tests
-Import tests.utils
+Import bono.tests.graphics
+Import bono.tests.helper
+Import bono.tests.payment
+Import bono.tests.tests
+Import bono.tests.utils

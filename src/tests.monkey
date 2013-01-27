@@ -4,13 +4,13 @@ Public
 
 #REFLECTION_FILTER+="*test|*src.tests*"
 
-Import tests.assert
-Import tests.assertionfailedexception
-Import tests.testcase
-Import tests.testfailedexception
-Import tests.testincompleteexception
-Import tests.testlistener
-Import tests.testreportsimple
-Import tests.testrunner
-Import tests.testskippedexception
-Import tests.testsuite
+Import bono.src.tests.assert
+Import bono.src.tests.assertionfailedexception
+Import bono.src.tests.testcase
+Import bono.src.tests.testfailedexception
+Import bono.src.tests.testincompleteexception
+Import bono.src.tests.testlistener
+Import bono.src.tests.testreportsimple
+Import bono.src.tests.testrunner
+Import bono.src.tests.testskippedexception
+Import bono.src.tests.testsuite

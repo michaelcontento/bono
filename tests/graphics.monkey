@@ -2,5 +2,5 @@ Strict
 
 Public
 
-Import graphics.aligntest
-Import graphics.colortest
+Import bono.tests.graphics.aligntest
+Import bono.tests.graphics.colortest

@@ -2,6 +2,6 @@ Strict
 
 Public
 
-Import tests.asserttest
-Import tests.testcasetest
-Import tests.testsuitetest
+Import bono.tests.tests.asserttest
+Import bono.tests.tests.testcasetest
+Import bono.tests.tests.testsuitetest

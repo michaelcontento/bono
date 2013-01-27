@@ -2,5 +2,5 @@ Strict
 
 Public
 
-Import scaler.contentscaler
-Import scaler.contentscalerfull
+Import bono.src.kernel.scaler.contentscaler
+Import bono.src.kernel.scaler.contentscalerfull

@@ -2,6 +2,6 @@ Strict
 
 Public
 
-Import payment.paymentmanager
-Import payment.paymentprovider
-Import payment.paymentprovideralias
+Import bono.src.payment.paymentmanager
+Import bono.src.payment.paymentprovider
+Import bono.src.payment.paymentprovideralias

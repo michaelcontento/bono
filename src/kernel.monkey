@@ -2,15 +2,15 @@ Strict
 
 Public
 
-Import kernel.app
-Import kernel.deltatimer
-Import kernel.director
-Import kernel.key
-Import kernel.renderable
-Import kernel.scaler
-Import kernel.scene
-Import kernel.sceneable
-Import kernel.soundmanager
-Import kernel.suspendable
-Import kernel.touch
-Import kernel.updateable
+Import bono.src.kernel.app
+Import bono.src.kernel.deltatimer
+Import bono.src.kernel.director
+Import bono.src.kernel.key
+Import bono.src.kernel.renderable
+Import bono.src.kernel.scaler
+Import bono.src.kernel.scene
+Import bono.src.kernel.sceneable
+Import bono.src.kernel.soundmanager
+Import bono.src.kernel.suspendable
+Import bono.src.kernel.touch
+Import bono.src.kernel.updateable

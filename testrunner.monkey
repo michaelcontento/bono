@@ -3,7 +3,7 @@ Strict
 Private
 
 Import bono
-Import testimport
+Import bono.testimport
 
 Public
 
