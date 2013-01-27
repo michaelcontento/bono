@@ -20,6 +20,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Field image:Image
     Field renderPos:Vector2D = New Vector2D()
     Field imageName:String
+    Field baseRotation:Int
     Field _scale:Vector2D = New Vector2D(1, 1)
     Global cacheImage:StringMap<Image> = New StringMap<Image>()
     Global cacheSize:StringMap<Vector2D> = New StringMap<Vector2D>()
@@ -45,10 +46,47 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         LoadImage()
     End
 
+    Method New(imageName:String, image:Image, forcedSize:Vector2D = Null, baseRotation:Int = 0)
+        Self.imageName = imageName
+        Self.image = image
+        Self.baseRotation = baseRotation
+
+        If forcedSize
+            SetSize(forcedSize)
+        Else
+            SetSize(New Vector2D(image.Width(), image.Height()))
+        End
+    End
+
+    Method GrabSprite:Sprite(name:String, src:Vector2D, size:Vector2D, rotation:Int = 0)
+        Local img:Image = image.GrabImage(
+            src.x, src.y,
+            size.x, size.y,
+            1,
+            Image.MidHandle)
+
+        Local forcedSize:Vector2D
+        Select rotation
+        Case 90, 270, -90, -270
+            forcedSize = New Vector2D(size.y, size.x)
+        Case 0, 180, -180
+            ' nothing to do here
+        Default
+            Error "FIXME"
+        End
+
+        Return New Sprite(name, img, forcedSize, rotation)
+    End
+
     Method OnRender:Void()
         GetColor().Activate()
         renderPos.Set(GetCenter()).Mul(scale).Add(GetPosition())
-        DrawImage(image, renderPos.x, renderPos.y, rotation, scale.x, scale.y, currentFrame)
+        DrawImage(
+            image,
+            renderPos.x, renderPos.y,
+            baseRotation + rotation,
+            scale.x, scale.y,
+            currentFrame)
         GetColor().Deactivate()
     End
 
