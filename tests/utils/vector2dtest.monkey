@@ -179,4 +179,28 @@ Class Vector2DTest Extends TestCase
 
         AssertEquals("(12.0, 34.0)", vec.ToString())
     End
+
+    Method TestFloor:Void()
+        Local vec:Vector2D = New Vector2D(1.3, 2.9)
+        vec.Floor()
+
+        AssertEquals(1.0, vec.x)
+        AssertEquals(2.0, vec.y)
+    End
+
+    Method TestCeil:Void()
+        Local vec:Vector2D = New Vector2D(1.3, 2.9)
+        vec.Ceil()
+
+        AssertEquals(2.0, vec.x)
+        AssertEquals(3.0, vec.y)
+    End
+
+    Method TestRound:Void()
+        Local vec:Vector2D = New Vector2D(1.4, 1.6)
+        vec.Round()
+
+        AssertEquals(1.0, vec.x)
+        AssertEquals(2.0, vec.y)
+    End
 End
