@@ -2,10 +2,7 @@ Strict
 
 Private
 
-Import assert
-Import testfailedexception
-Import testincompleteexception
-Import testskippedexception
+Import bono
 
 Public
 

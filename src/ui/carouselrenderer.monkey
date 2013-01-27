@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import carousel
+Import bono
 
 Public
 

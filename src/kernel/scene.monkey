@@ -2,15 +2,7 @@ Strict
 
 Private
 
-Import app
-Import deltatimer
-Import director
-Import key
-Import touch
-Import renderable
-Import sceneable
-Import suspendable
-Import updateable
+Import bono
 
 Public
 

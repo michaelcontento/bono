@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import touchable
-Import touchevent
+Import bono
 
 Public
 

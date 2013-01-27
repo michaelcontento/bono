@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import assertionfailedexception
+Import bono
 
 Function Fail:Void(message:String)
     Throw New AssertionFailedException("Failed asserting that " + message)

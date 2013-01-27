@@ -2,11 +2,7 @@ Strict
 
 Private
 
-Import app
-Import sceneable
-Import suspendable
-Import renderable
-Import updateable
+Import bono
 
 Public
 

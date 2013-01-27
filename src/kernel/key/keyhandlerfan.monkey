@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import keyhandler
-Import keyevent
+Import bono
 
 Public
 

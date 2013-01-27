@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import renderable
+Import bono
 
 Public
 

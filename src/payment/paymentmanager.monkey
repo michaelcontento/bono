@@ -2,8 +2,8 @@ Strict
 
 Private
 
-Import paymentprovider
-Import paymentprovideralias
+Import bono.src.payment.paymentprovider
+Import bono.src.payment.paymentprovideralias
 
 Public
 

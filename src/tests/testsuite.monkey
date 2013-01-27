@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import testlistener
-Import testrunner
+Import bono
 Import reflection
 
 Public

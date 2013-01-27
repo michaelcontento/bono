@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import color
+Import bono
 
 Public
 

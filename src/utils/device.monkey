@@ -1,8 +1,8 @@
 Private
 
-Import "native/device.${TARGET}.${LANG}"
+Import bono
 Import mojo.graphics
-Import vector2d
+Import "native/device.${TARGET}.${LANG}"
 
 Class DeviceNonNative Abstract
     Function GetSize:Vector2D()

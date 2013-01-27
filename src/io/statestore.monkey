@@ -2,8 +2,8 @@ Strict
 
 Private
 
+Import bono
 Import mojo.app
-Import persistable
 
 Public
 

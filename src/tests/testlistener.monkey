@@ -2,8 +2,8 @@ Strict
 
 Private
 
+Import bono
 Import reflection
-Import testsuite
 
 Public
 

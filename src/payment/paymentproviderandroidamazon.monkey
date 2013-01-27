@@ -14,7 +14,7 @@ Private
 '        </intent-filter>
 '    </receiver>
 
-Import paymentprovider
+Import bono.src.payment.paymentprovider
 Import "native/paymentwrapper-amazon.android.java"
 
 Private Extern
