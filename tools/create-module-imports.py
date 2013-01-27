@@ -49,7 +49,8 @@ def create_import_files(dirname):
     def process(dirpath):
         filenames = [x.stripext().name for x in dirpath.files()]
         filenames = [x for x in filenames if is_valid(dirpath.name, x)]
-        rendered = MONKEY.render(filenames=filenames, module=dirpath.name)
+        module = "bono." + dirpath.replace("/", ".")
+        rendered = MONKEY.render(filenames=filenames, module=module)
         (dirpath + ".monkey").write_text(rendered)
 
     walkdir(path(dirname), process, create_import_files)
@@ -76,24 +77,11 @@ def remove_non_autoload_modules():
     filepath.write_lines([x for x in filepath.lines() if is_autoload(x)])
 
 
-def create_symlinks(dirname):
-    def process(dirpath):
-        levels = len(dirpath.splitall()) - 1
-        des = dirpath / "bono"
-        if des.exists():
-            des.remove()
-        path("../" * levels).symlink(dirpath / "bono")
-
-    walkdir(path(dirname), process, create_symlinks)
-
-
 if __name__ == "__main__":
     create_import_files("src")
     create_import_files("tests")
-    create_symlinks("src")
     add_reflection_rule()
     remove_non_autoload_modules()
 
     path("src.monkey").rename("bono.monkey")
     path("tests.monkey").rename("testimport.monkey")
-    path("src/bono").remove()
