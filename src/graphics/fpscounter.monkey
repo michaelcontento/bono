@@ -2,9 +2,7 @@ Strict
 
 Private
 
-Import basedisplayobject
-Import bono.src.kernel
-Import bono.src.utils
+Import bono
 Import mojo.graphics
 
 Public

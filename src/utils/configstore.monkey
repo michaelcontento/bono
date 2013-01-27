@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import bono.src.io
-Import config
+Import bono
 
 Public
 

@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import transition
+Import bono
 
 Function OutBounce:Float(progress:Float)
     If progress < (1 / 2.75) Return 7.5625 * Pow(progress, 2)

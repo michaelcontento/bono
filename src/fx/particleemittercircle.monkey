@@ -2,10 +2,7 @@ Strict
 
 Private
 
-Import bono.src.utils
-Import bono.src.kernel
-Import particle
-Import particleemitter
+Import bono
 
 Public
 

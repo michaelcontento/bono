@@ -2,9 +2,7 @@ Strict
 
 Private
 
-Import bono.src.graphics
-Import bono.src.kernel
-Import bono.src.utils
+Import bono
 
 Public
 

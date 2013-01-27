@@ -2,8 +2,8 @@ Strict
 
 Private
 
+Import bono
 Import mojo.graphics
-Import bono.src.helper
 
 Public
 

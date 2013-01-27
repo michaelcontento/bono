@@ -2,13 +2,9 @@ Strict
 
 Private
 
-Import bono.src.exceptions
-Import bono.src.tests
-Import bono.src.utils
+Import bono
 Import bono.vendor.skn3.xml
-Import invalidspriteatlasxmlexception
 Import mojo.app
-Import sprite
 
 Public
 

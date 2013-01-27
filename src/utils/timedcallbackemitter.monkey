@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import bono.src.kernel
-Import timedcallbackobserver
+Import bono
 
 Class CallbackNode
     Field name:String

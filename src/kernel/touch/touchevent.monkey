@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import bono.src.utils
+Import bono
 Import mojo.app
 
 Public

@@ -2,12 +2,8 @@ Strict
 
 Private
 
-Import bono.src.helper
-Import bono.src.utils
-Import bono.src.kernel
+Import bono
 Import mojo.input
-Import touchable
-Import touchevent
 
 Public
 

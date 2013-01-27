@@ -2,10 +2,7 @@ Strict
 
 Private
 
-Import basedisplayobject
-Import bono.src.graphics
-Import bono.src.kernel
-Import bono.src.utils
+Import bono
 Import bono.vendor.angelfont
 
 Public

@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import bono.src.kernel
-Import particle
+Import bono
 
 Public
 

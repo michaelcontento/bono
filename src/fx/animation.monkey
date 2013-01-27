@@ -2,9 +2,7 @@ Strict
 
 Private
 
-Import bono.src.kernel
-Import effect
-Import transition
+Import bono
 
 Public
 

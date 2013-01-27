@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import transition
+Import bono
 
 Public
 

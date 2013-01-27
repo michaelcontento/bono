@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import bono.src.graphics
-Import effect
+Import bono
 
 Public
 

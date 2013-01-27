@@ -2,9 +2,7 @@ Strict
 
 Private
 
-Import bono.src.kernel
-Import keyevent
-Import keyhandler
+Import bono
 Import mojo.input
 
 Public

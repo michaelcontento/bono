@@ -2,10 +2,7 @@ Strict
 
 Private
 
-Import bono.src.utils
-Import colors
-Import positionable
-Import sizeable
+Import bono
 
 Public
 

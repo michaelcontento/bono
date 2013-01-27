@@ -2,8 +2,7 @@ Strict
 
 Private
 
-Import paymentprovider
-Import bono.src.exceptions
+Import bono
 Import "native/paymentwrapper-google.android.java"
 
 Private Extern

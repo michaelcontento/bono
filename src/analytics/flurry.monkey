@@ -26,7 +26,7 @@ End
 
 Private
 
-Import bono.src.utils
+Import bono
 
 Public
 

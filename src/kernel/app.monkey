@@ -2,17 +2,10 @@ Strict
 
 Private
 
-Import bono.src.utils
-Import bono.src.exceptions
+Import bono
 Import brl.asyncevent
-Import scaler.contentscaler
-Import deltatimer
-Import director
 Import mojo.app
 Import mojo.graphics
-Import renderable
-Import suspendable
-Import updateable
 
 Public
 

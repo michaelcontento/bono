@@ -2,9 +2,7 @@ Strict
 
 Private
 
-Import bono.src.graphics.colors
-Import bono.src.kernel
-Import color
+Import bono
 Import mojo.graphics
 
 Public

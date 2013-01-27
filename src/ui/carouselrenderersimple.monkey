@@ -2,13 +2,7 @@ Strict
 
 Private
 
-Import bono.src.graphics
-Import bono.src.helper
-Import bono.src.kernel
-Import bono.src.utils
-Import carousel
-Import carouselhandler
-Import carouselrenderer
+Import bono
 Import mojo
 
 Public
