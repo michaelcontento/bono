@@ -3,6 +3,7 @@ Strict
 Private
 
 Import bono.src.utils
+Import bono.src.exceptions
 Import brl.asyncevent
 Import contentscaler
 Import deltatimer
@@ -47,39 +48,59 @@ Class App Extends app.App Abstract
     End
 
     Method OnCreate:Int()
-        SetUpdateRate(GetTargetFps())
-        timer = New DeltaTimer(GetTargetFps())
-        contentScaler = GetContentScaler()
+        Try
+            SetUpdateRate(GetTargetFps())
+            timer = New DeltaTimer(GetTargetFps())
+            contentScaler = GetContentScaler()
 
-        Director.Shared().SetApp(Self)
-        Run()
+            Director.Shared().SetApp(Self)
+            Run()
+        Catch ex:Exception
+            Error ex
+        End
         Return 0
     End
 
     Method OnRender:Int()
-        Cls(0, 0, 0)
-        UpdateAsyncEvents()
-        If contentScaler Then contentScaler.OnRenderPre(Self)
-        If renderable Then renderable.OnRender()
-        If contentScaler Then contentScaler.OnRenderPost(Self)
+        Try
+            Cls(0, 0, 0)
+            UpdateAsyncEvents()
+            If contentScaler Then contentScaler.OnRenderPre(Self)
+            If renderable Then renderable.OnRender()
+            If contentScaler Then contentScaler.OnRenderPost(Self)
+        Catch ex:Exception
+            Error ex
+        End
         Return 0
     End
 
     Method OnUpdate:Int()
-        timer.OnUpdate()
-        If updateable Then updateable.OnUpdate(timer)
+        Try
+            timer.OnUpdate()
+            If updateable Then updateable.OnUpdate(timer)
+        Catch ex:Exception
+            Error ex
+        End
         Return 0
     End
 
     Method OnResume:Int()
-        timer.Play()
-        If suspendable Then suspendable.OnResume()
+        Try
+            timer.Play()
+            If suspendable Then suspendable.OnResume()
+        Catch ex:Exception
+            Error ex
+        End
         Return 0
     End
 
     Method OnSuspend:Int()
-        timer.Pause()
-        If suspendable Then suspendable.OnSuspend()
+        Try
+            timer.Pause()
+            If suspendable Then suspendable.OnSuspend()
+        Catch ex:Exception
+            Error ex
+        End
         Return 0
     End
 
