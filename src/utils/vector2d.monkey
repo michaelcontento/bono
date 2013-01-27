@@ -1,5 +1,9 @@
 Strict
 
+Private
+
+Import bono
+
 Public
 
 Class Vector2D
