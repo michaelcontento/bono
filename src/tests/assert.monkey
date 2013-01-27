@@ -10,8 +10,8 @@ End
 
 Function FailWithDetails:Void(message:String, expected:String, actual:String)
     Fail(message + "~n" +
-        "Expected: " + expected + "~n" +
-        "Actual  : " + actual)
+        "  Expected: " + expected + "~n" +
+        "  Actual  : " + actual)
 End
 
 Public
