@@ -32,8 +32,9 @@ Class App Extends app.App Abstract
         Return Device.GetSize()
     End
 
-    Method TranslateSpace:Void(vec:Vector2D)
-        If contentScaler Then contentScaler.TranslateSpace(Self, vec)
+    Method TranslateSpace:Vector2D(vec:Vector2D)
+        If Not contentScaler Then Return vec
+        Return contentScaler.TranslateSpace(Self, vec)
     End
 
     Method GetTargetFps:Int()

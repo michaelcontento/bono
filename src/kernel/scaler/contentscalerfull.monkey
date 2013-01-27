@@ -13,9 +13,9 @@ Class ContentScalerFull Implements ContentScaler
 
     Public
 
-    Method TranslateSpace:Void(app:App, vec:Vector2D)
+    Method TranslateSpace:Vector2D(app:App, vec:Vector2D)
         InitScaleVector(app)
-        vec.Div(scaleVec)
+        Return vec.Copy().Div(scaleVec)
     End
 
     Method OnRenderPre:Void(app:App)
