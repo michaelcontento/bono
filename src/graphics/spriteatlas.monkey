@@ -17,7 +17,6 @@ Class SpriteAtlas
 
     Field atlasSprite:Sprite
     Field childSprites:StringMap<Sprite> = New StringMap<Sprite>()
-    Field nameSet:StringSet = New StringSet()
     Field xml:XMLDoc
 
     Public
@@ -33,7 +32,7 @@ Class SpriteAtlas
         xml = Null
     End
 
-    Method GetSprite:Sprite(name:String)
+    Method Get:Sprite(name:String)
         If Not childSprites.Contains(name)
             Throw New InvalidArgumentException(
                 "There is no sprite named: " + name)
@@ -42,8 +41,24 @@ Class SpriteAtlas
         Return childSprites.Get(name)
     End
 
-    Method GetSpriteNames:StringSet()
-        Return nameSet
+    Method GetNames:MapKeys<String, Sprite>()
+        Return childSprites.Keys()
+    End
+
+    Method ObjectEnumerator:ValueEnumerator<String, Sprite>()
+        Return childSprites.Values().ObjectEnumerator()
+    End
+
+    Method Count:Int()
+        Return childSprites.Count()
+    End
+
+    Method IsEmpty:Bool()
+        Return childSprites.IsEmpty()
+    End
+
+    Method Contains:Bool(name:String)
+        Return childSprites.Contains(name)
     End
 
     Private
@@ -118,7 +133,6 @@ Class SpriteAtlas
                 rotation = 0
             End
 
-            nameSet.Insert(name)
             childSprites.Set(
                 name,
                 atlasSprite.GrabSprite(name, src, size, rotation))
