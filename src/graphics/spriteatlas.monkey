@@ -25,8 +25,12 @@ Class SpriteAtlas
     Method New(filename:String)
         LoadXml(filename)
         CheckXml()
+
         LoadAtlasSprite()
         LoadSprites()
+
+        FreeXmlRecursive(xml)
+        xml = Null
     End
 
     Method GetSprite:Sprite(name:String)
@@ -138,5 +142,17 @@ Class SpriteAtlas
             Throw New InvalidSpriteAtlasXmlException(
                 "Invalid value for attribute 'r' in sprite node found")
         End
+    End
+
+    Method FreeXmlRecursive:Void(xml:XMLNode)
+        If Not xml Then Return
+
+        For Local child:XMLNode = EachIn xml.children
+            FreeXmlRecursive(child)
+            xml.RemoveChild(child)
+        End
+
+        xml.ClearAttributes()
+        xml.ClearChildren()
     End
 End
