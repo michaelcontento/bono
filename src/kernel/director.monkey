@@ -24,6 +24,10 @@ Class Director
         Return instance
     End
 
+    Function TranslateSpace:Vector2D(pos:Vector2D)
+        Return Director.Shared().GetApp().TranslateSpace(pos)
+    End
+
     Method SetApp:Void(app:App)
         Self.app = app
     End
