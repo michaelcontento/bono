@@ -1,4 +1,4 @@
-MONKEY_PATH="/Applications/Monkey/"
+MONKEY_PATH="/Applications/Monkey"
 CONFIG="debug"
 TARGET="glfw"
 
@@ -9,6 +9,7 @@ tests:
 	@$(MONKEY_PATH)/bin/trans_macos \
 		-config=$(CONFIG) \
 		-target=$(TARGET) \
+		-modpath=".;$$(pwd)/../;$$(pwd);$(MONKEY_PATH)/modules" \
 		-run testrunner.monkey | ./tools/trimoutput-tests.sh
 
 lint:
