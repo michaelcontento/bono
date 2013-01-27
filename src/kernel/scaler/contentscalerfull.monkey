@@ -2,10 +2,9 @@ Strict
 
 Private
 
-Import app
+Import bono.src.kernel
 Import bono.src.helper
 Import bono.src.utils
-Import contentscaler
 
 Public
 

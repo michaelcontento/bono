@@ -5,7 +5,7 @@ Private
 Import bono.src.utils
 Import bono.src.exceptions
 Import brl.asyncevent
-Import contentscaler
+Import scaler.contentscaler
 Import deltatimer
 Import director
 Import mojo.app
