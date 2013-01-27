@@ -43,13 +43,13 @@ Class TestRunner
             Try
                 methodInfo.Invoke(test, [])
             Catch ex:TestFailedException
-                listener.AddFailure(classInfo, methodInfo, ex.ToString())
+                listener.AddFailure(classInfo, methodInfo, ex.message)
             Catch ex:AssertionFailedException
-                listener.AddFailure(classInfo, methodInfo, ex.ToString())
+                listener.AddFailure(classInfo, methodInfo, ex.message)
             Catch ex:TestSkippedException
-                listener.AddSkippedTest(classInfo, methodInfo, ex.ToString())
+                listener.AddSkippedTest(classInfo, methodInfo, ex.message)
             Catch ex:TestIncompleteException
-                listener.AddIncompleteTest(classInfo, methodInfo, ex.ToString())
+                listener.AddIncompleteTest(classInfo, methodInfo, ex.message)
             End
             listener.EndTest(classInfo, methodInfo)
 
