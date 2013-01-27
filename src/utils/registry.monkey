@@ -1,10 +1,10 @@
 Strict
 
-Import configvaluenotfoundexception
+Import bono
 
 Public
 
-Class Config<T> Abstract
+Class Registry<T> Abstract
     Private
 
     Global store:StringMap<T> = New StringMap<T>()
@@ -13,13 +13,13 @@ Class Config<T> Abstract
 
     Function Get:T(key:String)
         If store.Contains(key) Then Return store.Get(key)
-        Throw New ConfigValueNotFoundException()
+        Throw New RegistryValueNotFoundException()
     End
 
     Function Get:T(key:String, fallback:T)
         Try
             Return Get(key)
-        Catch ex:ConfigValueNotFoundException
+        Catch ex:RegistryValueNotFoundException
             ' Nothing special to do here ... simply return the given default
         End
         Return fallback

@@ -6,7 +6,7 @@ Import bono
 
 Public
 
-Class ConfigStore<T> Implements Persistable
+Class RegistryStore<T> Implements Persistable
     Private
 
     Const SEPARATOR:String = "--CONFIG::SEPARATOR--"
@@ -17,10 +17,10 @@ Class ConfigStore<T> Implements Persistable
     Method ToString:String()
         Local result:String = ""
 
-        For Local key:String = EachIn Config<T>.Keys()
+        For Local key:String = EachIn Registry<T>.Keys()
             result += key
             result += DELIMITER
-            result += Config<T>.Get(key)
+            result += Registry<T>.Get(key)
             result += SEPARATOR
         End
 
@@ -33,17 +33,17 @@ Class ConfigStore<T> Implements Persistable
 
         For Local record:String = EachIn records
             Local parts:String[] = record.Split(DELIMITER)
-            Config<T>.Set(parts[0], T(parts[1]))
+            Registry<T>.Set(parts[0], T(parts[1]))
         End
     End
 
     Function LoadStateStore:Void()
-        Local tmp:ConfigStore<T> = New ConfigStore<T>()
+        Local tmp:RegistryStore<T> = New RegistryStore<T>()
         StateStore.Load(tmp)
     End
 
     Function SaveStateStore:Void()
-        Local tmp:ConfigStore<T> = New ConfigStore<T>()
+        Local tmp:RegistryStore<T> = New RegistryStore<T>()
         StateStore.Save(tmp)
     End
 End
