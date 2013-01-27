@@ -3,8 +3,7 @@ Strict
 Private
 
 Import bono.src.utils
-Import color
-Import colorable
+Import colors
 Import positionable
 Import sizeable
 

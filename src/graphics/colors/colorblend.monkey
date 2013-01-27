@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import basedisplayobject
+Import bono.src.graphics.colors
 Import bono.src.kernel
 Import color
 Import mojo.graphics

@@ -2,9 +2,9 @@ Strict
 
 Private
 
-Import align
-Import basedisplayobject
 Import bono.src.exceptions
+Import bono.src.graphics.basedisplayobject
+Import bono.src.graphics.colors
 Import bono.src.kernel
 Import bono.src.utils
 Import mojo.graphics

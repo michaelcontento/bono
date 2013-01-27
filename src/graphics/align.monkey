@@ -5,7 +5,7 @@ Private
 Import bono.src.utils
 Import positionable
 Import sizeable
-Import sprite
+Import sprites.sprite
 
 Public
 
