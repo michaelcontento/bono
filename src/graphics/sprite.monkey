@@ -4,6 +4,7 @@ Private
 
 Import align
 Import basedisplayobject
+Import bono.src.exceptions
 Import bono.src.kernel
 Import bono.src.utils
 Import mojo.graphics
@@ -72,7 +73,8 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         Case 0, 180, -180
             ' nothing to do here
         Default
-            Error "FIXME"
+            Throw New InvalidArgumentException(
+                "Unable to handle given rotation '" + String(rotation) + "'")
         End
 
         Return New Sprite(name, img, forcedSize, rotation)
@@ -181,6 +183,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     End
 
     Method FailIfImageNotLoaded:Void()
-        If Not image Then Error("Unable to load: " + imageName)
+        If Not image Then Throw New RuntimeException(
+            "Unable to load image file: " + imageName)
     End
 End
