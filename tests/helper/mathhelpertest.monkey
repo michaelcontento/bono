@@ -8,10 +8,19 @@ Public
 
 Class MathHelperTest Extends TestCase
     Method TestRoundUp:Void()
+       AssertEquals(1, MathHelper.Round(0.5))
        AssertEquals(1, MathHelper.Round(0.6))
        AssertEquals(1, MathHelper.Round(0.7))
        AssertEquals(1, MathHelper.Round(0.8))
        AssertEquals(1, MathHelper.Round(0.9))
+    End
+
+    Method TestRoundUpWithNumberGreaterThanOne:Void()
+       AssertEquals(10, MathHelper.Round(9.5))
+       AssertEquals(10, MathHelper.Round(9.6))
+       AssertEquals(10, MathHelper.Round(9.7))
+       AssertEquals(10, MathHelper.Round(9.8))
+       AssertEquals(10, MathHelper.Round(9.9))
     End
 
     Method TestRoundDown:Void()
@@ -19,6 +28,13 @@ Class MathHelperTest Extends TestCase
        AssertEquals(0, MathHelper.Round(0.3))
        AssertEquals(0, MathHelper.Round(0.2))
        AssertEquals(0, MathHelper.Round(0.1))
+    End
+
+    Method TestRoundDownWithNumberGreaterThanOne:Void()
+       AssertEquals(9, MathHelper.Round(9.4))
+       AssertEquals(9, MathHelper.Round(9.3))
+       AssertEquals(9, MathHelper.Round(9.2))
+       AssertEquals(9, MathHelper.Round(9.1))
     End
 
     Method TestRoundAlreadyRounded:Void()
