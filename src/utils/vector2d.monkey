@@ -39,6 +39,27 @@ Class Vector2D
         Return New Vector2D(x, y)
     End
 
+    Method Round:Vector2D()
+        x = MathHelper.Round(x)
+        y = MathHelper.Round(y)
+
+        Return Self
+    End
+
+    Method Ceil:Vector2D()
+        x = monkey.Ceil(x)
+        y = monkey.Ceil(y)
+
+        Return Self
+    End
+
+    Method Floor:Vector2D()
+        x = monkey.Floor(x)
+        y = monkey.Floor(y)
+
+        Return Self
+    End
+
     Method Set:Vector2D(v2:Vector2D)
         x = v2.x
         y = v2.y
