@@ -160,11 +160,11 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
 
     Method CacheSet:Void(name:String, image:Image, size:Vector2D)
         cacheImage.Set(name, image)
-        cacheSize.Set(name, size)
+        cacheSize.Set(name, size.Copy())
     End
 
     Method CacheGetSize:Vector2D(name:String)
-        Return cacheSize.Get(name)
+        Return cacheSize.Get(name).Copy()
     End
 
     Method CacheGetImage:Image(name:String)
