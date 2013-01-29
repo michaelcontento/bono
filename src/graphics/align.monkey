@@ -14,32 +14,26 @@ Class Align Abstract
     Const CENTER:Int = 4
 
     Function Horizontal:Void(pos:Vector2D, obj:Sizeable, mode:Int)
-        Local scale:Float = 1
-        If Sprite(obj) Then scale = Sprite(obj).scale.x
-
         Select mode
         Case LEFT
             ' Default alignment - nothing to do here
         Case RIGHT
-            pos.x -= obj.GetSize().x / scale
+            pos.x -= obj.GetSize().x
         Case CENTER
-            pos.x -= obj.GetSize().x / scale / 2
+            pos.x -= obj.GetSize().x / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
     End
 
     Function Vertical:Void(pos:Vector2D, obj:Sizeable, mode:Int)
-        Local scale:Float = 1
-        If Sprite(obj) Then scale = Sprite(obj).scale.y
-
         Select mode
         Case TOP
             ' Default alignment - nothing to do here
         Case BOTTOM
-            pos.y -= obj.GetSize().y / scale
+            pos.y -= obj.GetSize().y
         Case CENTER
-            pos.y -= obj.GetSize().y / scale / 2
+            pos.y -= obj.GetSize().y / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
