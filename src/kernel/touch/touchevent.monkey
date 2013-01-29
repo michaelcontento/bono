@@ -47,6 +47,15 @@ Class TouchEvent
 
     Method Copy:TouchEvent()
         Local obj:TouchEvent = New TouchEvent(_finger)
+
+        ' New has increased the global counter but we're just creating a clone
+        ' of ourself and, to keep a proper order, we should decrement the id
+        ' by one now
+        nextId -= 1
+
+        obj._id = _id
+        obj._startTime = _startTime
+        obj._endTime = _endTime
         For Local pos:Vector2D = EachIn positions
             obj.Add(pos)
         End
