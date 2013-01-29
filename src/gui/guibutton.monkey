@@ -6,7 +6,7 @@ Import bono
 
 Public
 
-Class GuiButton Extends GuiBase Implements Touchable
+Class GuiButton Extends GuiBase Implements Touchable, Updateable
     Private
 
     Global someButtonPressed:Bool
@@ -52,6 +52,10 @@ Class GuiButton Extends GuiBase Implements Touchable
     Method SetSize:Void(newSize:Vector2D)
         LockedWithSprite("SetSize")
         Super.SetSize(newSize)
+    End
+
+    Method OnUpdate:Void(timer:DeltaTimer)
+        If sprite Then sprite.OnUpdate(timer)
     End
 
     Method OnRender:Void()
