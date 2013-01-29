@@ -73,7 +73,7 @@ Class TouchEmitter Implements Updateable, Suspendable
     End
 
     Method ReadTouch:Void()
-        Local diffVector:Vector2D
+        Local diffVector:Vector2D = New Vector2D()
         Local vector:Vector2D
         Local lastTouchDown:Bool
 
@@ -89,7 +89,7 @@ Class TouchEmitter Implements Updateable, Suspendable
             End
 
             vector = New Vector2D(TouchX(i), TouchY(i))
-            diffVector = vector.Copy().Sub(touchEvents[i].prevPos)
+            diffVector.Set(vector).Sub(touchEvents[i].prevPos)
 
             If diffVector.Length() >= minDistance
                 touchEvents[i].Add(vector)
