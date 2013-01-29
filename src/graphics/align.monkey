@@ -13,57 +13,40 @@ Class Align Abstract
     Const RIGHT:Int = 3
     Const CENTER:Int = 4
 
-    Function Horizontal:Void(object:Object, mode:Int)
-        CheckInterfaces(object)
-        Local scale:Float = GetScale(object).x
+    Function Horizontal:Void(pos:Vector2D, obj:Sizeable, mode:Int)
+        Local scale:Float = 1
+        If Sprite(obj) Then scale = Sprite(obj).scale.x
 
         Select mode
         Case LEFT
             ' Default alignment - nothing to do here
         Case RIGHT
-            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x * scale
+            pos.x -= obj.GetSize().x / scale
         Case CENTER
-            Positionable(object).GetPosition().x -= Sizeable(object).GetSize().x * scale / 2
+            pos.x -= obj.GetSize().x / scale / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
     End
 
-    Function Vertical:Void(object:Object, mode:Int)
-        CheckInterfaces(object)
-        Local scale:Float = GetScale(object).y
+    Function Vertical:Void(pos:Vector2D, obj:Sizeable, mode:Int)
+        Local scale:Float = 1
+        If Sprite(obj) Then scale = Sprite(obj).scale.y
 
         Select mode
         Case TOP
             ' Default alignment - nothing to do here
         Case BOTTOM
-            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y * scale
+            pos.y -= obj.GetSize().y / scale
         Case CENTER
-            Positionable(object).GetPosition().y -= Sizeable(object).GetSize().y * scale / 2
+            pos.y -= obj.GetSize().y / scale / 2
         Default
             Error("Invalid alignment mode (" + mode + ") given")
         End
     End
 
-    Function Centered:Void(object:Sizeable)
-        Horizontal(object, CENTER)
-        Vertical(object, CENTER)
-    End
-
-    Private
-
-    Function CheckInterfaces:Void(object:Object)
-        If Not Sizeable(object)
-            Error("Given object must implement Sizeable")
-        End
-
-        If Not Positionable(object)
-            Error("Given object must implement Positionable")
-        End
-    End
-
-    Function GetScale:Vector2D(object:Object)
-        If Sprite(object) Then Return Sprite(object).scale
-        Return New Vector2D(1, 1)
+    Function Centered:Void(pos:Vector2D, obj:Sizeable)
+        Horizontal(pos, obj, CENTER)
+        Vertical(pos, obj, CENTER)
     End
 End
