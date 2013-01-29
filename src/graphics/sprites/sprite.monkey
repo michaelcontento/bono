@@ -19,6 +19,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Field imageName:String
     Field baseRotation:Int
     Field _scale:Vector2D = New Vector2D(1, 1)
+    Field lastScale:Vector2D = New Vector2D(1, 1)
     Global cacheImage:StringMap<Image> = New StringMap<Image>()
     Global cacheSize:StringMap<Vector2D> = New StringMap<Vector2D>()
 
@@ -103,6 +104,9 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     End
 
     Method OnUpdate:Void(deltaTimer:DeltaTimer)
+        GetSize().Div(lastScale).Mul(_scale)
+        lastScale.Set(_scale)
+
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
@@ -135,7 +139,6 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     End
 
     Method scale:Void(newScale:Vector2D) Property
-        If image Then GetSize().Div(_scale).Mul(newScale)
         _scale = newScale
     End
 
