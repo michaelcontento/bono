@@ -88,6 +88,9 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     End
 
     Method OnRender:Void()
+        GetSize().Div(lastScale).Mul(_scale)
+        lastScale.Set(_scale)
+
         renderPos.Set(GetCenter())
         renderPos.Add(GetPosition())
         Align.Horizontal(renderPos, Self, halign)
@@ -98,15 +101,12 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
             image,
             renderPos.x, renderPos.y,
             baseRotation + rotation,
-            scale.x, scale.y,
+            _scale.x, _scale.y,
             currentFrame)
         GetColor().Deactivate()
     End
 
     Method OnUpdate:Void(deltaTimer:DeltaTimer)
-        GetSize().Div(lastScale).Mul(_scale)
-        lastScale.Set(_scale)
-
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
@@ -153,7 +153,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Method DrawImageRect:Void(x:Float, y:Float, srcX:Float, srcY:Float, srcWidth:Float, srcHeight:Float)
         x += GetCenter().x
         y += GetCenter().y
-        graphics.DrawImageRect(image, x, y, srcX, srcY, srcWidth, srcHeight, rotation, scale.x, scale.y, currentFrame)
+        graphics.DrawImageRect(image, x, y, srcX, srcY, srcWidth, srcHeight, rotation, _scale.x, _scale.y, currentFrame)
     End
 
     Private
