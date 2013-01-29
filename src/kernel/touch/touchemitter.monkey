@@ -14,6 +14,7 @@ Class TouchEmitter Implements Updateable, Suspendable
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
+    Field touchHasMoved:Bool[MAX_TOUCH_FINGERS]
 
     Public
 
@@ -64,8 +65,9 @@ Class TouchEmitter Implements Updateable, Suspendable
             ElseIf Not isTouchDown[i]
                 handler.OnTouchUp(touchEvents[i].Copy())
                 touchEvents[i] = Null
-            Else
+            ElseIf touchHasMoved[i]
                 handler.OnTouchMove(touchEvents[i])
+                touchHasMoved[i] = False
             End
         End
     End
@@ -91,6 +93,7 @@ Class TouchEmitter Implements Updateable, Suspendable
 
             If diffVector.Length() >= minDistance
                 touchEvents[i].Add(vector)
+                touchHasMoved[i] = True
                 If retainSize > -1 Then touchEvents[i].Trim(retainSize)
             End
         End
