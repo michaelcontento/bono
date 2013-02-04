@@ -34,15 +34,11 @@ Class SpriteAtlas
                 "There is no sprite named: " + name)
         End
 
-        Return childSprites.Get(name)
+        Return childSprites.Get(name).Copy()
     End
 
     Method GetNames:MapKeys<String, Sprite>()
         Return childSprites.Keys()
-    End
-
-    Method ObjectEnumerator:ValueEnumerator<String, Sprite>()
-        Return childSprites.Values().ObjectEnumerator()
     End
 
     Method Count:Int()
