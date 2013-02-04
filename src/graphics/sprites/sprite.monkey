@@ -58,6 +58,18 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         End
     End
 
+    Method Copy:Sprite()
+        Local tmp:Sprite = New Sprite(imageName, image, Null, baseRotation)
+        tmp.valign = valign
+        tmp.halign = halign
+        tmp.frameSpeed = frameSpeed
+        tmp.loopAnimation = loopAnimation
+        tmp.rotation = rotation
+        tmp.scale = scale
+
+        Return tmp
+    End
+
     Method GrabSprite:Sprite(name:String, src:Vector2D, size:Vector2D, rotation:Int = 0)
         Local img:Image = image.GrabImage(
             src.x, src.y,
