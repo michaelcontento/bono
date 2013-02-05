@@ -13,8 +13,12 @@ Class Text Extends BaseDisplayObject Implements Renderable
     Global angelFontStore:StringMap<AngelFont> = New StringMap<AngelFont>()
     Field name:String
     Field _text:String = ""
+    Field renderPos:Vector2D = New Vector2D()
 
     Public
+
+    Field halign:Int = Align.LEFT
+    Field valign:Int = Align.TOP
 
     Method New(name:String, pos:Vector2D=Null)
         Self.name = name
@@ -27,8 +31,12 @@ Class Text Extends BaseDisplayObject Implements Renderable
     End
 
     Method OnRender:Void()
+        renderPos.Set(GetPosition())
+        Align.Horizontal(renderPos, Self, halign)
+        Align.Vertical(renderPos, Self, valign)
+
         GetColor().Activate()
-        angelFont.DrawText(_text, GetPosition().x, GetPosition().y)
+        angelFont.DrawText(_text, renderPos.x, renderPos.y)
         GetColor().Deactivate()
     End
 
