@@ -47,6 +47,15 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
         End
     End
 
+    Method ClearChilds:Void()
+        For Local child:Object = EachIn childs
+            RemoveChild(child)
+        End
+
+        If keyEmitter Then AddChild(keyEmitter)
+        If touchEmitter Then AddChild(touchEmitter)
+    End
+
     Method AddChild:Void(child:Object)
         If Not childs.Contains(child) Then childs.AddLast(child)
 
