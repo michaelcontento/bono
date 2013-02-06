@@ -11,6 +11,7 @@ Class GuiButton Extends GuiBase Implements Touchable, Updateable
 
     Global someButtonPressed:Bool
     Field isPressed:Bool
+    Field finger:Int
     Field sprite:Sprite
 
     Public
@@ -75,11 +76,13 @@ Class GuiButton Extends GuiBase Implements Touchable, Updateable
 
         someButtonPressed = True
         isPressed = True
+        finger = event.finger
         OnButtonDown(event)
     End
 
     Method OnTouchMove:Void(event:TouchEvent)
         If Not isPressed Then Return
+        If Not event.finger = finger Then Return
         If Not trackLeavingMoves And Not Collide(event.pos) Then Return
 
         OnButtonMove(event)
@@ -87,6 +90,7 @@ Class GuiButton Extends GuiBase Implements Touchable, Updateable
 
     Method OnTouchUp:Void(event:TouchEvent)
         If Not isPressed Then Return
+        If Not event.finger = finger Then Return
 
         someButtonPressed = False
         isPressed = False
