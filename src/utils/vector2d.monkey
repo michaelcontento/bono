@@ -43,6 +43,13 @@ Class Vector2D
         Return New Vector2D(x, y)
     End
 
+    Method Reset:Vector2D()
+        x = 0
+        y = 0
+
+        Return Self
+    End
+
     Method Round:Vector2D()
         x = MathHelper.Round(x)
         y = MathHelper.Round(y)
