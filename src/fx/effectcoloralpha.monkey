@@ -29,7 +29,7 @@ Class EffectColorAlpha Extends List<Colorable> Implements Effect
         current = (stop - start) * progress + start
 
         For Local obj:Colorable = EachIn Self
-            obj.GetColor().alpha = current
+            obj.GetColor().alphaFloat = current
         End
     End
 End

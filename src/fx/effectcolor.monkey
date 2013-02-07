@@ -26,10 +26,10 @@ Class EffectColor Extends List<Colorable> Implements Effect
     End
 
     Method OnProgress:Void(progress:Float)
-        current.red   = (stop.red   - start.red)   * progress + start.red
-        current.green = (stop.green - start.green) * progress + start.green
-        current.blue  = (stop.blue  - start.blue)  * progress + start.blue
-        current.alpha = (stop.alpha - start.alpha) * progress + start.alpha
+        current.redFloat   = (stop.red   - start.red)   * progress + start.red
+        current.greenFloat = (stop.green - start.green) * progress + start.green
+        current.blueFloat  = (stop.blue  - start.blue)  * progress + start.blue
+        current.alphaFloat = (stop.alpha - start.alpha) * progress + start.alpha
 
         For Local obj:Colorable = EachIn Self
             obj.GetColor().red   = current.red
