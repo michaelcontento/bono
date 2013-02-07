@@ -32,7 +32,7 @@ Class KeyhandlerFan Implements Keyhandler
     End
 
     Method Add:Void(obj:Keyhandler)
-        If Not pool.Contains(obj) Then pool.AddLast(obj)
+        If Not pool.Contains(obj) Then pool.AddFirst(obj)
     End
 
     Method Remove:Void(obj:Keyhandler)

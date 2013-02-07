@@ -32,7 +32,7 @@ Class TouchableFan Implements Touchable
     End
 
     Method Add:Void(obj:Touchable)
-        If Not pool.Contains(obj) Then pool.AddLast(obj)
+        If Not pool.Contains(obj) Then pool.AddFirst(obj)
     End
 
     Method Remove:Void(obj:Touchable)
