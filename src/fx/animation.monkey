@@ -26,6 +26,14 @@ Class Animation Extends List<Effect> Implements Updateable
         Self.transition = transition
     End
 
+    Method GetTransition:Transition()
+        Return transition
+    End
+
+    Method GetDuration:Float()
+        Return duration
+    End
+
     Method Pause:Void()
         finished = True
     End
