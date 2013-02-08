@@ -12,17 +12,20 @@ Class Particle
     Field size:Vector2D = New Vector2D()
     Field velocity:Vector2D = New Vector2D()
     Field color:Color = New Color()
+    Field rotation:Float
     Field lifetime:Float
     Field active:Bool
 
     Method Apply:Void(sprite:Sprite)
         sprite.SetPosition(position)
         sprite.SetColor(color)
+        sprite.rotation = rotation
     End
 
     Method Reset:Void()
         position.x = 0
         position.y = 0
+        rotation = 0
         previousPosition.x = 0
         previousPosition.y = 0
         size.x = 0
