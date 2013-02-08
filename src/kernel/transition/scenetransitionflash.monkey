@@ -50,9 +50,8 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
     End
 
     Method Switch:Void(prevScene:Sceneable, nextScene:Sceneable)
-        If Not switched Then TriggerSceneLeaveAndEnter()
-
-        Super.Switch(prevScene, nextScene)
+        Self.prevScene = prevScene
+        Self.nextScene = nextScene
         switched = False
         animation.Restart()
 
@@ -62,6 +61,13 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
         Else
             SwitchOver()
         End
+    End
+
+    Method Finish:Void()
+        If intro Then intro.Stop()
+        animation.Stop()
+
+        SwitchOver()
     End
 
     Method OnRender:Void()
@@ -81,9 +87,9 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
         End
 
         animation.OnUpdate(timer)
-        If animation.IsPlaying()
-            Super.OnUpdate(timer)
-        Else
+        Super.OnUpdate(timer)
+
+        If Not animation.IsPlaying()
             Director.Shared().GetApp().SetHandler(nextScene)
         End
     End

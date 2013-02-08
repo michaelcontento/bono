@@ -17,6 +17,7 @@ Class Director
     Field previousScene:Sceneable
     Field previousSceneName:String
     Field defaultTransition:SceneTransition = New SceneTransitionInstant()
+    Field lastTransition:SceneTransition
 
     Public
 
@@ -63,9 +64,12 @@ Class Director
 
     Method GotoScene:Void(name:String, transition:SceneTransition)
         If name = GetCurrentSceneName() Then Return
-        SwapCurrentAndPrevious(name)
+
+        If lastTransition Then lastTransition.Finish()
+        lastTransition = transition
 
         GetApp().SetHandler(transition)
+        SwapCurrentAndPrevious(name)
         transition.Switch(GetPreviousScene(), GetCurrentScene())
     End
 

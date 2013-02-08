@@ -13,4 +13,7 @@ Class SceneTransitionInstant Implements SceneTransition
 
         Director.Shared().GetApp().SetHandler(nextScene)
     End
+
+    Method Finish:Void()
+    End
 End

@@ -11,10 +11,9 @@ Class SceneTransitionProxy Implements SceneTransition, Renderable, Suspendable, 
     Field nextScene:Sceneable
     Field activeScene:Sceneable
 
-    Method Switch:Void(prevScene:Sceneable, nextScene:Sceneable)
-        Self.prevScene = prevScene
-        Self.nextScene = nextScene
-    End
+    Method Switch:Void(prevScene:Sceneable, nextScene:Sceneable) Abstract
+
+    Method Finish:Void() Abstract
 
     Method OnUpdate:Void(timer:DeltaTimer)
         If Updateable(activeScene) Then Updateable(activeScene).OnUpdate(timer)
