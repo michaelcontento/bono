@@ -35,9 +35,9 @@ Class GuiButton Extends GuiBase Implements Touchable, Updateable
         Local oldSprite:Sprite = sprite
         sprite = Null
 
-        SetColor(oldSprite.GetColor().Copy())
-        SetPosition(oldSprite.GetPosition().Copy())
-        SetSize(oldSprite.GetSize().Copy())
+        GetColor().Set(oldSprite.GetColor())
+        GetPosition().Set(oldSprite.GetPosition())
+        GetSize().Set(oldSprite.GetSize())
     End
 
     Method SetColor:Void(newColor:Color)
