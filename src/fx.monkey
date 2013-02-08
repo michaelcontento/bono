@@ -6,6 +6,7 @@ Import bono.src.fx.animation
 Import bono.src.fx.effect
 Import bono.src.fx.effectcolor
 Import bono.src.fx.effectcoloralpha
+Import bono.src.fx.effectreverse
 Import bono.src.fx.particle
 Import bono.src.fx.particleemitter
 Import bono.src.fx.particleemittercircle
