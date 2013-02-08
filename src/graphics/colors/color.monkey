@@ -93,6 +93,41 @@ Class Color
             MathHelper.IntToHex(_blue)
     End
 
+    Method FromHSV:Void(h:Float, s:Float, v:Float)
+        Local hi := Int(h * 6)
+        Local f := h * 6 - hi
+        Local p := v * (1 - s)
+        Local q := v * (1 - f * s)
+        Local t := v * (1 - (1 - f) * s)
+
+        Select hi
+        Case 0
+            redFloat = v
+            greenFloat = t
+            blueFloat = p
+        Case 1
+            redFloat = q
+            greenFloat = v
+            blueFloat = p
+        Case 2
+            redFloat = p
+            greenFloat = q
+            blueFloat = t
+        Case 3
+            redFloat = p
+            greenFloat = q
+            blueFloat = v
+        Case 4
+            redFloat = t
+            greenFloat = p
+            blueFloat = v
+        Case 5
+            redFloat = v
+            greenFloat = p
+            blueFloat = q
+        End
+    End
+
     Method Equals:Bool(color:Color)
         If Not (color.red = _red) Then Return False
         If Not (color.green = _green) Then Return False
