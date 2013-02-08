@@ -10,8 +10,10 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
     Private
 
     Field childs:List<Object> = New List<Object>
+    Field keyEventsEnabled:Bool
     Field keyEmitter:KeyEmitter
     Field keyhandlerFan:KeyhandlerFan
+    Field touchEventsEnabled:Bool
     Field touchEmitter:TouchEmitter
     Field touchableFan:TouchableFan
 
@@ -52,8 +54,8 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
             RemoveChild(child)
         End
 
-        If keyEmitter Then AddChild(keyEmitter)
-        If touchEmitter Then AddChild(touchEmitter)
+        EnableTouchEvents(touchEventsEnabled)
+        EnableKeyEvents(keyEventsEnabled)
     End
 
     Method AddChild:Void(child:Object)
@@ -94,6 +96,7 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
         Else
             RemoveChild(GetTouchEmitter())
         End
+        touchEventsEnabled = flag
     End
 
     Method GetTouchEmitter:TouchEmitter()
@@ -113,6 +116,7 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
         Else
             RemoveChild(GetKeyEmitter())
         End
+        keyEventsEnabled = flag
     End
 
     Method GetKeyEmitter:KeyEmitter()
