@@ -10,8 +10,10 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
     Private
 
     Field animation:Animation
+    Field intro:Animation
     Field effect := New EffectColorAlpha(1.0, 0.0)
     Field blend := New ColorBlend()
+    Field switched:Bool
 
     Public
 
@@ -26,6 +28,11 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
         effect.AddLast(blend)
     End
 
+    Method WithIntro:Void(duration:Float, transition:Transition)
+        intro = New Animation(duration, transition)
+        intro.AddLast(New EffectReverse(effect))
+    End
+
     Method SetColor:Void(newColor:Color)
         blend.SetColor(newColor)
     End
@@ -36,12 +43,15 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
 
     Method Switch:Void(prevScene:Sceneable, nextScene:Sceneable)
         Super.Switch(prevScene, nextScene)
-
-        If prevScene Then prevScene.OnSceneLeave()
-        If nextScene Then nextScene.OnSceneEnter()
-        activeScene = nextScene
-
+        switched = False
         animation.Restart()
+
+        If intro
+            intro.Restart()
+            activeScene = prevScene
+        Else
+            SwitchOver()
+        End
     End
 
     Method OnRender:Void()
@@ -50,11 +60,32 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
     End
 
     Method OnUpdate:Void(timer:DeltaTimer)
+        If intro
+            intro.OnUpdate(timer)
+            If intro.IsPlaying()
+                Super.OnUpdate(timer)
+                Return
+            Else
+                SwitchOver()
+            End
+        End
+
         animation.OnUpdate(timer)
         If animation.IsPlaying()
             Super.OnUpdate(timer)
         Else
             Director.Shared().GetApp().SetHandler(nextScene)
         End
+    End
+
+    Private
+
+    Method SwitchOver:Void()
+        If switched Then Return
+        switched = True
+
+        activeScene = nextScene
+        If prevScene Then prevScene.OnSceneLeave()
+        If nextScene Then nextScene.OnSceneEnter()
     End
 End
