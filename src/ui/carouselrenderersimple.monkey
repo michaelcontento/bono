@@ -99,34 +99,36 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
         SetScissor(oldScissor[0], oldScissor[1], oldScissor[2], oldScissor[3])
     End
 
-    Method OnTouchDown:Void(event:TouchEvent)
+    Method OnTouchDown:Bool(event:TouchEvent)
         touched = True
         momentumX = 0
         touchMovement = 0
+        Return False
     End
 
-    Method OnTouchMove:Void(event:TouchEvent)
-        If Not touched Then Return
+    Method OnTouchMove:Bool(event:TouchEvent)
+        If Not touched Then Return False
         offset.x += event.prevDelta.x
         CheckOffsetBoundaries()
 
-        If event.positions.Count() = 0 Then Return
-        If event.prevDelta.x = 0 Then Return
+        If event.positions.Count() = 0 Then Return False
+        If event.prevDelta.x = 0 Then Return False
 
         touchMovement += event.prevDelta.x
         touchTime = event.endTime
+        Return True
     End
 
-    Method OnTouchUp:Void(event:TouchEvent)
-        If Not touched Then Return
+    Method OnTouchUp:Bool(event:TouchEvent)
+        If Not touched Then Return False
         touched = False
 
         If event.startDelta.Length() < maxMoveDistanceForClicks
             Local item:BaseDisplayObject = GetTouchedItem(event)
-            If Not item Then Return
+            If Not item Then Return False
 
             Local handler:CarouselHandler = CarouselHandler(item)
-            If Not handler Then Return
+            If Not handler Then Return False
 
             handler.OnCarouselSelect()
         Else
@@ -136,6 +138,8 @@ Class CarouselRendererSimple Implements CarouselRenderer, TouchObserver
                 momentumX = distance / duration * 30
             End
         End
+
+        Return True
     End
 
     Private

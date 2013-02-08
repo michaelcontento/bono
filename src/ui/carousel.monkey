@@ -56,27 +56,30 @@ Class Carousel Extends BaseDisplayObject Implements Touchable
     End
 
     ' --- Touchable
-    Method OnTouchDown:Void(event:TouchEvent)
-        If Not isTouchable Then Return
-        If Not Collide(event.pos) Then Return
+    Method OnTouchDown:Bool(event:TouchEvent)
+        If Not isTouchable Then Return False
+        If Not Collide(event.pos) Then Return False
         touched = True
 
         Touchable(renderer).OnTouchDown(event)
+        Return True
     End
 
-    Method OnTouchMove:Void(event:TouchEvent)
-        If Not isTouchable Then Return
-        If Not touched Then Return
+    Method OnTouchMove:Bool(event:TouchEvent)
+        If Not isTouchable Then Return False
+        If Not touched Then Return False
 
         Touchable(renderer).OnTouchMove(event)
+        Return True
     End
 
-    Method OnTouchUp:Void(event:TouchEvent)
-        If Not isTouchable Then Return
-        If Not touched Then Return
+    Method OnTouchUp:Bool(event:TouchEvent)
+        If Not isTouchable Then Return False
+        If Not touched Then Return False
         touched = False
 
         Touchable(renderer).OnTouchUp(event)
+        Return True
     End
 
     Private

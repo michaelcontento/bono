@@ -9,7 +9,6 @@ Public
 Class GuiButton Extends GuiBase Implements Touchable, Updateable
     Private
 
-    Global someButtonPressed:Bool
     Field isPressed:Bool
     Field finger:Int
     Field sprite:Sprite
@@ -85,34 +84,37 @@ Class GuiButton Extends GuiBase Implements Touchable, Updateable
         Return Super.Collide(realPos)
     End
 
-    Method OnTouchDown:Void(event:TouchEvent)
-        If someButtonPressed Then Return
-        If Not Collide(event.pos) Then Return
+    Method OnTouchDown:Bool(event:TouchEvent)
+        If isPressed Then Return False
+        If Not Collide(event.pos) Then Return False
 
-        someButtonPressed = True
         isPressed = True
         finger = event.finger
         OnButtonDown(event)
+        Return True
     End
 
-    Method OnTouchMove:Void(event:TouchEvent)
-        If Not isPressed Then Return
-        If Not event.finger = finger Then Return
-        If Not trackLeavingMoves And Not Collide(event.pos) Then Return
+    Method OnTouchMove:Bool(event:TouchEvent)
+        If Not isPressed Then Return False
+        If event.finger <> finger Then Return False
+
+        If Not trackLeavingMoves And Not Collide(event.pos) Then Return False
 
         OnButtonMove(event)
+        Return True
     End
 
-    Method OnTouchUp:Void(event:TouchEvent)
-        If Not isPressed Then Return
-        If Not event.finger = finger Then Return
+    Method OnTouchUp:Bool(event:TouchEvent)
+        If Not isPressed Then Return False
+        If event.finger <> finger Then Return False
 
-        someButtonPressed = False
         isPressed = False
+        finger = -1
 
-        If Not Collide(event.pos) Then Return
+        If Not Collide(event.pos) Then Return False
 
         OnButtonUp(event)
+        Return True
     End
 
     Method OnButtonDown:Void(event:TouchEvent)

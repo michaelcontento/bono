@@ -13,22 +13,25 @@ Class TouchableFan Implements Touchable
 
     Public
 
-    Method OnTouchDown:Void(event:TouchEvent)
+    Method OnTouchDown:Bool(event:TouchEvent)
         For Local obj:Touchable = EachIn pool
-            obj.OnTouchDown(event)
+            If obj.OnTouchDown(event) Then Return True
         End
+        Return False
     End
 
-    Method OnTouchMove:Void(event:TouchEvent)
+    Method OnTouchMove:Bool(event:TouchEvent)
         For Local obj:Touchable = EachIn pool
-            obj.OnTouchMove(event)
+            If obj.OnTouchMove(event) Then Return True
         End
+        Return False
     End
 
-    Method OnTouchUp:Void(event:TouchEvent)
+    Method OnTouchUp:Bool(event:TouchEvent)
         For Local obj:Touchable = EachIn pool
-            obj.OnTouchUp(event)
+            If obj.OnTouchUp(event) Then Return True
         End
+        Return False
     End
 
     Method Add:Void(obj:Touchable)
