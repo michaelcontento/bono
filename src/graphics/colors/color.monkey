@@ -56,17 +56,24 @@ Class Color
         oldColor.blue = colorStack[2]
         oldColor.alpha = GetAlpha()
 
-        Set(Self)
+        MojoSet(Self)
     End
 
     Method Deactivate:Void()
         If Not oldColor Then Return
-        Set(oldColor)
+        MojoSet(oldColor)
         oldColor = Null
     End
 
     Method Copy:Color()
         Return New Color(_red, _green, _blue, _alpha)
+    End
+
+    Method Set:Void(newColor:Color)
+        red = newColor.red
+        green = newColor.green
+        blue = newColor.blue
+        alpha = newColor.alpha
     End
 
     Method FromHex:Void(hex:String)
@@ -179,7 +186,7 @@ Class Color
         _alpha = Clamp(_alpha, MIN, MAX)
     End
 
-    Method Set:Void(color:Color)
+    Method MojoSet:Void(color:Color)
         SetColor(color.red, color.green, color.blue)
         SetAlpha(color.alphaFloat)
     End
