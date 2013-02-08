@@ -13,7 +13,7 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
     Field intro:Animation
     Field effect := New EffectColorAlpha(1.0, 0.0)
     Field blend := New ColorBlend()
-    Field switched:Bool
+    Field switched := True
 
     Public
 
@@ -42,6 +42,8 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
     End
 
     Method Switch:Void(prevScene:Sceneable, nextScene:Sceneable)
+        If Not switched Then TriggerSceneLeaveAndEnter()
+
         Super.Switch(prevScene, nextScene)
         switched = False
         animation.Restart()
@@ -85,6 +87,10 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
         switched = True
 
         activeScene = nextScene
+        TriggerSceneLeaveAndEnter()
+    End
+
+    Method TriggerSceneLeaveAndEnter:Void()
         If prevScene Then prevScene.OnSceneLeave()
         If nextScene Then nextScene.OnSceneEnter()
     End
