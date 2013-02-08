@@ -28,6 +28,14 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
         effect.AddLast(blend)
     End
 
+    Method WithIntro:Void()
+        WithIntro(animation.GetDuration())
+    End
+
+    Method WithIntro:Void(duration:Float)
+        WithIntro(duration, animation.GetTransition())
+    End
+
     Method WithIntro:Void(duration:Float, transition:Transition)
         intro = New Animation(duration, transition)
         intro.AddLast(New EffectReverse(effect))
