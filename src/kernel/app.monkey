@@ -58,7 +58,6 @@ Class App Extends app.App Abstract
     Method OnCreate:Int()
         Try
             SetUpdateRate(GetTargetFps())
-            timer = New DeltaTimer(GetTargetFps())
             contentScaler = GetContentScaler()
 
             Director.Shared().SetApp(Self)
@@ -83,6 +82,8 @@ Class App Extends app.App Abstract
     End
 
     Method OnUpdate:Int()
+        If Not timer Then timer = New DeltaTimer(GetTargetFps())
+
         Try
             timer.OnUpdate()
             If updateable Then updateable.OnUpdate(timer)
