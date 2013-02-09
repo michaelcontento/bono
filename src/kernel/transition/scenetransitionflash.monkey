@@ -55,7 +55,7 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
         switched = False
         animation.Restart()
 
-        If intro
+        If intro And prevScene
             intro.Restart()
             activeScene = prevScene
         Else
