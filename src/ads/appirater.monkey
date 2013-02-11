@@ -28,19 +28,23 @@ End
 
 #Else
 
+Private
+
+Import bono
+
 Public
 
 Class Appirater Abstract
     Function Launched:Void(canPrompt:Bool=True)
-        If Target.IS_DEBUG Then Print "[Appirater Launched:" + canPrompt + "]"
+        If Target.IS_DEBUG Then Print "[Appirater Launched:" + BoolToString(canPrompt) + "]"
     End
 
     Function EnteredForeground:Void(canPrompt:Bool=True)
-        If Target.IS_DEBUG Then Print "[Appirater EnteredForeground:" + canPrompt + "]"
+        If Target.IS_DEBUG Then Print "[Appirater EnteredForeground:" + BoolToString(canPrompt) + "]"
     End
 
     Function UserDidSignificantEvent:Void(canPrompt:Bool=True)
-        If Target.IS_DEBUG Then Print "[Appirater UserDidSignificantEvent:" + canPrompt + "]"
+        If Target.IS_DEBUG Then Print "[Appirater UserDidSignificantEvent:" + BoolToString(canPrompt) + "]"
     End
 
     Function SetAppId:Void(id:String)
@@ -64,7 +68,14 @@ Class Appirater Abstract
     End
 
     Function SetDebug:Void(flag:Bool)
-        If Target.IS_DEBUG Then Print "[Appirater SetDebug:" + flag + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetDebug:" + BoolToString(flag) + "]"
+    End
+
+    Private
+
+    Function BoolToString:String(flag:Bool)
+        If flag Then Return "YES"
+        Return "NO"
     End
 End
 
