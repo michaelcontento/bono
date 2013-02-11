@@ -1,21 +1,21 @@
-@class _DeviceUIAlertDelegate;
+class AlertDelegate : public Object
+{
+public:
+    virtual void Call(int buttonIndex, String buttonTitle) = 0;
+};
 
-static _DeviceUIAlertDelegate* _deviceuialertdelegate;
-static NSInteger _lastButtonIndex;
-static NSString* _lastButtonTitle;
-static int _alertId = 0;
-
-@interface _DeviceUIAlertDelegate : NSObject<UIAlertViewDelegate>
-{}
+@class AlertDelegateObjectiveC;
+@interface AlertDelegateObjectiveC : NSObject<UIAlertViewDelegate>
+{
+    @public AlertDelegate* delegate;
+}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 @end
-
-@implementation _DeviceUIAlertDelegate
+@implementation AlertDelegateObjectiveC
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    ++_alertId;
-    _lastButtonIndex = buttonIndex;
-    _lastButtonTitle = [alertView buttonTitleAtIndex:buttonIndex];
+    delegate->Call(buttonIndex, [alertView buttonTitleAtIndex:buttonIndex]);
+    [delegate release];
 }
 @end
 
@@ -41,16 +41,15 @@ public:
         return String(language);
     }
 
-    void static _ShowAlert(String title, String message, Array<String> buttons)
+    void static ShowAlertNative(String title, String message, Array<String> buttons, AlertDelegate* delegate)
     {
-        if (!_deviceuialertdelegate) {
-            _deviceuialertdelegate = [_DeviceUIAlertDelegate alloc];
-        }
+        AlertDelegateObjectiveC* delegateObjc = [AlertDelegateObjectiveC alloc];
+        delegateObjc->delegate = delegate;
 
         UIAlertView *alert = [[UIAlertView alloc]
             initWithTitle:title.ToNSString()
             message:message.ToNSString()
-            delegate:_deviceuialertdelegate
+            delegate:delegateObjc
             cancelButtonTitle:buttons.At(0).ToNSString()
             otherButtonTitles:nil];
 
@@ -60,20 +59,5 @@ public:
 
         [alert show];
         [alert release];
-    }
-
-    int static _GetAlertId()
-    {
-        return _alertId;
-    }
-
-    int static _GetAlertIndex()
-    {
-        return _lastButtonIndex;
-    }
-
-    String static _GetAlertTitle()
-    {
-        return _lastButtonTitle;
     }
 };
