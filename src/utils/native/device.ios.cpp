@@ -15,7 +15,6 @@ public:
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     delegate->Call(buttonIndex, [alertView buttonTitleAtIndex:buttonIndex]);
-    [delegate release];
 }
 @end
 
