@@ -3,6 +3,7 @@ Strict
 Private
 
 Import bono
+Import bono.src.payment
 Import "native/paymentwrapper-google.android.java"
 
 Private Extern
