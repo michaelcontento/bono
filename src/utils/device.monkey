@@ -34,33 +34,15 @@ Class Device Extends DeviceNonNative Abstract
 
     Private
 
-    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device::ShowAlertNative"
+    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device.ShowAlertNative"
 #End
 End
 
 ' Interfaces can't be external and for this we need to do a little dance ...
 '
-' The basic workflow is something like:
-'   Device.ShowAlertNative
-'   --> UIAlertView.show
-'   --> AlertDelegateObjectiveC.clickedButtonAtIndex
-'   --> AlertDelegate.Call
-'
-' The UIAlertView is created, configured and shown completly in the native
-' ShowAlert method. To receive the click we create a new instance of
-' AlertDelegateObjectiveC which only translates the Obj-C call into
-' AlertDelegate.Call(). This is important, because we now have a very simple
-' object with one (pure virtual) method - AlertDelegate.
-'
-' AlertDelegate has an external interface and is accessbile for Monkey. And with
-' this in mind: AlertDelegateBridge simply inherits AlertDelegate and
-' translates the method Call() into the desired interface (AlertCallback).
-'
-' The full stack should look something like this:
-'   Device.ShowAlert
+'   DeviceNonNative.ShowAlert
 '   --> Device.ShowAlertNative
-'   --> UIAlertView.show
-'   --> AlertDelegateObjectiveC.clickedButtonAtIndex
+'   --> (native implementation)
 '   --> AlertDelegate.Call
 '   --> AlertDelegateBridge.Call
 '   --> AlertCallback.OnAlertCallback
