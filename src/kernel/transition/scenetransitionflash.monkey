@@ -76,7 +76,7 @@ Class SceneTransitionFlash Extends SceneTransitionProxy Implements Colorable
     End
 
     Method OnUpdate:Void(timer:DeltaTimer)
-        If intro
+        If intro And prevScene
             intro.OnUpdate(timer)
             If intro.IsPlaying()
                 Super.OnUpdate(timer)
