@@ -14,6 +14,7 @@ Class SpriteAtlas
     Field atlasSprite:Sprite
     Field childSprites:StringMap<Sprite> = New StringMap<Sprite>()
     Field xml:XMLDoc
+    Field preloaded:Bool
 
     Public
 
@@ -26,6 +27,16 @@ Class SpriteAtlas
 
         FreeXmlRecursive(xml)
         xml = Null
+    End
+
+    Method Preload:Void()
+        If preloaded Then Return
+        preloaded = True
+
+        Local oldFloat := atlasSprite.GetColor().alphaFloat
+        atlasSprite.GetColor().alphaFloat = 0
+        atlasSprite.OnRender()
+        atlasSprite.GetColor().alphaFloat = oldFloat
     End
 
     Method Get:Sprite(name:String)
