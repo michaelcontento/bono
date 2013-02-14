@@ -86,7 +86,7 @@ Class App Extends app.App Abstract
 
         Try
             timer.OnUpdate()
-            If updateable Then updateable.OnUpdate(timer)
+            If timer.delta <> 0 And updateable Then updateable.OnUpdate(timer)
         Catch ex:Exception
             Error ex
         End
