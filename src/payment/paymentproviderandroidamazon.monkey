@@ -2,6 +2,21 @@ Strict
 
 Private
 
+' ============================
+' == COMMERCIAL BREAK START ==
+' ============================
+'
+' Tired of setting things up? Monkey-Wizard to the rescue!
+' --> https://github.com/michaelcontento/monkey-wizard
+'
+' And the whole thing should be easy as:
+' --> wizard AmazonPayment ../myproject/myproject.build/android
+'
+' ============================
+' ==  COMMERCIAL BREAK END  ==
+' ============================
+'
+'
 ' 1) Download the official SDK: https://developer.amazon.com/sdk.html
 ' 2) If there is no libs/ folder in build/android: create it!
 ' 3) Copy the in-app-purchasing-*.jar from the SDK into the libs/ folder

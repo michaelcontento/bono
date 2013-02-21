@@ -2,6 +2,22 @@ Strict
 
 #If TARGET="ios"
 
+' ============================
+' == COMMERCIAL BREAK START ==
+' ============================
+'
+' Tired of setting things up? Monkey-Wizard to the rescue!
+' --> https://github.com/michaelcontento/monkey-wizard
+'
+' And the whole thing should be easy as:
+' --> wizard IosRevmob ../myproject/myproject.build/ios
+' --> wizard AndroidRevmob ../myproject/myproject.build/android
+'
+' ============================
+' ==  COMMERCIAL BREAK END  ==
+' ============================
+'
+'
 ' You need to include the following frameworks to your project:
 '   * RevMobAds.framework
 '   * SystemConfiguration.framework

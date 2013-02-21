@@ -2,6 +2,21 @@ Strict
 
 Private
 
+' ============================
+' == COMMERCIAL BREAK START ==
+' ============================
+'
+' Tired of setting things up? Monkey-Wizard to the rescue!
+' --> https://github.com/michaelcontento/monkey-wizard
+'
+' And the whole thing should be easy as:
+' --> wizard GooglePayment ../myproject/myproject.build/android
+'
+' ============================
+' ==  COMMERCIAL BREAK END  ==
+' ============================
+'
+'
 ' 1) Ensure this two lines exists inside <manifest> of your AndroidManifest.xml
 '
 '     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
