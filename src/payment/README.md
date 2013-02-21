@@ -82,6 +82,8 @@ Support for the android target and the Amazon App Store. Should run on Android
 API > 13 and the whole setup is done in a few minutes. Just use the official
 jar-file and stick to the docs regarding the `AndroidManifest.xml`.
 
+**Important:** Read the docs at the top of `paymentproviderandroidamazon.monkey`!
+
 **Important:** The current android market is selected based on
 `#BONO_ANDROID_MARKET`!
 
@@ -91,6 +93,8 @@ Support for the android target and the Google Play Store. Should run on Android
 API > 13 and the whole thing is pretty complicated to setup, as you need a lot
 of java code. Luckily the most stuff can be reused from the official IAP example
 and a little bit of glue code out of [Horizon-for-Monkey][].
+
+**Important:** Read the docs at the top of `paymentproviderandroidgoogle.monkey`!
 
 **Important:** The current android market is selected based on
 `#BONO_ANDROID_MARKET`!

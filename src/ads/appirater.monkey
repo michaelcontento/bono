@@ -2,6 +2,21 @@ Strict
 
 #If TARGET="ios"
 
+' ============================
+' == COMMERCIAL BREAK START ==
+' ============================
+'
+' Tired of setting things up? Monkey-Wizard to the rescue!
+' --> https://github.com/michaelcontento/monkey-wizard
+'
+' And the whole thing should be easy as:
+' --> wizard IosAppirater ../myproject/myproject.build/ios
+'
+' ============================
+' ==  COMMERCIAL BREAK END  ==
+' ============================
+'
+'
 ' You need to include the following frameworks to your project:
 '   * CFNetwork.framework
 '   * SystemConfiguration.framework
