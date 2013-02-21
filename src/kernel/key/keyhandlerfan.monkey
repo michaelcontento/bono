@@ -13,22 +13,25 @@ Class KeyhandlerFan Implements Keyhandler
 
     Public
 
-    Method OnKeyDown:Void(event:KeyEvent)
+    Method OnKeyDown:Bool(event:KeyEvent)
         For Local obj:Keyhandler = EachIn pool
-            obj.OnKeyDown(event)
+            If obj.OnKeyDown(event) Then Return True
         End
+        Return False
     End
 
-    Method OnKeyPress:Void(event:KeyEvent)
+    Method OnKeyPress:Bool(event:KeyEvent)
         For Local obj:Keyhandler = EachIn pool
-            obj.OnKeyPress(event)
+            If obj.OnKeyPress(event) Then Return True
         End
+        Return False
     End
 
-    Method OnKeyUp:Void(event:KeyEvent)
+    Method OnKeyUp:Bool(event:KeyEvent)
         For Local obj:Keyhandler = EachIn pool
-            obj.OnKeyUp(event)
+            If obj.OnKeyUp(event) Then Return True
         End
+        Return False
     End
 
     Method Add:Void(obj:Keyhandler)
