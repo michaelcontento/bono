@@ -2,6 +2,47 @@ Strict
 
 Private
 
+' 1) Ensure this two lines exists inside <manifest> of your AndroidManifest.xml
+'
+'     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+'     <uses-permission android:name="com.android.vending.BILLING"></uses-permission>
+'
+' 2) Add this reciever inside <application> of your AndroidManifest.xml
+'
+'    <service android:name="net.robotmedia.billing.BillingService" />
+'    <receiver android:name="net.robotmedia.billing.BillingReceiver">
+'        <intent-filter>
+'            <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+'            <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+'            <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+'        </intent-filter>
+'    </receiver>
+'
+' 3) Copy the billing library from the following link into src/
+'
+'    https://github.com/robotmedia/AndroidBillingLibrary
+'
+' 4) Patch AndroidBillingLibrary/src/net/robotmedia/billing/BillingRequest.java 
+'    around line 220 to look like:
+'
+'    ## BEFORE
+'
+'    @Override
+'    public void onResponseCode(ResponseCode response) {
+'        super.onResponseCode(response);
+'        if (response == ResponseCode.RESULT_OK) {
+'            BillingController.onTransactionsRestored();
+'        }
+'    }
+'
+'    ## AFTER
+'
+'    @Override
+'    public void onResponseCode(ResponseCode response) {
+'        super.onResponseCode(response);
+'        BillingController.onTransactionsRestored();
+'    }
+
 Import bono
 Import "native/paymentwrapper-google.android.java"
 
