@@ -1,4 +1,4 @@
-# Payment [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kaffeefleck&url=https://github.com/michaelcontento/bono/edit/master/src/payment&title=Monkey-Payment&language=en_GB&tags=github&category=software)
+# Payment [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kaffeefleck&url=https://github.com/michaelcontento/bono&title=Bono&language=en_GB&tags=github&category=software)
 
 Handle in-app purchasing (IAP) in various markets with ease.
 
