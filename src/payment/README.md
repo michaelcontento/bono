@@ -1,4 +1,4 @@
-# Payment
+# Payment [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=kaffeefleck&url=https://github.com/michaelcontento/monkey-wizard&title=Monkey-Wizard&language=en_GB&tags=github&category=software)
 
 Handle in-app purchasing (IAP) in various markets with ease.
 
