@@ -18,6 +18,10 @@ Public
     #Print "Bono: PaymentProviderAlias set to PaymentProviderAndroidAmazon"
     Import bono.src.payment.paymentproviderandroidamazon
     Alias PaymentProviderAlias = PaymentProviderAndroidAmazon
+#ElseIf TARGET="android" And BONO_ANDROID_MARKET="samsung"
+    #Print "Bono: PaymentProviderAlias set to PaymentProviderAndroidSamsung"
+    Import bono.src.payment.paymentproviderandroidsamsung
+    Alias PaymentProviderAlias = PaymentProviderAndroidSamsung
 #Else
     #Error "BONO: Unable to detect the right PaymentProvider"
 #End

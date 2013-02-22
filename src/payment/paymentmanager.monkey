@@ -49,6 +49,13 @@ Class PaymentManager Implements PaymentProvider
         #End
     End
 
+    Method SetItemGroupId:Void(itemGroupId:String)
+        DebugLog("SetItemGroupId")
+        #If TARGET="android" And BONO_ANDROID_MARKET="samsung"
+        PaymentProviderAlias(GetProvider()).itemGroupId = itemGroupId
+        #End
+    End
+
     Method GetProvider:PaymentProvider()
         Return provider
     End

@@ -4,7 +4,7 @@ Handle in-app purchasing (IAP) in various markets with ease.
 
 ## Overview
 
-![Class diagramm](http://yuml.me/298873e0)
+![Class diagramm](http://yuml.me/77696e4e)
 
 ## Manager
 
@@ -83,6 +83,17 @@ API > 13 and the whole setup is done in a few minutes. Just use the official
 jar-file and stick to the docs regarding the `AndroidManifest.xml`.
 
 **Important:** Read the docs at the top of `paymentproviderandroidamazon.monkey`!
+
+**Important:** The current android market is selected based on
+`#BONO_ANDROID_MARKET`!
+
+### AndroidSamsung
+
+Support for the android target and the Samsung App Store. Should run on Android
+API > 13 and the whole setup is done in a few minutes. Just use the official
+jar-file and stick to the docs regarding the `AndroidManifest.xml`.
+
+**Important:** Read the docs at the top of `paymentproviderandroidsamsung.monkey`!
 
 **Important:** The current android market is selected based on
 `#BONO_ANDROID_MARKET`!
