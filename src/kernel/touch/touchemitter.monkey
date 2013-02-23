@@ -14,6 +14,7 @@ Class TouchEmitter Implements Updateable, Suspendable
     Field isTouchDown:Bool[MAX_TOUCH_FINGERS]
     Field touchDownDispatched:Bool[MAX_TOUCH_FINGERS]
     Field touchEvents:TouchEvent[MAX_TOUCH_FINGERS]
+    Field touchHasMoved:Bool[MAX_TOUCH_FINGERS]
 
     Public
 
@@ -64,14 +65,15 @@ Class TouchEmitter Implements Updateable, Suspendable
             ElseIf Not isTouchDown[i]
                 handler.OnTouchUp(touchEvents[i].Copy())
                 touchEvents[i] = Null
-            Else
+            ElseIf touchHasMoved[i]
                 handler.OnTouchMove(touchEvents[i])
+                touchHasMoved[i] = False
             End
         End
     End
 
     Method ReadTouch:Void()
-        Local diffVector:Vector2D
+        Local diffVector:Vector2D = New Vector2D()
         Local vector:Vector2D
         Local lastTouchDown:Bool
 
@@ -80,18 +82,19 @@ Class TouchEmitter Implements Updateable, Suspendable
             isTouchDown[i] = Bool(TouchDown(i))
 
             If Not isTouchDown[i] And Not lastTouchDown Then Continue
+            vector = New Vector2D(TouchX(i), TouchY(i))
 
             If touchEvents[i] = Null
                 touchDownDispatched[i] = False
                 touchEvents[i] = New TouchEvent(i)
-            End
-
-            vector = New Vector2D(TouchX(i), TouchY(i))
-            diffVector = vector.Copy().Sub(touchEvents[i].prevPos)
-
-            If diffVector.Length() >= minDistance
                 touchEvents[i].Add(vector)
-                If retainSize > -1 Then touchEvents[i].Trim(retainSize)
+            Else
+                diffVector.Set(vector).Sub(touchEvents[i].prevPos)
+                If diffVector.Length() >= minDistance
+                    touchEvents[i].Add(vector)
+                    touchHasMoved[i] = True
+                    If retainSize > -1 Then touchEvents[i].Trim(retainSize)
+                End
             End
         End
     End

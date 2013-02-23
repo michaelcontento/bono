@@ -11,11 +11,13 @@ Class Director
 
     Global instance:Director
     Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
+    Field app:App
     Field currentScene:Sceneable
     Field currentSceneName:String
     Field previousScene:Sceneable
     Field previousSceneName:String
-    Field app:App
+    Field defaultTransition:SceneTransition = New SceneTransitionInstant()
+    Field lastTransition:SceneTransition
 
     Public
 
@@ -24,6 +26,8 @@ Class Director
         Return instance
     End
 
+    ' --- APP
+
     Function TranslateSpace:Vector2D(pos:Vector2D)
         Return Director.Shared().GetApp().TranslateSpace(pos)
     End
@@ -31,6 +35,12 @@ Class Director
     Method SetApp:Void(app:App)
         Self.app = app
     End
+
+    Method GetApp:App()
+        Return app
+    End
+
+    ' --- SCENE
 
     Method AddScene:Void(name:String, scene:Sceneable)
         If scenes.Contains(name)
@@ -49,16 +59,25 @@ Class Director
     End
 
     Method GotoScene:Void(name:String)
-        If name = currentSceneName Then Return
-
-        SwapCurrentAndPrevious(name)
-        UpdateAppHandler(currentScene)
-
-        If previousScene Then previousScene.OnSceneLeave()
-        If currentScene Then currentScene.OnSceneEnter()
+        GotoScene(name, defaultTransition)
     End
 
-    Method GetCurrentScene:Void()
+    Method GotoScene:Void(name:String, transition:SceneTransition)
+        If name = GetCurrentSceneName() Then Return
+
+        If lastTransition Then lastTransition.Finish()
+        lastTransition = transition
+
+        GetApp().SetHandler(transition)
+        SwapCurrentAndPrevious(name)
+        transition.Switch(GetPreviousScene(), GetCurrentScene())
+    End
+
+    Method SetDefaultSceneTransition:Void(transition:SceneTransition)
+        defaultTransition = transition
+    End
+
+    Method GetCurrentScene:Sceneable()
         Return currentScene
     End
 
@@ -66,16 +85,12 @@ Class Director
         Return currentSceneName
     End
 
-    Method GetPreviousScene:Void()
+    Method GetPreviousScene:Sceneable()
         Return previousScene
     End
 
     Method GetPreviousSceneName:String()
         Return previousSceneName
-    End
-
-    Method GetApp:App()
-        Return app
     End
 
     Private
@@ -86,25 +101,5 @@ Class Director
 
         currentScene = GetScene(name)
         currentSceneName = name
-    End
-
-    Method UpdateAppHandler:Void(scene:Sceneable)
-        If Renderable(scene)
-            GetApp().renderable = Renderable(scene)
-        Else
-            GetApp().renderable = Null
-        End
-
-        If Suspendable(scene)
-            GetApp().suspendable = Suspendable(scene)
-        Else
-            GetApp().suspendable = Null
-        End
-
-        If Updateable(scene)
-            GetApp().updateable = Updateable(scene)
-        Else
-            GetApp().updateable = Null
-        End
     End
 End

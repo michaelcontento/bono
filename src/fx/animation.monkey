@@ -17,13 +17,21 @@ Class Animation Extends List<Effect> Implements Updateable
     Public
 
     Method New()
-        Error("Wrong constructor. Use New(Float, Transition)")
+        Throw New InvalidConstructorException("use New(Float, Transition)")
     End
 
     Method New(duration:Float, transition:Transition)
         Super.New()
         Self.duration = duration
         Self.transition = transition
+    End
+
+    Method GetTransition:Transition()
+        Return transition
+    End
+
+    Method GetDuration:Float()
+        Return duration
     End
 
     Method Pause:Void()

@@ -56,17 +56,24 @@ Class Color
         oldColor.blue = colorStack[2]
         oldColor.alpha = GetAlpha()
 
-        Set(Self)
+        MojoSet(Self)
     End
 
     Method Deactivate:Void()
         If Not oldColor Then Return
-        Set(oldColor)
+        MojoSet(oldColor)
         oldColor = Null
     End
 
     Method Copy:Color()
         Return New Color(_red, _green, _blue, _alpha)
+    End
+
+    Method Set:Void(newColor:Color)
+        red = newColor.red
+        green = newColor.green
+        blue = newColor.blue
+        alpha = newColor.alpha
     End
 
     Method FromHex:Void(hex:String)
@@ -84,6 +91,41 @@ Class Color
             MathHelper.IntToHex(_red) +
             MathHelper.IntToHex(_green) +
             MathHelper.IntToHex(_blue)
+    End
+
+    Method FromHSV:Void(h:Float, s:Float, v:Float)
+        Local hi := Int(h * 6)
+        Local f := h * 6 - hi
+        Local p := v * (1 - s)
+        Local q := v * (1 - f * s)
+        Local t := v * (1 - (1 - f) * s)
+
+        Select hi
+        Case 0
+            redFloat = v
+            greenFloat = t
+            blueFloat = p
+        Case 1
+            redFloat = q
+            greenFloat = v
+            blueFloat = p
+        Case 2
+            redFloat = p
+            greenFloat = q
+            blueFloat = t
+        Case 3
+            redFloat = p
+            greenFloat = q
+            blueFloat = v
+        Case 4
+            redFloat = t
+            greenFloat = p
+            blueFloat = v
+        Case 5
+            redFloat = v
+            greenFloat = p
+            blueFloat = q
+        End
     End
 
     Method Equals:Bool(color:Color)
@@ -179,7 +221,7 @@ Class Color
         _alpha = Clamp(_alpha, MIN, MAX)
     End
 
-    Method Set:Void(color:Color)
+    Method MojoSet:Void(color:Color)
         SetColor(color.red, color.green, color.blue)
         SetAlpha(color.alphaFloat)
     End

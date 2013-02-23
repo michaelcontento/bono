@@ -17,25 +17,33 @@ Class TextInput Extends Text Implements Keyhandler
         Super.New(fontName, pos)
     End
 
-    Method OnKeyDown:Void(event:KeyEvent)
+    Method OnKeyDown:Bool(event:KeyEvent)
+        Return False
     End
 
-    Method OnKeyPress:Void(event:KeyEvent)
+    Method OnKeyPress:Bool(event:KeyEvent)
+        Return False
     End
 
     Method OnKeyUp:Void(event:KeyEvent)
         If event.code > 31 And event.code < 127
             InsertChar(event.char)
+            Return True
         Else
             Select event.code
             Case 8
                 RemoveChar()
+                Return True
             Case 65573
                 MoveCursorLeft()
+                Return True
             Case 65575
                 MoveCursorRight()
+                Return True
             End
         End
+
+        Return False
     End
 
     Private

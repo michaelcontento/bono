@@ -7,7 +7,7 @@ Import bono
 Public
 
 Interface Touchable
-    Method OnTouchDown:Void(event:TouchEvent)
-    Method OnTouchMove:Void(event:TouchEvent)
-    Method OnTouchUp:Void(event:TouchEvent)
+    Method OnTouchDown:Bool(event:TouchEvent)
+    Method OnTouchMove:Bool(event:TouchEvent)
+    Method OnTouchUp:Bool(event:TouchEvent)
 End

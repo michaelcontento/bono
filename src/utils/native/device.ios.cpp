@@ -1,3 +1,23 @@
+class AlertDelegate : public Object
+{
+public:
+    virtual void Call(int buttonIndex, String buttonTitle) = 0;
+};
+
+@class AlertDelegateObjectiveC;
+@interface AlertDelegateObjectiveC : NSObject<UIAlertViewDelegate>
+{
+    @public AlertDelegate* delegate;
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+@end
+@implementation AlertDelegateObjectiveC
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    delegate->Call(buttonIndex, [alertView buttonTitleAtIndex:buttonIndex]);
+}
+@end
+
 class Device
 {
 public:
@@ -18,5 +38,25 @@ public:
     {
         NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
         return String(language);
+    }
+
+    void static ShowAlertNative(String title, String message, Array<String> buttons, AlertDelegate* delegate)
+    {
+        AlertDelegateObjectiveC* delegateObjc = [AlertDelegateObjectiveC alloc];
+        delegateObjc->delegate = delegate;
+
+        UIAlertView *alert = [[UIAlertView alloc]
+            initWithTitle:title.ToNSString()
+            message:message.ToNSString()
+            delegate:delegateObjc
+            cancelButtonTitle:buttons.At(0).ToNSString()
+            otherButtonTitles:nil];
+
+        for (int i = 1; i < buttons.Length(); i++) {
+            [alert addButtonWithTitle:buttons.At(i).ToNSString()];
+        }
+
+        [alert show];
+        [alert release];
     }
 };

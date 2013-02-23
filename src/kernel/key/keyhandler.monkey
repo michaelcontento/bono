@@ -7,7 +7,7 @@ Import bono
 Public
 
 Interface Keyhandler
-    Method OnKeyDown:Void(event:KeyEvent)
-    Method OnKeyPress:Void(event:KeyEvent)
-    Method OnKeyUp:Void(event:KeyEvent)
+    Method OnKeyDown:Bool(event:KeyEvent)
+    Method OnKeyPress:Bool(event:KeyEvent)
+    Method OnKeyUp:Bool(event:KeyEvent)
 End

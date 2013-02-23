@@ -19,11 +19,14 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Field imageName:String
     Field baseRotation:Int
     Field _scale:Vector2D = New Vector2D(1, 1)
+    Field lastScale:Vector2D = New Vector2D(1, 1)
     Global cacheImage:StringMap<Image> = New StringMap<Image>()
     Global cacheSize:StringMap<Vector2D> = New StringMap<Vector2D>()
 
     Public
 
+    Field valign:Int = Align.TOP
+    Field halign:Int = Align.LEFT
     Field frameSpeed:Int
     Field loopAnimation:Bool
     Field rotation:Float
@@ -55,6 +58,18 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         End
     End
 
+    Method Copy:Sprite()
+        Local tmp:Sprite = New Sprite(imageName, image, Null, baseRotation)
+        tmp.valign = valign
+        tmp.halign = halign
+        tmp.frameSpeed = frameSpeed
+        tmp.loopAnimation = loopAnimation
+        tmp.rotation = rotation
+        tmp.scale = scale
+
+        Return tmp
+    End
+
     Method GrabSprite:Sprite(name:String, src:Vector2D, size:Vector2D, rotation:Int = 0)
         Local img:Image = image.GrabImage(
             src.x, src.y,
@@ -76,14 +91,29 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         Return New Sprite(name, img, forcedSize, rotation)
     End
 
+    Method Collide:Bool(checkPos:Vector2D)
+        Local offset:Vector2D = New Vector2D()
+        Align.Horizontal(offset, Self, halign)
+        Align.Vertical(offset, Self, valign)
+
+        Return Super.Collide(checkPos.Copy().Sub(offset))
+    End
+
     Method OnRender:Void()
+        GetSize().Div(lastScale).Mul(_scale)
+        lastScale.Set(_scale)
+
+        renderPos.Set(GetCenter())
+        renderPos.Add(GetPosition())
+        Align.Horizontal(renderPos, Self, halign)
+        Align.Vertical(renderPos, Self, valign)
+
         GetColor().Activate()
-        renderPos.Set(GetCenter()).Mul(scale).Add(GetPosition())
         DrawImage(
             image,
             renderPos.x, renderPos.y,
             baseRotation + rotation,
-            scale.x, scale.y,
+            _scale.x, _scale.y,
             currentFrame)
         GetColor().Deactivate()
     End
@@ -121,7 +151,6 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     End
 
     Method scale:Void(newScale:Vector2D) Property
-        If image Then GetSize().Div(_scale).Mul(newScale)
         _scale = newScale
     End
 
@@ -136,18 +165,18 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Method DrawImageRect:Void(x:Float, y:Float, srcX:Float, srcY:Float, srcWidth:Float, srcHeight:Float)
         x += GetCenter().x
         y += GetCenter().y
-        graphics.DrawImageRect(image, x, y, srcX, srcY, srcWidth, srcHeight, rotation, scale.x, scale.y, currentFrame)
+        graphics.DrawImageRect(image, x, y, srcX, srcY, srcWidth, srcHeight, rotation, _scale.x, _scale.y, currentFrame)
     End
 
     Private
 
     Method CacheSet:Void(name:String, image:Image, size:Vector2D)
         cacheImage.Set(name, image)
-        cacheSize.Set(name, size)
+        cacheSize.Set(name, size.Copy())
     End
 
     Method CacheGetSize:Vector2D(name:String)
-        Return cacheSize.Get(name)
+        Return cacheSize.Get(name).Copy()
     End
 
     Method CacheGetImage:Image(name:String)

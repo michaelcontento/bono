@@ -13,7 +13,8 @@ Class Registry<T> Abstract
 
     Function Get:T(key:String)
         If store.Contains(key) Then Return store.Get(key)
-        Throw New RegistryValueNotFoundException()
+        Throw New RegistryValueNotFoundException(
+            "there is no value stored for the given key '" + key + "'")
     End
 
     Function Get:T(key:String, fallback:T)

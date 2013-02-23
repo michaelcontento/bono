@@ -12,7 +12,6 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
     Field color:Color
     Field pos:Vector2D
     Field size:Vector2D
-    Field center:Vector2D
 
     Public
 
@@ -50,11 +49,9 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable Abstract
 
     Method SetSize:Void(newSize:Vector2D)
         size = newSize
-        center = newSize.Copy().Div(2)
     End
 
     Method GetCenter:Vector2D()
-        If center = Null Then Error("No size set and center therefore unset.")
-        Return center
+        Return size.Copy().Div(2)
     End
 End

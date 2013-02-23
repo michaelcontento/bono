@@ -24,6 +24,27 @@ Class App Extends app.App Abstract
 
     Method Run:Void() Abstract
 
+    Method TranslateSpace:Vector2D(vec:Vector2D)
+        If Not contentScaler Then Return vec.Copy()
+        Return contentScaler.TranslateSpace(Self, vec)
+    End
+
+    Method GetDirector:Director()
+        Return Director.Shared()
+    End
+
+    Method SetHandler:Void(obj:Object)
+        renderable = Renderable(obj)
+        suspendable = Suspendable(obj)
+        updateable = Updateable(obj)
+    End
+
+    ' --- CONFIG
+
+    Method GetTargetFps:Int()
+        Return DEFAULT_FPS
+    End
+
     Method GetContentScaler:ContentScaler()
         Return Null
     End
@@ -32,19 +53,11 @@ Class App Extends app.App Abstract
         Return Device.GetSize()
     End
 
-    Method TranslateSpace:Vector2D(vec:Vector2D)
-        If Not contentScaler Then Return vec.Copy()
-        Return contentScaler.TranslateSpace(Self, vec)
-    End
-
-    Method GetTargetFps:Int()
-        Return DEFAULT_FPS
-    End
+    ' --- MONKEY APP
 
     Method OnCreate:Int()
         Try
             SetUpdateRate(GetTargetFps())
-            timer = New DeltaTimer(GetTargetFps())
             contentScaler = GetContentScaler()
 
             Director.Shared().SetApp(Self)
@@ -69,9 +82,11 @@ Class App Extends app.App Abstract
     End
 
     Method OnUpdate:Int()
+        If Not timer Then timer = New DeltaTimer(GetTargetFps())
+
         Try
             timer.OnUpdate()
-            If updateable Then updateable.OnUpdate(timer)
+            If timer.delta <> 0 And updateable Then updateable.OnUpdate(timer)
         Catch ex:Exception
             Error ex
         End
@@ -96,9 +111,5 @@ Class App Extends app.App Abstract
             Error ex
         End
         Return 0
-    End
-
-    Method GetDirector:Director()
-        Return Director.Shared()
     End
 End

@@ -14,6 +14,7 @@ Class SpriteAtlas
     Field atlasSprite:Sprite
     Field childSprites:StringMap<Sprite> = New StringMap<Sprite>()
     Field xml:XMLDoc
+    Field preloaded:Bool
 
     Public
 
@@ -28,21 +29,27 @@ Class SpriteAtlas
         xml = Null
     End
 
+    Method Preload:Void()
+        If preloaded Then Return
+        preloaded = True
+
+        Local oldFloat := atlasSprite.GetColor().alphaFloat
+        atlasSprite.GetColor().alphaFloat = 0
+        atlasSprite.OnRender()
+        atlasSprite.GetColor().alphaFloat = oldFloat
+    End
+
     Method Get:Sprite(name:String)
         If Not childSprites.Contains(name)
             Throw New InvalidArgumentException(
                 "There is no sprite named: " + name)
         End
 
-        Return childSprites.Get(name)
+        Return childSprites.Get(name).Copy()
     End
 
     Method GetNames:MapKeys<String, Sprite>()
         Return childSprites.Keys()
-    End
-
-    Method ObjectEnumerator:ValueEnumerator<String, Sprite>()
-        Return childSprites.Values().ObjectEnumerator()
     End
 
     Method Count:Int()

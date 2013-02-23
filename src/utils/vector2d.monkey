@@ -1,5 +1,9 @@
 Strict
 
+Private
+
+Import bono
+
 Public
 
 Class Vector2D
@@ -37,6 +41,34 @@ Class Vector2D
 
     Method Copy:Vector2D()
         Return New Vector2D(x, y)
+    End
+
+    Method Reset:Vector2D()
+        x = 0
+        y = 0
+
+        Return Self
+    End
+
+    Method Round:Vector2D()
+        x = MathHelper.Round(x)
+        y = MathHelper.Round(y)
+
+        Return Self
+    End
+
+    Method Ceil:Vector2D()
+        x = monkey.Ceil(x)
+        y = monkey.Ceil(y)
+
+        Return Self
+    End
+
+    Method Floor:Vector2D()
+        x = monkey.Floor(x)
+        y = monkey.Floor(y)
+
+        Return Self
     End
 
     Method Set:Vector2D(v2:Vector2D)
@@ -110,12 +142,20 @@ Class Vector2D
     End
 
     Method Div:Vector2D(v2:Vector2D)
+        If v2.x = 0 Or v2.y = 0
+            Throw New InvalidArgumentException("Division by zero: " + v2)
+        End
+
         x /= v2.x
         y /= v2.y
         Return Self
     End
 
     Method Div:Vector2D(factor:Float)
+        If factor = 0
+            Throw New InvalidArgumentException("Division by zero")
+        End
+
         y /= factor
         x /= factor
         Return Self

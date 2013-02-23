@@ -13,4 +13,5 @@ Import bono.src.kernel.sceneable
 Import bono.src.kernel.soundmanager
 Import bono.src.kernel.suspendable
 Import bono.src.kernel.touch
+Import bono.src.kernel.transition
 Import bono.src.kernel.updateable

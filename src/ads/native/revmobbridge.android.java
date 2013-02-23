@@ -1,7 +1,7 @@
 import android.app.Activity;
 import com.revmob.RevMob;
-import com.revmob.ads.EnvironmentConfig;
-import com.revmob.ads.banner.Banner;
+import com.revmob.RevMobTestingMode;
+import com.revmob.ads.banner.RevMobBanner;
 import android.widget.LinearLayout;
 
 class RevmobBridge
@@ -16,13 +16,13 @@ class RevmobBridge
     public static void ShowFullscreen()
     {
         if (revmob == null) { return; }
-        revmob.showFullscreenAd(MonkeyGame.activity);
+        revmob.showFullscreen(MonkeyGame.activity);
     }
 
     public static void ShowBanner()
     {
         if (revmob == null) { return; }
-        Banner banner = revmob.createBanner(MonkeyGame.activity);
+        RevMobBanner banner = revmob.createBanner(MonkeyGame.activity);
         LinearLayout layout = (LinearLayout) MonkeyGame.activity.findViewById(R.id.banner);
         layout.removeAllViews();
         layout.addView(banner);
@@ -37,7 +37,7 @@ class RevmobBridge
     public static void OpenAdLink()
     {
         if (revmob == null) { return; }
-        revmob.openAdLink(MonkeyGame.activity);
+        revmob.openAdLink(MonkeyGame.activity, null);
     }
 
     public static void ShowPopup()
@@ -48,16 +48,19 @@ class RevmobBridge
 
     public static void EnableTestingWithAds()
     {
-        EnvironmentConfig.setTestingMode(true);
+        if (revmob == null) { return; }
+        revmob.setTestingMode(RevMobTestingMode.WITH_ADS);
     }
 
     public static void EnableTestingWithoutAds()
     {
-        EnvironmentConfig.setTestingWithoutAds(true);
+        if (revmob == null) { return; }
+        revmob.setTestingMode(RevMobTestingMode.WITHOUT_ADS);
     }
 
     public static void DisableTesting()
     {
-        EnvironmentConfig.setTestingMode(false);
+        if (revmob == null) { return; }
+        revmob.setTestingMode(RevMobTestingMode.DISABLED);
     }
 }
