@@ -11,6 +11,7 @@ NON_AUTOLOAD_FILES = {
     "payment": [
         "paymentproviderandroidgoogle",
         "paymentproviderandroidamazon",
+        "paymentproviderandroidsamsung",
         "paymentproviderappleios",
         "paymentproviderautounlock"
     ]
