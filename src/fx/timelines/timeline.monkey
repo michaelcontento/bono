@@ -44,6 +44,14 @@ Class Timeline Implements Updateable
         Play()
     End
 
+    Method IsFinished:Bool()
+        Return (position > length And loopCounter = loopsRequested)
+    End
+
+    Method IsPlaying:Bool()
+        Return (Not isPaused)
+    End
+
     Method Loop:Void(times:Int=INFINITE)
         loopsRequested = times
     End
