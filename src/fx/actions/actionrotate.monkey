@@ -10,8 +10,8 @@ Class ActionRotate Extends BaseAction
     Private
 
     Field obj:Rotateable
-    Field endAngel:Float
-    Field startAngel:Float
+    Field endRotation:Float
+    Field startRotation:Float
 
     Public
 
@@ -19,18 +19,18 @@ Class ActionRotate Extends BaseAction
         Throw New InvalidConstructorException("use New(Rotateable, Float)")
     End
 
-    Method New(obj:Rotateable, angel:Float)
+    Method New(obj:Rotateable, rotation:Float)
         Self.obj = obj
-        Self.endAngel = angel
+        Self.endRotation = rotation
     End
 
     Method OnActionStart:Void()
         Super.OnActionStart()
 
-        startAngel = obj.GetRotation()
+        startRotation = obj.GetRotation()
     End
 
     Method OnActionUpdate:Void(progress:Float)
-        obj.SetRotation(startAngel + (endAngel * progress))
+        obj.SetRotation(startRotation + (endRotation * progress))
     End
 End
