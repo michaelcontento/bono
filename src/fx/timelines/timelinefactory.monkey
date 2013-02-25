@@ -27,6 +27,10 @@ Class TimelineFactory
         Return line
     End
 
+    Method Loop:Void(times:Int=Timeline.INFINITE)
+        line.Loop(times)
+    End
+
     Method MoveTo:ActionMoveTo(pos:Vector2D)
         Local result := New ActionMoveTo(Positionable(obj), pos)
         line.Append(result)
