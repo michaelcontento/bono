@@ -31,6 +31,12 @@ Class TimelineFactory
         line.Loop(times)
     End
 
+    Method Parallel:ActionParallel()
+        Local result := New ActionParallel(obj)
+        line.Append(result)
+        Return result
+    End
+
     Method MoveTo:ActionMoveTo(pos:Vector2D)
         Local result := New ActionMoveTo(Positionable(obj), pos)
         line.Append(result)
