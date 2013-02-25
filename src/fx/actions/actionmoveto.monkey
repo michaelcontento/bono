@@ -9,10 +9,11 @@ Public
 Class ActionMoveTo Extends BaseAction
     Private
 
-    Field endPos:Vector2D
-    Field startPos:Vector2D
-    Field distance:Vector2D
     Field obj:Positionable
+    Field endPos:Vector2D
+    Field startPos := New Vector2D()
+    Field distance := New Vector2D()
+    Field currentPos := New Vector2D()
 
     Public
 
@@ -28,11 +29,12 @@ Class ActionMoveTo Extends BaseAction
     Method OnActionStart:Void()
         Super.OnActionStart()
 
-        startPos = obj.GetPosition().Copy()
-        distance = endPos.Copy().Sub(startPos)
+        startPos.Set(obj.GetPosition())
+        distance.Set(endPos).Sub(startPos)
     End
 
     Method OnActionUpdate:Void(progress:Float)
-        obj.GetPosition().Set(startPos.Copy().Add(distance.Copy().Mul(progress)))
+        currentPos.Set(distance).Mul(progress).Add(startPos)
+        obj.GetPosition().Set(currentPos)
     End
 End
