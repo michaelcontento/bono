@@ -58,6 +58,7 @@ Class Timeline Implements Updateable
 
     Method Clear:Void()
         actions.Clear()
+        length = 0
         position = START_POSITION
     End
 
