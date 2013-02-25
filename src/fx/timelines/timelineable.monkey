@@ -6,6 +6,6 @@ Import bono
 
 Public
 
-Interface Timelineable
+Interface Timelineable Extends Updateable
     Method GetTimeline:TimelineFactory()
 End
