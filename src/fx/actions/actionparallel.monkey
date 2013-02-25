@@ -15,7 +15,7 @@ Class ActionParallel Implements Action
     Public
 
     Method New()
-        Throw New InvalidConstructorException("use New(Positionable, Vector2D)")
+        Throw New InvalidConstructorException("use New(Object)")
     End
 
     Method New(obj:Object)
