@@ -7,19 +7,22 @@ Strict
 
 Class Target Abstract
 
-#If BONO_ANDROID_MARKET="google"
+#If BONO_ANDROID_MARKET="google" And TARGET="android"
+    Const PLATFORM_ID:String = TARGET + ":google"
     Const IS_MARKET_GOOGLE:Bool = True
 #Else
     Const IS_MARKET_GOOGLE:Bool = False
 #End
 
-#If BONO_ANDROID_MARKET="amazon"
+#If BONO_ANDROID_MARKET="amazon" And TARGET="android"
+    Const PLATFORM_ID:String = TARGET + ":amazon"
     Const IS_MARKET_AMAZON:Bool = True
 #Else
     Const IS_MARKET_AMAZON:Bool = False
 #End
 
-#If BONO_ANDROID_MARKET="samsung"
+#If BONO_ANDROID_MARKET="samsung" And TARGET="android"
+    Const PLATFORM_ID:String = TARGET + ":samsung"
     Const IS_MARKET_SAMSUNG:Bool = True
 #Else
     Const IS_MARKET_SAMSUNG:Bool = False
@@ -70,6 +73,7 @@ Class Target Abstract
 
 #If TARGET="flash"
     Const TARGET:String = "flash"
+    Const PLATFORM_ID:String = TARGET
     Const IS_FLASH:Bool = True
 #Else
     Const IS_FLASH:Bool = False
@@ -77,6 +81,7 @@ Class Target Abstract
 
 #If TARGET="glfw"
     Const TARGET:String = "glfw"
+    Const PLATFORM_ID:String = HOST + ":" + TARGET
     Const IS_GLFW:Bool = True
 #Else
     Const IS_GLFW:Bool = False
@@ -84,6 +89,7 @@ Class Target Abstract
 
 #If TARGET="html5"
     Const TARGET:String = "html5"
+    Const PLATFORM_ID:String = TARGET
     Const IS_HTML5:Bool = True
 #Else
     Const IS_HTML5:Bool = False
@@ -91,6 +97,7 @@ Class Target Abstract
 
 #If TARGET="ios"
     Const TARGET:String = "ios"
+    Const PLATFORM_ID:String = TARGET
     Const IS_IOS:Bool = True
 #Else
     Const IS_IOS:Bool = False
@@ -98,6 +105,7 @@ Class Target Abstract
 
 #If TARGET="metro"
     Const TARGET:String = "metro"
+    Const PLATFORM_ID:String = TARGET
     Const IS_METRO:Bool = True
 #Else
     Const IS_METRO:Bool = False
@@ -105,6 +113,7 @@ Class Target Abstract
 
 #If TARGET="psm"
     Const TARGET:String = "psm"
+    Const PLATFORM_ID:String = TARGET
     Const IS_PSM:Bool = True
 #Else
     Const IS_PSM:Bool = False
@@ -112,6 +121,7 @@ Class Target Abstract
 
 #If TARGET="stdcpp"
     Const TARGET:String = "stdcpp"
+    Const PLATFORM_ID:String = HOST + ":" + TARGET
     Const IS_STDCPP:Bool = True
 #Else
     Const IS_STDCPP:Bool = False
@@ -119,6 +129,7 @@ Class Target Abstract
 
 #If TARGET="xna"
     Const TARGET:String = "xna"
+    Const PLATFORM_ID:String = TARGET
     Const IS_XNA:Bool = True
 #Else
     Const IS_XNA:Bool = False
