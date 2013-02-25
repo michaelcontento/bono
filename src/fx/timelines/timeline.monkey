@@ -30,7 +30,7 @@ Class Timeline Implements Updateable
         isPaused = False
     End
 
-    Method PlayPauseToggle:Void()
+    Method PauseToggle:Void()
         isPaused = (Not isPaused)
     End
 
