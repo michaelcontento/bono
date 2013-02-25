@@ -8,6 +8,7 @@ Import bono.src.graphics.clearscene
 Import bono.src.graphics.colors
 Import bono.src.graphics.fpscounter
 Import bono.src.graphics.positionable
+Import bono.src.graphics.rotateable
 Import bono.src.graphics.sizeable
 Import bono.src.graphics.sprites
 Import bono.src.graphics.text
