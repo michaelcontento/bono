@@ -7,7 +7,7 @@ Import mojo.graphics
 
 Public
 
-Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
+Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotateable, Timelineable
     Private
 
     Field currentFrame:Int
@@ -22,6 +22,8 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Field lastScale:Vector2D = New Vector2D(1, 1)
     Global cacheImage:StringMap<Image> = New StringMap<Image>()
     Global cacheSize:StringMap<Vector2D> = New StringMap<Vector2D>()
+    Field rotation:Float
+    Field timelineFactory:TimelineFactory
 
     Public
 
@@ -29,7 +31,6 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     Field halign:Int = Align.LEFT
     Field frameSpeed:Int
     Field loopAnimation:Bool
-    Field rotation:Float
 
     Method New(imageName:String, pos:Vector2D=Null)
         Self.imageName = imageName
@@ -56,6 +57,25 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
         Else
             SetSize(New Vector2D(image.Width(), image.Height()))
         End
+    End
+
+    Method GetTimeline:TimelineFactory()
+        If Not timelineFactory Then timelineFactory = New TimelineFactory(Self)
+        Return timelineFactory
+    End
+
+    Method SetRotation:Void(angel:Float)
+        rotation = angel
+        While rotation > 360
+            rotation -= 360
+        End
+        While rotation < 0
+            rotation += 360
+        End
+    End
+
+    Method GetRotation:Float()
+        Return rotation
     End
 
     Method Copy:Sprite()
@@ -119,6 +139,8 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable
     End
 
     Method OnUpdate:Void(deltaTimer:DeltaTimer)
+        If timelineFactory Then timelineFactory.GetTimeline().OnUpdate(deltaTimer)
+
         If frameCount <= 0 Then Return
         If animationIsDone Then Return
 
