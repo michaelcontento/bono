@@ -2,6 +2,10 @@ class AlertDelegate : public Object
 {
 public:
     virtual void Call(int buttonIndex, String buttonTitle) = 0;
+
+    void mark() { 
+        Object::mark();
+    };
 };
 
 @class AlertDelegateObjectiveC;
