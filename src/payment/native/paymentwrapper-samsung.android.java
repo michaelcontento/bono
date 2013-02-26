@@ -2,7 +2,7 @@ import com.samsungapps.plasma.*;
 
 class PaymentWrapper implements PlasmaListener {
     private static final int ITEM_AMOUNT = 25;
-    private static final String TAG = "BONO-SAMSUNG-IAP";
+    private static final String TAG = "Bono.Payment.Samsung";
 
     private Plasma plasma = null;
     private int transactionId = 0;

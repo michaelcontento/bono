@@ -27,7 +27,7 @@ import com.amazon.inapp.purchasing.SubscriptionPeriod;
  */
 class MonkeyPurchaseObserver extends BasePurchasingObserver {
     private static final String OFFSET = "offset";
-    private static final String TAG = "Amazon-IAP";
+    private static final String TAG = "Bono.Payment.Amazon";
     public Map<String, String> requestIds;
     private String userId;
     public Integer taskCount = 0;
