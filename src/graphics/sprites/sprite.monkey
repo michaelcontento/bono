@@ -85,7 +85,10 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
         tmp.frameSpeed = frameSpeed
         tmp.loopAnimation = loopAnimation
         tmp.rotation = rotation
-        tmp.scale = scale
+        tmp.scale = scale.Copy()
+        tmp.SetColor(GetColor().Copy())
+        tmp.SetSize(GetSize().Copy())
+        tmp.SetPosition(GetPosition().Copy())
 
         Return tmp
     End

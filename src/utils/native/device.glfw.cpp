@@ -4,6 +4,10 @@ class AlertDelegate : public Object
 {
 public:
     virtual void Call(int buttonIndex, String buttonTitle) = 0;
+
+    void mark() { 
+        Object::mark();
+    };
 };
 
 #if __APPLE__
@@ -34,15 +38,28 @@ public:
     void static ShowAlertNative(String title, String message, Array<String> buttons, AlertDelegate* delegate)
     {
         CFOptionFlags cfRes;
+
+        CFStringRef b[3];
+ 
+        for (int i = 0; i<3; ++i) 
+        {
+            if (buttons.Length() > i)
+            {
+                b[i] = CFStringCreateWithCString(NULL, buttons.At(i).ToCString<char>(), kCFStringEncodingASCII);
+            } else {
+                b[i] = CFStringCreateWithCString(NULL, "", kCFStringEncodingASCII);
+            }
+        }
+ 
         CFUserNotificationDisplayAlert(0, kCFUserNotificationNoteAlertLevel,
                NULL, NULL, NULL,
                CFStringCreateWithCString(NULL, title.ToCString<char>(), kCFStringEncodingASCII),
                CFStringCreateWithCString(NULL, message.ToCString<char>(), kCFStringEncodingASCII),
-               CFStringCreateWithCString(NULL, buttons.At(0).ToCString<char>(), kCFStringEncodingASCII),
-               CFStringCreateWithCString(NULL, buttons.At(1).ToCString<char>(), kCFStringEncodingASCII),
-               CFStringCreateWithCString(NULL, buttons.At(2).ToCString<char>(), kCFStringEncodingASCII),
-               &cfRes);
-
+               b[0],
+               b[1],
+               b[2],
+               &cfRes); 
+        
         switch (cfRes)
         {
             case kCFUserNotificationDefaultResponse:
