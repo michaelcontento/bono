@@ -14,6 +14,10 @@ Class MatrixHelper Abstract
 
     Public
 
+    Const AXIS_BOTH:Int = 0
+    Const AXIS_X:Int = 1
+    Const AXIS_Y:Int = 2
+
     Function SetScissorRelative:Void(x:Float, y:Float, width:Float, height:Float)
         Local scale:Vector2D = GetScale()
         Local translate:Vector2D = GetTranslate()
@@ -35,6 +39,21 @@ Class MatrixHelper Abstract
 
     Function Scale:Void(size:Vector2D)
         graphics.Scale(size.x, size.y)
+    End
+
+    Function RoundScale:Void(axis:Int=AXIS_BOTH, precision:Int=1)
+        Local mul := Pow(10, precision)
+        Local newScale := MatrixHelper.GetScale().Mul(mul).Round().Div(mul)
+
+        newScale.Div(MatrixHelper.GetScale())
+        Select axis
+        Case AXIS_X
+            newScale.y = 1.0
+        Case AXIS_Y
+            newScale.x = 1.0
+        End
+
+        MatrixHelper.Scale(newScale)
     End
 
     Function Translate:Void(offset:Vector2D)
