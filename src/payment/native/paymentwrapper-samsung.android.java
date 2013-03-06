@@ -111,7 +111,7 @@ class PaymentWrapper implements PlasmaListener {
     {
         SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
-        edit.putStringSet(TAG, ownedItems);
+        edit.putString(TAG, getOwnedItemsAsString());
         edit.commit();
 
         Log.v(TAG, "local item DB saved");
@@ -121,11 +121,27 @@ class PaymentWrapper implements PlasmaListener {
     {
         SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
         try {
-            ownedItems = prefs.getStringSet(TAG, new HashSet<String>());
+            loadOwnedItemsAsString(prefs.getString(TAG, ""));
         } catch (ClassCastException e) {
         }
 
         Log.v(TAG, "local item DB loaded");
+    }
+
+    private void loadOwnedItemsAsString(String input)
+    {
+        for (String productId : input.split("\n")) {
+            ownedItems.add(productId);
+        }
+    }
+
+    private String getOwnedItemsAsString()
+    {
+        String result = "";
+        for (String item : ownedItems) {
+            result += item + "\n";
+        }
+        return result.substring(0, result.length() - 1);
     }
 
     /**
