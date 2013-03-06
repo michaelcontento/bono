@@ -61,6 +61,36 @@ Class SoundManager
         End
     End
 
+    Method Pause:Void()
+        PauseMusic()
+        PauseSounds()
+    End
+
+    Method PauseMusic:Void()
+        audio.PauseMusic()
+    End
+
+    Method PauseSounds:Void()
+        For Local i := 0 To CHANNELS
+            PauseChannel(i)
+        End
+    End
+
+    Method Resume:Void()
+        ResumeMusic()
+        ResumeSounds()
+    End
+
+    Method ResumeMusic:Void()
+        audio.ResumeMusic()
+    End
+
+    Method ResumeSounds:Void()
+        For Local i := 0 To CHANNELS
+            ResumeChannel(i)
+        End
+    End
+
     Private
 
     Method PlayMusic:Void(key:String)
