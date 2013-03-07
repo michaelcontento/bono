@@ -19,7 +19,7 @@ Class Particle
     Method Apply:Void(sprite:Sprite)
         sprite.SetPosition(position)
         sprite.SetColor(color)
-        sprite.rotation = rotation
+        sprite.SetRotation(rotation)
     End
 
     Method Reset:Void()

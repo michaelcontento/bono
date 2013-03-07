@@ -47,8 +47,8 @@ Class ParticleEmitterCircle Implements ParticleEmitter
     End
 
     Method OnParticleLaunch:Void(deltatimer:DeltaTimer, particle:Particle)
-        particle.velocity.Copy(velocity).Rotate(GetNextAngel())
-        particle.position.Copy(position)
+        particle.velocity.Set(velocity).Rotate(GetNextAngel())
+        particle.position.Set(position)
     End
 
     Method OnParticleUpdate:Void(deltatimer:DeltaTimer, particle:Particle)
@@ -56,8 +56,8 @@ Class ParticleEmitterCircle Implements ParticleEmitter
         particle.active = (particle.lifetime < particleLifetime)
 
         If Not fadeMode = NONE
-            particle.color.alpha = particle.lifetime / particleLifetime
-            If fadeMode = OUT Then particle.color.alpha = 1 - particle.color.alpha
+            particle.color.alphaFloat = particle.lifetime / particleLifetime
+            If fadeMode = OUT Then particle.color.alphaFloat = 1 - particle.color.alphaFloat
         End
     End
 
