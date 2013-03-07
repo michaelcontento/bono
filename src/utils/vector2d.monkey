@@ -105,6 +105,12 @@ Class Vector2D
         Return Self
     End
 
+    Method Add:Vector2D(x:Float, y:Float)
+        Self.x += x
+        Self.y += y
+        Return Self
+    End
+
     Method Add:Vector2D(v2:Vector2D)
         x += v2.x
         y += v2.y
@@ -114,6 +120,12 @@ Class Vector2D
     Method Add:Vector2D(factor:Float)
         x += factor
         y += factor
+        Return Self
+    End
+
+    Method Sub:Vector2D(x:Float, y:Float)
+        Self.x -= x
+        Self.y -= y
         Return Self
     End
 
