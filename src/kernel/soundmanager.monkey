@@ -21,6 +21,7 @@ Class SoundManager
     Public
 
     Field failOnLoadingError:Bool = True
+    Field newSoundCanStopOldest:Bool = True
 
     Method Add:Void(key:String, file:String)
         If files.Contains(key) Then Error("Key " + key + " already used")
@@ -134,7 +135,12 @@ Class SoundManager
             channelsChecked += 1
         Until channelsChecked >= CHANNELS
 
-        Return -1
+        If Not newSoundCanStopOldest Then Return -1
+
+        lastChannel += 1
+        If lastChannel >= CHANNELS Then lastChannel = 0
+        StopChannel(lastChannel)
+        Return lastChannel
     End
 
     Method LoadSound:Sound(file:String)
