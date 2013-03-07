@@ -10,7 +10,7 @@ Class ActionMoveTo Extends BaseAction
     Private
 
     Field obj:Positionable
-    Field endPos:Vector2D
+    Field endPos := New Vector2D()
     Field startPos := New Vector2D()
     Field distance := New Vector2D()
     Field currentPos := New Vector2D()
@@ -23,7 +23,7 @@ Class ActionMoveTo Extends BaseAction
 
     Method New(obj:Positionable, pos:Vector2D)
         Self.obj = obj
-        Self.endPos = pos
+        Self.endPos.Set(pos)
     End
 
     Method OnActionStart:Void()
