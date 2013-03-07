@@ -41,11 +41,11 @@ Class MatrixHelper Abstract
         graphics.Scale(size.x, size.y)
     End
 
-    Function RoundScale:Void(axis:Int=AXIS_BOTH, precision:Int=1)
-        Local mul := Pow(10, precision)
-        Local newScale := MatrixHelper.GetScale().Mul(mul).Round().Div(mul)
-
+    Function PushMatrixReset:Void(axis:Int=AXIS_BOTH)
+        ' TODO: Reset all other properties (scale, ..) too
+        Local newScale := New Vector2D(1, 1)
         newScale.Div(MatrixHelper.GetScale())
+
         Select axis
         Case AXIS_X
             newScale.y = 1.0
@@ -53,6 +53,7 @@ Class MatrixHelper Abstract
             newScale.x = 1.0
         End
 
+        PushMatrix()
         MatrixHelper.Scale(newScale)
     End
 
