@@ -43,8 +43,32 @@ Class TimelineFactory
         Return result
     End
 
+    Method Scale:ActionScale(scaleToAdd:Vector2D)
+        Local result := New ActionScale(Sprite(obj), scaleToAdd)
+        line.Append(result)
+        Return result
+    End
+
+    Method Scale:ActionScale(val:Float)
+        Return Scale(val, val)
+    End
+
+    Method Scale:ActionScale(x:Float, y:Float)
+        Return Scale(New Vector2D(x, y))
+    End
+
     Method Sleep:ActionSleep(duration:Float)
         Local result := New ActionSleep(duration)
+        line.Append(result)
+        Return result
+    End
+
+    Method SleepRandom:ActionSleepRandom(minDuration:Float, maxDuration:Float)
+        Return Sleep(Rnd(minDuration, maxDuration))
+    End
+
+    Method SleepRandomLateEval:ActionSleepRandomLateEval(minDuration:Float, maxDuration:Float)
+        Local result := New ActionSleepRandomLateEval(minDuration, maxDuration)
         line.Append(result)
         Return result
     End
