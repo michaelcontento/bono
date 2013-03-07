@@ -37,6 +37,12 @@ Class TimelineFactory
         Return result
     End
 
+    Method Callback:ActionCallback(name:String, cb:ActionsCallback)
+        Local result := New ActionCallback(obj, name, cb)
+        line.Append(result)
+        Return result
+    End
+
     Method MoveTo:ActionMoveTo(pos:Vector2D)
         Local result := New ActionMoveTo(Positionable(obj), pos)
         line.Append(result)
