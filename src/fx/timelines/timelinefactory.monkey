@@ -43,6 +43,12 @@ Class TimelineFactory
         Return result
     End
 
+    Method FadeAlphaTo:ActionFadeAlphaTo(alpha:Float)
+        Local result := New ActionFadeAlphaTo(Colorable(obj), alpha)
+        line.Append(result)
+        Return result
+    End
+
     Method Scale:ActionScale(scaleToAdd:Vector2D)
         Local result := New ActionScale(Sprite(obj), scaleToAdd)
         line.Append(result)
