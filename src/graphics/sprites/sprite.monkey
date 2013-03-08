@@ -27,8 +27,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Public
 
-    Field valign:Int = Align.TOP
-    Field halign:Int = Align.LEFT
+    Field align:Int = Align.TOP | Align.LEFT
     Field frameSpeed:Int
     Field loopAnimation:Bool
 
@@ -80,8 +79,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Method Copy:Sprite()
         Local tmp:Sprite = New Sprite(imageName, image, Null, baseRotation)
-        tmp.valign = valign
-        tmp.halign = halign
+        tmp.align = align
         tmp.frameSpeed = frameSpeed
         tmp.loopAnimation = loopAnimation
         tmp.rotation = rotation
@@ -116,8 +114,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Method Collide:Bool(checkPos:Vector2D)
         Local offset:Vector2D = New Vector2D()
-        Align.Horizontal(offset, Self, halign)
-        Align.Vertical(offset, Self, valign)
+        Align.Align(offset, Self, align)
 
         Return Super.Collide(checkPos.Copy().Sub(offset))
     End
@@ -128,8 +125,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
         renderPos.Set(GetCenter())
         renderPos.Add(GetPosition())
-        Align.Horizontal(renderPos, Self, halign)
-        Align.Vertical(renderPos, Self, valign)
+        Align.Align(renderPos, Self, align)
 
         GetColor().Activate()
         DrawImage(
