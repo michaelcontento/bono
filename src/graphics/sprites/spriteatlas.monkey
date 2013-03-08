@@ -155,6 +155,13 @@ Class SpriteAtlas
             End
         End
 
+        For Local attr:String = EachIn ["oX", "oY", "oW", "oH"]
+            If child.HasAttribute(attr)
+                Throw New InvalidSpriteAtlasXmlException(
+                    "Attribute '" + attr + "' found but not yet implemented")
+            End
+        End
+
         If child.HasAttribute("r") And child.GetAttribute("r") <> "y"
             Throw New InvalidSpriteAtlasXmlException(
                 "Invalid value for attribute 'r' in sprite node found")
