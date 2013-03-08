@@ -3,6 +3,6 @@ Strict
 Public
 
 Interface Rotateable
-    Method SetRotation:Void(angel:Float)
+    Method SetRotation:Void(angle:Float)
     Method GetRotation:Float()
 End
