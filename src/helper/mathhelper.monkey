@@ -33,10 +33,6 @@ Class MathHelper Abstract
         Return left - right * Floor(left / right)
     End
 
-    Function ModI:Int(left:Int, right:Int)
-        Return left Mod right
-    End
-
     Function HexToInt:Int(hex:String)
         Local result:Int
         Local hexLen:Int = hex.Length() - 1
