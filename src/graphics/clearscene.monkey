@@ -19,7 +19,6 @@ Class ClearScene Implements Renderable, Colorable
     End
 
     Method OnRender:Void()
-        If Not color Then Error("This should nerver happen")
         Cls(color.red, color.green, color.blue)
     End
 
