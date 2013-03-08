@@ -51,39 +51,39 @@ Public
 
 Class Appirater Abstract
     Function Launched:Void(canPrompt:Bool=True)
-        If Target.IS_DEBUG Then Print "[Appirater Launched:" + BoolToString(canPrompt) + "]"
+        If Target.IS_DEBUG Then Print "[Appirater Launched] canPrompt: " + BoolToString(canPrompt)
     End
 
     Function EnteredForeground:Void(canPrompt:Bool=True)
-        If Target.IS_DEBUG Then Print "[Appirater EnteredForeground:" + BoolToString(canPrompt) + "]"
+        If Target.IS_DEBUG Then Print "[Appirater EnteredForeground] canPrompt: " + BoolToString(canPrompt)
     End
 
     Function UserDidSignificantEvent:Void(canPrompt:Bool=True)
-        If Target.IS_DEBUG Then Print "[Appirater UserDidSignificantEvent:" + BoolToString(canPrompt) + "]"
+        If Target.IS_DEBUG Then Print "[Appirater UserDidSignificantEvent] canPrompt: " + BoolToString(canPrompt)
     End
 
     Function SetAppId:Void(id:String)
-        If Target.IS_DEBUG Then Print "[Appirater SetAppId:" + id + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetAppId id: ]" + id
     End
 
     Function SetDaysUntilPrompt:Void(days:Int)
-        If Target.IS_DEBUG Then Print "[Appirater SetDaysUntilPrompt:" + days + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetDaysUntilPrompt] days: " + days
     End
 
     Function SetUsesUntilPrompt:Void(days:Int)
-        If Target.IS_DEBUG Then Print "[Appirater SetUsesUntilPrompt:" + days + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetUsesUntilPrompt] days: " + days
     End
 
     Function SetSignificantEventsUntilPrompt:Void(uses:Int)
-        If Target.IS_DEBUG Then Print "[Appirater SetSignificantEventsUntilPrompt:" + uses + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetSignificantEventsUntilPrompt] uses: " + uses
     End
 
     Function SetTimeBeforeReminding:Void(time:Int)
-        If Target.IS_DEBUG Then Print "[Appirater SetTimeBeforeReminding:" + time + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetTimeBeforeReminding] time: " + time
     End
 
     Function SetDebug:Void(flag:Bool)
-        If Target.IS_DEBUG Then Print "[Appirater SetDebug:" + BoolToString(flag) + "]"
+        If Target.IS_DEBUG Then Print "[Appirater SetDebug] flag: " + BoolToString(flag)
     End
 
     Private
