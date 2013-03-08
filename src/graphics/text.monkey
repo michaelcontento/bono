@@ -17,8 +17,6 @@ Class Text Extends BaseDisplayObject Implements Renderable
 
     Public
 
-    Field align:Int = Align.LEFT | Align.TOP
-
     Method New(name:String, pos:Vector2D=Null)
         Self.name = name
         If Not (pos = Null) Then SetPosition(pos)
@@ -31,7 +29,7 @@ Class Text Extends BaseDisplayObject Implements Renderable
 
     Method OnRender:Void()
         renderPos.Set(GetPosition())
-        Align.Align(renderPos, Self, align)
+        Align.Align(renderPos, Self, GetAlignment())
 
         GetColor().Activate()
         angelFont.DrawText(_text, renderPos.x, renderPos.y)

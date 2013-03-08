@@ -27,7 +27,6 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Public
 
-    Field align:Int = Align.TOP | Align.LEFT
     Field frameSpeed:Int
     Field loopAnimation:Bool
 
@@ -79,11 +78,13 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Method Copy:Sprite()
         Local tmp:Sprite = New Sprite(imageName, image, Null, baseRotation)
-        tmp.align = align
         tmp.frameSpeed = frameSpeed
         tmp.loopAnimation = loopAnimation
         tmp.rotation = rotation
         tmp.scale = scale.Copy()
+
+        ' TODO: Move this into BaseDisplayObject.CopyHelper()?
+        tmp.SetAlignment(GetAlignment())
         tmp.SetColor(GetColor().Copy())
         tmp.SetSize(GetSize().Copy())
         tmp.SetPosition(GetPosition().Copy())
@@ -112,20 +113,13 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
         Return New Sprite(name, img, forcedSize, rotation)
     End
 
-    Method Collide:Bool(checkPos:Vector2D)
-        Local offset:Vector2D = New Vector2D()
-        Align.Align(offset, Self, align)
-
-        Return Super.Collide(checkPos.Copy().Sub(offset))
-    End
-
     Method OnRender:Void()
         GetSize().Div(lastScale).Mul(_scale)
         lastScale.Set(_scale)
 
         renderPos.Set(GetCenter())
         renderPos.Add(GetPosition())
-        Align.Align(renderPos, Self, align)
+        Align.Align(renderPos, Self, GetAlignment())
 
         GetColor().Activate()
         DrawImage(

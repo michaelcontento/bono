@@ -49,6 +49,16 @@ Class GuiButton Extends GuiBase Implements Touchable, Updateable
         Return Super.GetColor()
     End
 
+    Method SetAlignment:Void(newAlign:int)
+        LockedWithSprite("SetAlignment")
+        Super.SetAlignment(newAlign)
+    End
+
+    Method GetAlignment:Int()
+        LockedWithSprite("GetAlignment")
+        Return Super.GetAlignment()
+    End
+
     Method SetPosition:Void(newPos:Vector2D)
         LockedWithSprite("SetPosition")
         Super.SetPosition(newPos)
