@@ -65,8 +65,4 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, Alignable 
     Method SetSize:Void(newSize:Vector2D)
         size = newSize
     End
-
-    Method GetCenter:Vector2D()
-        Return size.Copy().Div(2)
-    End
 End

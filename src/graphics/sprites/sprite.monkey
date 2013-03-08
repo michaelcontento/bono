@@ -117,7 +117,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
         GetSize().Div(lastScale).Mul(_scale)
         lastScale.Set(_scale)
 
-        renderPos.Set(GetCenter())
+        renderPos.Set(GetSize()).Div(2)
         renderPos.Add(GetPosition())
         Align.Align(renderPos, Self, GetAlignment())
 
@@ -178,8 +178,12 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
     End
 
     Method DrawImageRect:Void(x:Float, y:Float, srcX:Float, srcY:Float, srcWidth:Float, srcHeight:Float)
-        x += GetCenter().x
-        y += GetCenter().y
+        ' borrow renderPos (mainly used in OnRender) here to avoid a new
+        ' instance of Vector2D
+        renderPos.Set(GetSize()).Div(2)
+
+        x += renderPos.x
+        y += renderPos.y
         graphics.DrawImageRect(image, x, y, srcX, srcY, srcWidth, srcHeight, rotation, _scale.x, _scale.y, currentFrame)
     End
 

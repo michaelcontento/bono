@@ -23,10 +23,6 @@ Class AlignmentDummy Implements Sizeable, Positionable
     Method SetSize:Void(newSize:Vector2D)
         size = newSize
     End
-
-    Method GetCenter:Vector2D()
-        Return size.Div(2)
-    End
 End
 
 Public
