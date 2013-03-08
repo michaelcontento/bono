@@ -1,7 +1,5 @@
 Strict
 
-#If TARGET="ios"
-
 ' ============================
 ' == COMMERCIAL BREAK START ==
 ' ============================
@@ -16,8 +14,9 @@ Strict
 ' ============================
 ' ==  COMMERCIAL BREAK END  ==
 ' ============================
-'
-'
+
+#If TARGET="ios"
+
 ' You need to include the following frameworks to your project:
 '   * RevMobAds.framework
 '   * SystemConfiguration.framework
