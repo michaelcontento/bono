@@ -27,6 +27,13 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, Alignable 
         Return True
     End
 
+    Function Copy:Void(from:BaseDisplayObject, dst:BaseDisplayObject)
+        dst.SetAlignment(from.GetAlignment())
+        dst.SetColor(from.GetColor().Copy())
+        dst.SetPosition(from.GetPosition().Copy())
+        dst.SetSize(from.GetSize().Copy())
+    End
+
     ' --- Alignable
     Method SetAlignment:Void(align:Int)
         Self.align = align

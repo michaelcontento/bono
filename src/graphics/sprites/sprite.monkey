@@ -78,16 +78,12 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Method Copy:Sprite()
         Local tmp:Sprite = New Sprite(imageName, image, Null, baseRotation)
+        BaseDisplayObject.Copy(Self, tmp)
+
         tmp.frameSpeed = frameSpeed
         tmp.loopAnimation = loopAnimation
         tmp.rotation = rotation
         tmp.scale = scale.Copy()
-
-        ' TODO: Move this into BaseDisplayObject.CopyHelper()?
-        tmp.SetAlignment(GetAlignment())
-        tmp.SetColor(GetColor().Copy())
-        tmp.SetSize(GetSize().Copy())
-        tmp.SetPosition(GetPosition().Copy())
 
         Return tmp
     End
