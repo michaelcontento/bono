@@ -7,15 +7,27 @@ Import mojo.graphics
 
 Public
 
-Class ClearScene Implements Renderable
+Class ClearScene Implements Renderable, Colorable
+    Private
+
     Field color:Color
 
+    Public
+
     Method New(color:Color=New Color())
-        Self.color = color
+        SetColor(color)
     End
 
     Method OnRender:Void()
         If Not color Then Error("This should nerver happen")
         Cls(color.red, color.green, color.blue)
+    End
+
+    Method SetColor:Void(color:Color)
+        Self.color = color
+    End
+
+    Method GetColor:Color()
+        Return color
     End
 End
