@@ -2,7 +2,6 @@
 
 from path import path
 from jinja2 import Template
-import sys
 
 MONKEY = Template("""Strict
 
