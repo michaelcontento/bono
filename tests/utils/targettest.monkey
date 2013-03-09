@@ -8,21 +8,31 @@ Public
 
 Class TargetTest Extends TestCase
     Method TestIsMarketGoogle:Void()
-        #If BONO_ANDROID_MARKET="google"
-            AssertTrue(Target.IS_MARKET_GOOGLE)
-            AssertFalse(Target.IS_MARKET_AMAZON)
+        #If TARGET="android"
+            #If BONO_ANDROID_MARKET="google"
+                AssertTrue(Target.IS_MARKET_GOOGLE)
+                AssertFalse(Target.IS_MARKET_AMAZON)
+            #Else
+                AssertFalse(Target.IS_MARKET_GOOGLE)
+                AssertTrue(Target.IS_MARKET_AMAZON)
+            #End
         #Else
             AssertFalse(Target.IS_MARKET_GOOGLE)
-            AssertTrue(Target.IS_MARKET_AMAZON)
+            AssertFalse(Target.IS_MARKET_AMAZON)
         #End
     End
 
     Method TestIsMarketAmazon:Void()
-        #If BONO_ANDROID_MARKET="amazon"
-            AssertFalse(Target.IS_MARKET_GOOGLE)
-            AssertTrue(Target.IS_MARKET_AMAZON)
+        #If TARGET="android"
+            #If BONO_ANDROID_MARKET="amazon"
+                AssertFalse(Target.IS_MARKET_GOOGLE)
+                AssertTrue(Target.IS_MARKET_AMAZON)
+            #Else
+                AssertTrue(Target.IS_MARKET_GOOGLE)
+                AssertFalse(Target.IS_MARKET_AMAZON)
+            #End
         #Else
-            AssertTrue(Target.IS_MARKET_GOOGLE)
+            AssertFalse(Target.IS_MARKET_GOOGLE)
             AssertFalse(Target.IS_MARKET_AMAZON)
         #End
     End

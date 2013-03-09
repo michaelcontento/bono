@@ -39,7 +39,7 @@ Class AlignTest Extends TestCase
     End
 
     Method TestHorizontalLeft:Void()
-        Align.Horizontal(dummy.position, dummy, Align.LEFT)
+        Align.Align(dummy.position, dummy, Align.LEFT)
         AssertTrue(dummy.position.Equal(DEFAULT_POSITION))
     End
 
@@ -47,7 +47,7 @@ Class AlignTest Extends TestCase
         Local expected:Vector2D = DEFAULT_POSITION.Copy()
         expected.x -= DEFAULT_SIZE.x
 
-        Align.Horizontal(dummy.position, dummy, Align.RIGHT)
+        Align.Align(dummy.position, dummy, Align.RIGHT)
         AssertTrue(dummy.position.Equal(expected))
     End
 
@@ -55,12 +55,12 @@ Class AlignTest Extends TestCase
         Local expected:Vector2D = DEFAULT_POSITION.Copy()
         expected.x -= DEFAULT_SIZE.x / 2
 
-        Align.Horizontal(dummy.position, dummy, Align.CENTER)
+        Align.Align(dummy.position, dummy, Align.CENTER | Align.TOP)
         AssertTrue(dummy.position.Equal(expected))
     End
 
     Method TestVerticalTop:Void()
-        Align.Vertical(dummy.position, dummy, Align.TOP)
+        Align.Align(dummy.position, dummy, Align.TOP)
         AssertTrue(dummy.position.Equal(DEFAULT_POSITION))
     End
 
@@ -68,7 +68,7 @@ Class AlignTest Extends TestCase
         Local expected:Vector2D = DEFAULT_POSITION.Copy()
         expected.y -= DEFAULT_SIZE.y
 
-        Align.Vertical(dummy.position, dummy, Align.BOTTOM)
+        Align.Align(dummy.position, dummy, Align.BOTTOM)
         AssertTrue(dummy.position.Equal(expected))
     End
 
@@ -76,7 +76,7 @@ Class AlignTest Extends TestCase
         Local expected:Vector2D = DEFAULT_POSITION.Copy()
         expected.y -= DEFAULT_SIZE.y / 2
 
-        Align.Vertical(dummy.position, dummy, Align.CENTER)
+        Align.Align(dummy.position, dummy, Align.CENTER | Align.LEFT)
         AssertTrue(dummy.position.Equal(expected))
     End
 
@@ -85,7 +85,7 @@ Class AlignTest Extends TestCase
         expected.x -= DEFAULT_SIZE.x / 2
         expected.y -= DEFAULT_SIZE.y / 2
 
-        Align.Centered(dummy.position, dummy)
+        Align.Align(dummy.position, dummy, Align.CENTER)
         AssertTrue(dummy.position.Equal(expected))
     End
 End
