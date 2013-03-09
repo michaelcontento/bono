@@ -57,7 +57,7 @@ Class MatrixHelper Abstract
     End
 
     Function PushMatrixResetScale:Void(axis:Int=AXIS_BOTH)
-        newScale.Set(1, 1).Div(MatrixHelper.GetScale())
+        newScale.Set(1, 1).Div(GetScale())
 
         If axis & AXIS_X Then newScale.y = 1.0
         If axis & AXIS_Y Then newScale.x = 1.0
