@@ -71,11 +71,15 @@ Class Vector2D
         Return Self
     End
 
-    Method Set:Vector2D(v2:Vector2D)
-        x = v2.x
-        y = v2.y
+    Method Set:Vector2D(x:Float, y:Float)
+        Self.x = x
+        Self.y = y
 
         Return Self
+    End
+
+    Method Set:Vector2D(v2:Vector2D)
+        Return Set(v2.x, v2.y)
     End
 
     Method Normalize:Vector2D()
@@ -112,15 +116,11 @@ Class Vector2D
     End
 
     Method Add:Vector2D(v2:Vector2D)
-        x += v2.x
-        y += v2.y
-        Return Self
+        Return Add(v2.x, v2.y)
     End
 
     Method Add:Vector2D(factor:Float)
-        x += factor
-        y += factor
-        Return Self
+        Return Add(factor, factor)
     End
 
     Method Sub:Vector2D(x:Float, y:Float)
@@ -130,47 +130,45 @@ Class Vector2D
     End
 
     Method Sub:Vector2D(v2:Vector2D)
-        x -= v2.x
-        y -= v2.y
-        Return Self
+        Return Sub(v2.x, v2.y)
     End
 
     Method Sub:Vector2D(factor:Float)
-        x -= factor
-        y -= factor
+        Return Sub(factor, factor)
+    End
+
+    Method Mul:Vector2D(x:Float, y:Float)
+        Self.x *= x
+        Self.y *= y
         Return Self
     End
 
     Method Mul:Vector2D(v2:Vector2D)
-        x *= v2.x
-        y *= v2.y
-        Return Self
+        Return Mul(v2.x, v2.y)
     End
 
     Method Mul:Vector2D(factor:Float)
-        x *= factor
-        y *= factor
+        Return Mul(factor, factor)
+    End
+
+    Method Div:Vector2D(x:Float, y:Float)
+        If x = 0 Or y = 0
+            Throw New InvalidArgumentException(
+                "Division by zero with x:" + x + " and y:" + y)
+        End
+
+        Self.x /= x
+        Self.y /= y
+
         Return Self
     End
 
     Method Div:Vector2D(v2:Vector2D)
-        If v2.x = 0 Or v2.y = 0
-            Throw New InvalidArgumentException("Division by zero: " + v2)
-        End
-
-        x /= v2.x
-        y /= v2.y
-        Return Self
+        Return Div(v2.x, v2.y)
     End
 
     Method Div:Vector2D(factor:Float)
-        If factor = 0
-            Throw New InvalidArgumentException("Division by zero")
-        End
-
-        y /= factor
-        x /= factor
-        Return Self
+        Return Div(factor, factor)
     End
 
     Method ToString:String()
