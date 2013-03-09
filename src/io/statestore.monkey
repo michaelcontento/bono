@@ -7,14 +7,7 @@ Import mojo.app
 
 Public
 
-Class StateStore
-    Private
-
-    Method New()
-    End
-
-    Public
-
+Class StateStore Abstract
     Function Load:Void(obj:Persistable)
         obj.FromString(LoadState())
     End
