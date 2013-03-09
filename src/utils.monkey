@@ -3,6 +3,7 @@ Strict
 Public
 
 Import bono.src.utils.alertcallback
+Import bono.src.utils.counter
 Import bono.src.utils.device
 Import bono.src.utils.pool
 Import bono.src.utils.registry
