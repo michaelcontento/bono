@@ -45,7 +45,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
         LoadImage()
     End
 
-    Method New(imageName:String, image:Image, forcedSize:Vector2D = Null, baseRotation:Int = 0)
+    Method New(imageName:String, image:Image, forcedSize:Vector2D=Null, baseRotation:Int=0)
         Self.imageName = imageName
         Self.image = image
         Self.baseRotation = baseRotation
@@ -88,7 +88,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
         Return tmp
     End
 
-    Method GrabSprite:Sprite(name:String, src:Vector2D, size:Vector2D, rotation:Int = 0)
+    Method GrabSprite:Sprite(name:String, src:Vector2D, size:Vector2D, rotation:Int=0)
         Local img:Image = image.GrabImage(
             src.x, src.y,
             size.x, size.y,
