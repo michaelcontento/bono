@@ -17,6 +17,7 @@ Import {{ module }}
 def modulize(filepath):
     return "bono." + filepath.stripext().replace("/", ".")
 
+
 def autoload_module(module):
     for name in ("src.payment", "src.ads", "src.analytics"):
         if module.startswith("bono." + name):
