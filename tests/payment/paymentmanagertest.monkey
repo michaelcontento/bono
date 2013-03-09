@@ -3,7 +3,8 @@ Strict
 Private
 
 Import bono
-Import bono.src.payment
+Import bono.src.payment.paymentmanager
+Import bono.src.payment.paymentprovider
 
 Class StubPaymentProvider Implements PaymentProvider
     Field timesIsProcessingCalled:Int

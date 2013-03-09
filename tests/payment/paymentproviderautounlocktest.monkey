@@ -3,11 +3,8 @@ Strict
 Private
 
 Import bono
-Import bono.src.payment
-
-#If TARGET<>"glfw" And TARGET<>"html5"
+Import bono.src.payment.paymentprovider
 Import bono.src.payment.paymentproviderautounlock
-#End
 
 Public
 

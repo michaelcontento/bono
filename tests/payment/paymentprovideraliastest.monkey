@@ -3,7 +3,7 @@ Strict
 Private
 
 Import bono
-Import bono.src.payment
+Import bono.src.payment.paymentprovideralias
 
 Public
 
