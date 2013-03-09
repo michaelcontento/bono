@@ -26,7 +26,7 @@ Class App Extends app.App Abstract
 
     Method TranslateSpace:Vector2D(vec:Vector2D)
         If Not contentScaler Then Return vec.Copy()
-        Return contentScaler.TranslateSpace(Self, vec)
+        Return contentScaler.TranslateSpace(Self, vec.Copy())
     End
 
     Method GetDirector:Director()
