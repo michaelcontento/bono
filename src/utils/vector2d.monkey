@@ -71,6 +71,13 @@ Class Vector2D
         Return Self
     End
 
+    Method Abs:Vector2D()
+        x = monkey.Abs(x)
+        y = monkey.Abs(y)
+
+        Return Self
+    End
+
     Method Set:Vector2D(x:Float, y:Float)
         Self.x = x
         Self.y = y
