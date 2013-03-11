@@ -9,7 +9,7 @@ Public
 Class BaseAction Implements Action Abstract
     Private
 
-    Field duration:Float
+    Field duration:Float = 1
     Field elapsed:Float
     Field transition:Transition = New TransitionLinear()
 
