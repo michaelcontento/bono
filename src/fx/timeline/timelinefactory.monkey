@@ -49,6 +49,10 @@ Class TimelineFactory
         Return result
     End
 
+    Method MoveTo:ActionMoveTo(x:Float, y:Float)
+        Return MoveTo(New Vector2D(x, y))
+    End
+
     Method FadeAlphaTo:ActionFadeAlphaTo(alpha:Float)
         Local result := New ActionFadeAlphaTo(Colorable(obj), alpha)
         line.Append(result)
