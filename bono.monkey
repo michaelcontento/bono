@@ -58,6 +58,7 @@ Import bono.src.graphics.interfaces.sizeable
 Import bono.src.graphics.shapes.baseshape
 Import bono.src.graphics.shapes.circle
 Import bono.src.graphics.shapes.ellipse
+Import bono.src.graphics.shapes.line
 Import bono.src.graphics.shapes.rect
 Import bono.src.graphics.sprite.invalidspriteatlasxmlexception
 Import bono.src.graphics.sprite.sprite
