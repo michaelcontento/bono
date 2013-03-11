@@ -7,7 +7,7 @@ Import mojo.graphics
 
 Public
 
-Class ClearScene Implements Renderable, Colorable
+Class ClearScreen Implements Renderable, Colorable
     Private
 
     Field color:Color

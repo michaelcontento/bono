@@ -46,7 +46,7 @@ Import bono.src.fx.transition.transitionrandom
 Import bono.src.fx.transition.transitionsine
 Import bono.src.graphics.align
 Import bono.src.graphics.basedisplayobject
-Import bono.src.graphics.clearscene
+Import bono.src.graphics.clearscreen
 Import bono.src.graphics.color.color
 Import bono.src.graphics.color.colorable
 Import bono.src.graphics.color.colorblend
