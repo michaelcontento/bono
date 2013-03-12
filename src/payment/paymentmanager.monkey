@@ -43,21 +43,21 @@ Class PaymentManager Implements PaymentProvider
     Method RestorePreviousPurchases:Void()
         DebugLog("RestorePreviousPurchases")
         #If TARGET="ios"
-        PaymentProviderAlias(GetProvider()).RestorePreviousPurchases()
+            PaymentProviderAlias(GetProvider()).RestorePreviousPurchases()
         #End
     End
 
     Method SetPublicKey:Void(key:String)
         DebugLog("SetPublicKey")
         #If TARGET="android" And BONO_ANDROID_MARKET="google"
-        PaymentProviderAlias(GetProvider()).publicKey = key
+            PaymentProviderAlias(GetProvider()).publicKey = key
         #End
     End
 
     Method SetItemGroupId:Void(itemGroupId:String)
         DebugLog("SetItemGroupId")
         #If TARGET="android" And BONO_ANDROID_MARKET="samsung"
-        PaymentProviderAlias(GetProvider()).itemGroupId = itemGroupId
+            PaymentProviderAlias(GetProvider()).itemGroupId = itemGroupId
         #End
     End
 
@@ -85,7 +85,7 @@ Class PaymentManager Implements PaymentProvider
 
     Method DebugLog:Void(func:String, message:String="")
         #If CONFIG="debug"
-        Print "[PaymentManager " + func + "] " + message
+            Print "[PaymentManager " + func + "] " + message
         #End
     End
 End
