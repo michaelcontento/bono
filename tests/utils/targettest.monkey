@@ -12,13 +12,14 @@ Class TargetTest Extends TestCase
             #If BONO_ANDROID_MARKET="google"
                 AssertTrue(Target.IS_MARKET_GOOGLE)
                 AssertFalse(Target.IS_MARKET_AMAZON)
+                AssertFalse(Target.IS_MARKET_SAMSUNG)
             #Else
                 AssertFalse(Target.IS_MARKET_GOOGLE)
-                AssertTrue(Target.IS_MARKET_AMAZON)
             #End
         #Else
             AssertFalse(Target.IS_MARKET_GOOGLE)
             AssertFalse(Target.IS_MARKET_AMAZON)
+            AssertFalse(Target.IS_MARKET_SAMSUNG)
         #End
     End
 
@@ -27,13 +28,51 @@ Class TargetTest Extends TestCase
             #If BONO_ANDROID_MARKET="amazon"
                 AssertFalse(Target.IS_MARKET_GOOGLE)
                 AssertTrue(Target.IS_MARKET_AMAZON)
+                AssertFalse(Target.IS_MARKET_SAMSUNG)
             #Else
-                AssertTrue(Target.IS_MARKET_GOOGLE)
                 AssertFalse(Target.IS_MARKET_AMAZON)
             #End
         #Else
             AssertFalse(Target.IS_MARKET_GOOGLE)
             AssertFalse(Target.IS_MARKET_AMAZON)
+            AssertFalse(Target.IS_MARKET_SAMSUNG)
+        #End
+    End
+
+    Method TestIsMarketSamsung:Void()
+        #If TARGET="android"
+            #If BONO_ANDROID_MARKET="samsung"
+                AssertFalse(Target.IS_MARKET_GOOGLE)
+                AssertFalse(Target.IS_MARKET_AMAZON)
+                AssertTrue(Target.IS_MARKET_SAMSUNG)
+            #Else
+                AssertFalse(Target.IS_MARKET_SAMSUNG)
+            #End
+        #Else
+            AssertFalse(Target.IS_MARKET_GOOGLE)
+            AssertFalse(Target.IS_MARKET_AMAZON)
+            AssertFalse(Target.IS_MARKET_SAMSUNG)
+        #End
+    End
+
+    Method TestPlatformId:Void()
+        #If TARGET="android"
+            AssertStringStartsWith("android:", Target.PLATFORM_ID)
+
+            If Target.IS_MARKET_GOOGLE
+                AssertStringEndsWith(":google", Target.PLATFORM_ID)
+            ElseIf Target.IS_MARKET_SAMSUNG
+                AssertStringEndsWith(":samsung", Target.PLATFORM_ID)
+            ElseIf Target.IS_MARKET_AMAZON
+                AssertStringEndsWith(":amazon", Target.PLATFORM_ID)
+            Else
+                MarkTestIncomplete("unknown android market")
+            End
+        #ElseIf TARGET="glfw" Or TARGET="stdcpp"
+            AssertStringStartsWith(Target.HOST + ":", Target.PLATFORM_ID)
+            AssertStringEndsWith(":" + Target.TARGET, Target.PLATFORM_ID)
+        #Else
+            AssertEquals(Target.TARGET, Target.PLATFORM_ID)
         #End
     End
 
