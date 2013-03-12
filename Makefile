@@ -1,8 +1,9 @@
-MONKEY_PATH="/Applications/Monkey"
-TRANS_NAME="trans_macos"
-CONFIG="debug"
-TARGET_OLD="glfw"
-TARGET_NEW="Glfw_Game"
+MONKEY_PATH=/Applications/Monkey
+TRANS_NAME=trans_macos
+CONFIG=debug
+TARGET_OLD=glfw
+TARGET_NEW=Glfw_Game
+BONO_MODPATH=$(CURDIR)/.modpath
 
 all: dependencies imports lint tests
 
@@ -18,18 +19,21 @@ tests_new:
 	@$(MONKEY_PATH)/bin/transcc_macos \
 		-config=$(CONFIG) \
 		-target=$(TARGET_NEW) \
-		-modpath=".;$$(pwd)/../;$$(pwd);$(MONKEY_PATH)/modules" \
+		-modpath=".;$(BONO_MODPATH);$(CURDIR);$(MONKEY_PATH)/modules" \
 		-run testrunner.monkey | ./tools/trimoutput-tests.sh
 
 tests_old:
 	@$(MONKEY_PATH)/bin/trans_macos \
 		-config=$(CONFIG) \
 		-target=$(TARGET_OLD) \
-		-modpath=".;$$(pwd)/../;$$(pwd);$(MONKEY_PATH)/modules" \
+		-modpath=".;$(BONO_MODPATH);$(CURDIR);$(MONKEY_PATH)/modules" \
 		-run testrunner.monkey | ./tools/trimoutput-tests.sh
 
 clean:
 	@rm -rf testrunner.build
+	@rm -rf "$(BONO_MODPATH)"
+	@mkdir -p "$(BONO_MODPATH)"
+	@ln -s "$(CURDIR)" "$(BONO_MODPATH)/bono"
 
 lint:
 	@echo "Running pep8 for all python files ..."
