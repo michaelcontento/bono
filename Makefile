@@ -1,16 +1,35 @@
 MONKEY_PATH="/Applications/Monkey"
+TRANS_NAME="trans_macos"
 CONFIG="debug"
-TARGET="glfw"
+TARGET_OLD="glfw"
+TARGET_NEW="Glfw_Game"
 
 all: dependencies imports lint tests
 
-tests:
+tests: clean
 	@echo "Running tests ..."
-	@$(MONKEY_PATH)/bin/trans_macos \
+	@if [ -x $(MONKEY_PATH)/bin/transcc_macos ]; then \
+		$(MAKE) tests_new; \
+	else \
+		$(MAKE) tests_old; \
+	fi
+
+tests_new:
+	@$(MONKEY_PATH)/bin/transcc_macos \
 		-config=$(CONFIG) \
-		-target=$(TARGET) \
+		-target=$(TARGET_NEW) \
 		-modpath=".;$$(pwd)/../;$$(pwd);$(MONKEY_PATH)/modules" \
 		-run testrunner.monkey | ./tools/trimoutput-tests.sh
+
+tests_old:
+	@$(MONKEY_PATH)/bin/trans_macos \
+		-config=$(CONFIG) \
+		-target=$(TARGET_OLD) \
+		-modpath=".;$$(pwd)/../;$$(pwd);$(MONKEY_PATH)/modules" \
+		-run testrunner.monkey | ./tools/trimoutput-tests.sh
+
+clean:
+	@rm -rf testrunner.build
 
 lint:
 	@echo "Running pep8 for all python files ..."
@@ -24,4 +43,4 @@ dependencies:
 	@echo "Install dependencies ..."
 	@pip install --quiet -r tools/requirements.txt --use-mirrors
 
-.PHONY: all tests imports dependencies lint
+.PHONY: all tests tests_old tests_new imports dependencies lint clean
