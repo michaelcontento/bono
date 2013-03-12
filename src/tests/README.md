@@ -121,7 +121,7 @@ becomes visible.
     Function Main:Int()
         Local suite:TestSuite = New TestSuite()
         suite.Autodiscover()
-        suite.Run(report)
+        suite.Run(New TestReportSimple())
         Return 0
     End
 
