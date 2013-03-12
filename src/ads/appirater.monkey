@@ -63,7 +63,7 @@ Class Appirater Abstract
     End
 
     Function SetAppId:Void(id:String)
-        If Target.IS_DEBUG Then Print "[Appirater SetAppId id: ]" + id
+        If Target.IS_DEBUG Then Print "[Appirater SetAppId] id: " + id
     End
 
     Function SetDaysUntilPrompt:Void(days:Int)
