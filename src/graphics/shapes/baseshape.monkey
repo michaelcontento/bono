@@ -7,7 +7,7 @@ Import mojo.graphics
 
 Public
 
-Class BaseShape Extends BaseDisplayObject Implements Renderable, Rotateable, Updateable
+Class BaseShape Extends BaseDisplayObject Implements Renderable, Rotateable, Updateable Abstract
     Private
 
     Field rotation:Float
