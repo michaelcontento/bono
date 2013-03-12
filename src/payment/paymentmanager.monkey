@@ -32,7 +32,7 @@ Class PaymentManager Implements PaymentProvider
     End
 
     Method Purchase:Void(id:String)
-        DebugLog("Purchase", ResolveId(id))
+        DebugLog("Purchase", "id: " + ResolveId(id))
         GetProvider().Purchase(ResolveId(id))
     End
 
