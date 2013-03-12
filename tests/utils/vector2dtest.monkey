@@ -78,12 +78,28 @@ Class Vector2DTest Extends TestCase
         AssertTrue(vec.Equal(copyVec))
     End
 
+    Method TestReset:Void()
+        Local vec:Vector2D = New Vector2D(12, 34)
+        vec.Reset()
+
+        AssertEquals(0.0, vec.x)
+        AssertEquals(0.0, vec.y)
+    End
+
     Method TestSet:Void()
         Local vec:Vector2D = New Vector2D(12, 34)
         Local copyVec:Vector2D = New Vector2D(0, 0)
         copyVec.Set(vec)
 
         AssertTrue(vec.Equal(copyVec))
+    End
+
+    Method TestSetWithTwoFloats:Void()
+        Local vec:Vector2D = New Vector2D(0, 0)
+        vec.Set(1.5, 2.5)
+
+        AssertEquals(1.5, vec.x)
+        AssertEquals(2.5, vec.y)
     End
 
     Method TestNormalize:Void()
@@ -126,6 +142,14 @@ Class Vector2DTest Extends TestCase
         AssertEquals(2.5, vec.y)
     End
 
+    Method TestAddTwoFloats:Void()
+        Local vec:Vector2D = New Vector2D(0, 0)
+        vec.Add(1.5, 2.5)
+
+        AssertEquals(1.5, vec.x)
+        AssertEquals(2.5, vec.y)
+    End
+
     Method TestSub:Void()
         Local vec:Vector2D = New Vector2D(0, 0)
         vec.Sub(New Vector2D(4, 5))
@@ -139,6 +163,14 @@ Class Vector2DTest Extends TestCase
         vec.Sub(2.5)
 
         AssertEquals(-2.5, vec.x)
+        AssertEquals(-2.5, vec.y)
+    End
+
+    Method TestSubTwoFloats:Void()
+        Local vec:Vector2D = New Vector2D(0, 0)
+        vec.Sub(1.5, 2.5)
+
+        AssertEquals(-1.5, vec.x)
         AssertEquals(-2.5, vec.y)
     End
 
@@ -158,6 +190,14 @@ Class Vector2DTest Extends TestCase
         AssertEquals(6.0, vec.y)
     End
 
+    Method TestMulTwoFloats:Void()
+        Local vec:Vector2D = New Vector2D(2, 3)
+        vec.Mul(1.5, 2.5)
+
+        AssertEquals(3.0, vec.x)
+        AssertEquals(7.5, vec.y)
+    End
+
     Method TestDiv:Void()
         Local vec:Vector2D = New Vector2D(4, 6)
         vec.Div(New Vector2D(2, 3))
@@ -174,6 +214,14 @@ Class Vector2DTest Extends TestCase
         AssertEquals(6.0, vec.y)
     End
 
+    Method TestDivTwoFloats:Void()
+        Local vec:Vector2D = New Vector2D(3.0, 7.5)
+        vec.Div(1.5, 2.5)
+
+        AssertEquals(2.0, vec.x)
+        AssertEquals(3.0, vec.y)
+    End
+
     Method TestToString:Void()
         Local vec:Vector2D = New Vector2D(12, 34)
 
@@ -183,6 +231,14 @@ Class Vector2DTest Extends TestCase
     Method TestFloor:Void()
         Local vec:Vector2D = New Vector2D(1.3, 2.9)
         vec.Floor()
+
+        AssertEquals(1.0, vec.x)
+        AssertEquals(2.0, vec.y)
+    End
+
+    Method TestAbs:Void()
+        Local vec:Vector2D = New Vector2D(-1, -2)
+        vec.Abs()
 
         AssertEquals(1.0, vec.x)
         AssertEquals(2.0, vec.y)
