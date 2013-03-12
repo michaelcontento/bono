@@ -2,6 +2,7 @@ Strict
 
 Private
 
+Import bono
 Import bono.src.payment.paymentprovider
 Import bono.src.payment.paymentprovideralias
 
@@ -17,6 +18,10 @@ Class PaymentManager Implements PaymentProvider
 
     Field idPrefix:String = ""
     Field idAlias:StringMap<String> = New StringMap<String>()
+
+    Method New()
+        Throw New InvalidConstructorException("use New(PaymentProvider)")
+    End
 
     Method New(provider:PaymentProvider)
         Self.provider = provider
