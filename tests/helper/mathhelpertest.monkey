@@ -7,6 +7,11 @@ Import bono
 Public
 
 Class MathHelperTest Extends TestCase
+    Method TestModF:Void()
+        AssertEquals(0.5, MathHelper.ModF(1.5, 1.0))
+        AssertEquals(0.0, MathHelper.ModF(1.0, 1.0))
+    End
+
     Method TestRoundUp:Void()
        AssertEquals(1, MathHelper.Round(0.5))
        AssertEquals(1, MathHelper.Round(0.6))
