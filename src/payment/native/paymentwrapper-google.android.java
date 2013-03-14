@@ -4,6 +4,7 @@ import android.content.SharedPreferences.Editor;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.BillingController.IConfiguration;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.model.Transaction;
 import net.robotmedia.billing.model.Transaction.PurchaseState;
 import net.robotmedia.billing.BillingRequest.ResponseCode;
 
@@ -15,6 +16,7 @@ class PaymentWrapper
     private boolean billingSupported = false;
     private Set<String> pendingItems = new HashSet<String>();
     private Set<String> ownedItems = new HashSet<String>();
+    public boolean transactionsRestored = false;
 
     /**
      * ---- MONKEY INTERFACE START ----
@@ -43,7 +45,7 @@ class PaymentWrapper
     }
 
     public boolean IsPurchaseInProgress() {
-        if (!billingSupported || !billingObserver.isTransactionsRestored()) {
+        if (billingSupported && !billingObserver.isTransactionsRestored()) {
             return true;
         } else {
             return !pendingItems.isEmpty();
@@ -75,16 +77,13 @@ class PaymentWrapper
 
             @Override
             public boolean isTransactionsRestored() {
-                final SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-                return prefs.getBoolean(KEY_TRANSACTIONS_RESTORED, false);
+                return PaymentWrapper.this.transactionsRestored;
             }
 
             @Override
             public void onTransactionsRestored() {
-                final SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-                final Editor edit = prefs.edit();
-                edit.putBoolean(KEY_TRANSACTIONS_RESTORED, true);
-                edit.commit();
+                PaymentWrapper.this.restoreFromLocalTransactions();
+                PaymentWrapper.this.transactionsRestored = true;
             }
         };
     }
@@ -102,6 +101,12 @@ class PaymentWrapper
                 return PaymentWrapper.publicKey;
             }
         };
+    }
+
+    public void restoreFromLocalTransactions() {
+        for (Transaction trans : BillingController.getTransactions(MonkeyGame.activity)) {
+            onPurchaseStateChanged(trans.productId, trans.purchaseState);
+        }
     }
 
     public void onBillingChecked(boolean supported) {
@@ -127,5 +132,6 @@ class PaymentWrapper
 
     protected void finalize() throws Throwable {
         BillingController.unregisterObserver(billingObserver);
+        BillingController.setConfiguration(null);
     }
 }
