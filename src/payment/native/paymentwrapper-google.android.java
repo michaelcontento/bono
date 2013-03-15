@@ -117,16 +117,17 @@ class PaymentWrapper
 
     public void onPurchaseStateChanged(String itemId, PurchaseState state) {
         pendingItems.remove(itemId);
+
         if (state == PurchaseState.PURCHASED) {
             ownedItems.add(itemId);
+        }
+        if (state == PurchaseState.CANCELLED) {
+            ownedItems.remove(itemId);
         }
     }
 
     public void onRequestPurchaseResponse(String itemId, ResponseCode response) {
         pendingItems.remove(itemId);
-        if (ResponseCode.isResponseOk(response.ordinal())) {
-            ownedItems.add(itemId);
-        }
     }
 
     protected void finalize() throws Throwable {
