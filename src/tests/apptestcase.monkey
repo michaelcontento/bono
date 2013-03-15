@@ -40,7 +40,15 @@ Class AppTestCase Extends TestCase
 
         Throw New AssertionFailedException(
             "Pixel difference found between the current " +
-            "render buffer and" + imgfile)
+            "render buffer and " + imgfile)
+    End
+
+    Method AssertScreenNotEquals:Void(imgfile:String)
+        Local data := LoadPixelData(imgfile)
+        If HasPixelDifference(data) Then Return
+
+        Throw New AssertionFailedException(
+            "render buffer and " + imgfile + " are identical")
     End
 
     Private
