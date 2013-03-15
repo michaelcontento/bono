@@ -6,6 +6,7 @@ Public
 
 Import bono.tests.graphics.aligntest
 Import bono.tests.graphics.colortest
+Import bono.tests.graphics.shapes.recttest
 Import bono.tests.helper.arrayhelpertest
 Import bono.tests.helper.mathhelpertest
 Import bono.tests.helper.stringhelpertest

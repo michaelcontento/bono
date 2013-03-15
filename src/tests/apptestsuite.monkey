@@ -24,6 +24,8 @@ Class AppTestSuite Extends mojo.App Implements TestSuite
     End
 
     Method OnRender:Int()
+        Cls()
+
         If Not initialized Then Return 0
         If Not listener Then Return 0
 
