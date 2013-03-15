@@ -24,7 +24,6 @@ class PaymentWrapper
 
     public void Init(String publicKey)
     {
-        BillingController.setDebug(true);
         BillingController.setConfiguration(getConfiguration(publicKey));
 
         billingObserver = getBillingObserver();
