@@ -20,8 +20,6 @@ Public
 
 Class StateStoreTest Extends TestCase
     Method TestSaveAndLoad:Void()
-        MarkTestSkipped("requires initialized mojo.app")
-
         Local obj := New PersitableDummy()
         obj.text = "hello world"
         StateStore.Save(obj)

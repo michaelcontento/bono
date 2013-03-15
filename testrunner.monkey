@@ -11,8 +11,8 @@ Function Main:Int()
     Local report:TestReportSimple = New TestReportSimple()
     report.verbose = False
 
-    Local suite:TestSuite = New TestSuite()
-    suite.Autodiscover()
+    Local suite:TestSuite = New AppTestSuite()
+    TestSuiteHelper.Autodiscover(suite)
     suite.Run(report)
     Return 0
 End

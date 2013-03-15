@@ -38,13 +38,13 @@ End
 
 Public
 
-Class TestSuiteTest Extends TestCase
+Class SimpleTestSuiteTest Extends TestCase
     Method SetUp:Void()
         MockTestRunner.runCalled = 0
     End
 
     Method TestAddAndRun:Void()
-        Local suite:TestSuite = New TestSuite()
+        Local suite := New SimpleTestSuite()
         suite.Add(New MockTestRunner())
         suite.Add(New MockTestRunner())
         suite.Run(New StubTestListener())
@@ -52,10 +52,7 @@ Class TestSuiteTest Extends TestCase
         AssertEquals(2, MockTestRunner.runCalled)
     End
 
-    Method TestAutoDiscover:Void()
-        Local suite:TestSuite = New TestSuite()
-        Local testsFound:Int = suite.Autodiscover()
-
-        AssertGreaterThan(0, testsFound)
+    Method TestImplementsTestSuite:Void()
+        AssertNotNull(TestSuite(New SimpleTestSuite()))
     End
 End
