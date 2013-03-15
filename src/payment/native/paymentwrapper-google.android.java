@@ -124,6 +124,8 @@ class PaymentWrapper
         if (state == PurchaseState.CANCELLED) {
             ownedItems.remove(itemId);
         }
+
+        BillingController.confirmNotifications(MonkeyGame.activity, itemId);
     }
 
     public void onRequestPurchaseResponse(String itemId, ResponseCode response) {
