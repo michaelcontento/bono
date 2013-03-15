@@ -19,6 +19,10 @@ Class DeltaTimer
 
     Public
 
+    Method New()
+        Throw New InvalidConstructorException("use New(Float)")
+    End
+
     Method New(fps:Float)
         targetFps = fps
         lastMillisecs = Millisecs()
