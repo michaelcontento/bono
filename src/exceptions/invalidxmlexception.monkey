@@ -6,7 +6,7 @@ Import bono
 
 Public
 
-Class InvalidSpriteAtlasXmlException Extends InvalidArgumentException
+Class InvalidXmlException Extends InvalidArgumentException
     Method New(message:String)
         Super.New(message)
     End

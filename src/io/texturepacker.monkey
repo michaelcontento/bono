@@ -4,73 +4,75 @@ Private
 
 Import bono
 Import bono.vendor.skn3.xml
-Import mojo.app
+Import mojo
+Import os
 
 Public
 
-Class SpriteAtlas
+Class TexturePacker
     Private
 
-    Field atlasSprite:Sprite
-    Field childSprites:StringMap<Sprite> = New StringMap<Sprite>()
+    Field loader:ImageLoader
+    Field rootImage:Image
+    Field childImages := New StringMap<Image>
     Field xml:XMLDoc
-    Field preloaded:Bool
+    Field xmlFilename:String
 
     Public
 
-    Method New(filename:String)
-        LoadXml(filename)
+    Global defaultImageLoader:ImageLoader = New MojoImageLoader()
+
+    Method New()
+        Throw New InvalidConstructorException("use New(String)")
+    End
+
+    Method New(filename:String, loader:ImageLoader=Null)
+        If Not loader Then loader = defaultImageLoader
+        Self.loader = loader
+
+        xmlFilename = filename
+        LoadXml()
         CheckXml()
 
-        LoadAtlasSprite()
-        LoadSprites()
+        LoadRootImage()
+        LoadChildImages()
 
         FreeXmlRecursive(xml)
         xml = Null
     End
 
-    Method Preload:Void()
-        If preloaded Then Return
-        preloaded = True
-
-        Local oldFloat := atlasSprite.GetColor().alphaFloat
-        atlasSprite.GetColor().alphaFloat = 0
-        atlasSprite.OnRender()
-        atlasSprite.GetColor().alphaFloat = oldFloat
-    End
-
-    Method Get:Sprite(name:String)
-        If Not childSprites.Contains(name)
+    Method Get:Image(name:String)
+        If Not childImages.Contains(name)
             Throw New InvalidArgumentException(
                 "There is no sprite named: " + name)
         End
 
-        Return childSprites.Get(name).Copy()
+        Return childImages.Get(name)
     End
 
     Method GetNames:MapKeys<String, Sprite>()
-        Return childSprites.Keys()
+        Return childImages.Keys()
     End
 
     Method Count:Int()
-        Return childSprites.Count()
+        Return childImages.Count()
     End
 
     Method IsEmpty:Bool()
-        Return childSprites.IsEmpty()
+        Return childImages.IsEmpty()
     End
 
     Method Contains:Bool(name:String)
-        Return childSprites.Contains(name)
+        Return childImages.Contains(name)
     End
 
     Private
 
-    Method LoadXml:Void(filename:String)
-        Local content:String = LoadString(filename)
+    Method LoadXml:Void()
+        Local content:String = mojo.app.LoadString(xmlFilename)
         If Not content Or content = ""
             Throw New RuntimeException(
-                "Unable to load definition from file: " + filename)
+                "Unable to load definition from file: " + xmlFilename)
         End
 
         Local error:XMLError = New XMLError
@@ -84,42 +86,42 @@ Class SpriteAtlas
 
     Method CheckXml:Void()
         If Not xml.HasChildren()
-            Throw New InvalidSpriteAtlasXmlException(
+            Throw New InvalidXmlException(
                 "Given xml file seems to be empty")
         End
 
         If xml.name <> "textureatlas"
-            Throw New InvalidSpriteAtlasXmlException(
+            Throw New InvalidXmlException(
                 "First node must be 'TextureAtlas'")
         End
 
         If Not xml.HasAttribute("imagepath")
-            Throw New InvalidSpriteAtlasXmlException(
+            Throw New InvalidXmlException(
                 "Missing attribute 'imagepath' in 'TextureAtlas' node")
         End
     End
 
-    Method LoadAtlasSprite:Void()
-        atlasSprite = New Sprite(xml.GetAttribute("imagepath"))
+    Method LoadRootImage:Void()
+        Local file := xml.GetAttribute("imagepath")
+        rootImage = loader.LoadImage(ExtractDir(xmlFilename) + "/" + file)
 
         If xml.HasAttribute("width")
             Assert.AssertEquals(
-                atlasSprite.GetSize().x,
-                Float(xml.GetAttribute("width")))
+                rootImage.Width(),
+                Int(xml.GetAttribute("width")))
         End
 
         If xml.HasAttribute("height")
             Assert.AssertEquals(
-                atlasSprite.GetSize().y,
-                Float(xml.GetAttribute("height")))
+                rootImage.Height(),
+                Int(xml.GetAttribute("height")))
         End
     End
 
-    Method LoadSprites:Void()
+    Method LoadChildImages:Void()
         Local name:String
         Local src:Vector2D = New Vector2D()
         Local size:Vector2D = New Vector2D()
-        Local rotation:Int
 
         For Local child:XMLNode = EachIn xml.children
             CheckChildXml(child)
@@ -130,40 +132,34 @@ Class SpriteAtlas
             size.x = Int(child.GetAttribute("w"))
             size.y = Int(child.GetAttribute("h"))
 
-            If child.GetAttribute("r", "n") = "y"
-                rotation = 90
-            Else
-                rotation = 0
-            End
-
-            childSprites.Set(
+            childImages.Set(
                 name,
-                atlasSprite.GrabSprite(name, src, size, rotation))
+                rootImage.GrabImage(src.x, src.y, size.x, size.y))
         End
     End
 
     Method CheckChildXml:Void(child:XMLNode)
         If child.name <> "sprite"
-            Throw New InvalidSpriteAtlasXmlException(
+            Throw New InvalidXmlException(
                 "Unknown node '" + child.name + "' found")
         End
 
         For Local attr:String = EachIn ["n", "x", "y", "w", "h"]
             If Not child.HasAttribute(attr)
-                Throw New InvalidSpriteAtlasXmlException(
+                Throw New InvalidXmlException(
                     "Missing attribute '" + attr + "' in sprite node")
             End
         End
 
-        For Local attr:String = EachIn ["oX", "oY", "oW", "oH"]
+        For Local attr:String = EachIn ["oX", "oY", "oW", "oH", "r"]
             If child.HasAttribute(attr)
-                Throw New InvalidSpriteAtlasXmlException(
+                Throw New InvalidXmlException(
                     "Attribute '" + attr + "' found but not yet implemented")
             End
         End
 
         If child.HasAttribute("r") And child.GetAttribute("r") <> "y"
-            Throw New InvalidSpriteAtlasXmlException(
+            Throw New InvalidXmlException(
                 "Invalid value for attribute 'r' in sprite node found")
         End
     End

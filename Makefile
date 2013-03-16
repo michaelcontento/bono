@@ -20,7 +20,7 @@ tests_new:
 		-config=$(CONFIG) \
 		-target=$(TARGET_NEW) \
 		-modpath=".;$(BONO_MODPATH);$(CURDIR);$(MONKEY_PATH)/modules" \
-		-run testrunner.monkey | ./tools/trimoutput-tests.sh
+		-run testrunner.monkey
 
 tests_old:
 	@$(MONKEY_PATH)/bin/trans_macos \

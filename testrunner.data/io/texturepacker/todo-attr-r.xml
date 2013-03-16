@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="imagepath/root" width="1" height="1">
+    <sprite n="imagepath/child" x="0" y="0" w="0" h="0" r="y"/>
+</TextureAtlas>

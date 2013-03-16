@@ -38,6 +38,7 @@ Class AppTestCase Extends TestCase
         Local data := LoadPixelData(imgfile)
         If Not HasPixelDifference(data) Then Return
 
+        SwapAndSleep()
         Throw New AssertionFailedException(
             "Pixel difference found between the current " +
             "render buffer and " + imgfile)
