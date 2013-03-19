@@ -4,7 +4,6 @@ Strict
 
 Public
 
-Import bono.tests.dummy
 Import bono.tests.graphics.aligntest
 Import bono.tests.graphics.colortest
 Import bono.tests.graphics.shapes.recttest
