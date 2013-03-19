@@ -12,7 +12,7 @@ tests: clean
 		-config=$(CONFIG) \
 		-target=$(TARGET) \
 		-modpath=".;$(BONO_MODPATH);$(CURDIR);$(MONKEY_PATH)/modules" \
-		-run testrunner.monkey
+		-run testrunner.monkey | ./tools/trimoutput-tests.sh
 
 clean:
 	@rm -rf testrunner.build
