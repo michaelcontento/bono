@@ -18,12 +18,12 @@ Public
 
 Class Assert Abstract
     Function AssertIdentical:Void(first:Object, second:Object)
-        If ObjectCompare.Compare(first, second) = 0 Then Return
+        If ObjectHelper.Compare(first, second) = 0 Then Return
         Fail("two objects are identical")
     End
 
     Function AssertNotIdentical:Void(first:Object, second:Object)
-        If ObjectCompare.Compare(first, second) <> 0 Then Return
+        If ObjectHelper.Compare(first, second) <> 0 Then Return
         Fail("two objects are not identical")
     End
 

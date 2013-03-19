@@ -73,6 +73,7 @@ Import bono.src.gui.guicallbackbutton
 Import bono.src.helper.arrayhelper
 Import bono.src.helper.mathhelper
 Import bono.src.helper.matrixhelper
+Import bono.src.helper.objecthelper
 Import bono.src.helper.stringhelper
 Import bono.src.io.assetloader
 Import bono.src.io.imageloader.cachedimageloader
@@ -124,7 +125,6 @@ Import bono.src.utils.countdown.countdown
 Import bono.src.utils.countdown.countdownfinishcallback
 Import bono.src.utils.countdown.countdowntickcallback
 Import bono.src.utils.device
-Import bono.src.utils.objectcompare
 Import bono.src.utils.pool
 Import bono.src.utils.registry.registry
 Import bono.src.utils.registry.registrystore

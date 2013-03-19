@@ -1,4 +1,4 @@
-class ObjectCompare
+class ObjectHelper
 {
 public:
     int static Compare(Object* left, Object* right)
