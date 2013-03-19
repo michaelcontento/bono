@@ -19,7 +19,7 @@ Class AssetLoaderTest Extends TestCase
 
     Method TearDown:Void()
         Sprite.imageLoader = Null
-        TexturePacker.defaultImageLoader = Null
+        TexturePacker.defaultImageLoader = New MojoImageLoader()
     End
 
     Method TestContains:Void()
@@ -96,22 +96,22 @@ Class AssetLoaderTest Extends TestCase
     End
 
     Method TestConfigureSprite:Void()
-        AssertNull(Sprite.imageLoader)
+        Sprite.imageLoader = Null
 
         asset.ConfigureSprite()
         AssertNotNull(Sprite.imageLoader)
     End
 
     Method TestConfigureTexturePacker:Void()
-        AssertNull(TexturePacker.defaultImageLoader)
+        TexturePacker.defaultImageLoader = Null
 
         asset.ConfigureTexturePacker()
         AssertNotNull(TexturePacker.defaultImageLoader)
     End
 
     Method TestConfigureAll:Void()
-        AssertNull(Sprite.imageLoader)
-        AssertNull(TexturePacker.defaultImageLoader)
+        Sprite.imageLoader = Null
+        TexturePacker.defaultImageLoader = Null
 
         asset.ConfigureAll()
 

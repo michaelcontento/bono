@@ -16,7 +16,7 @@ Class TexturePackerTest Extends AppTestCase
     End
 
     Method TearDown:Void()
-        TexturePacker.defaultImageLoader = Null
+        TexturePacker.defaultImageLoader = New MojoImageLoader()
     End
 
     Method TestWithExampleSprite:Void()
