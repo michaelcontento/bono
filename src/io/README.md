@@ -17,6 +17,25 @@ Local img:Image = assets.GetImage("image.png")
 Local spr:Sprite = assets.GetSprite("image.png")
 ```
 
+### Configure
+
+You can use `ConfigureSprite`, `ConfigureTexturePacker` or `ConfigureAll` to
+inject the given `AssetLoader` instance as default `ImageLoader` into `Sprite`
+and/or `TexturePacker`. They are all loose parts but it's a good idea to use
+them together.
+
+```monkey
+Local assets := New AssetLoader()
+assets.ConfigureAll()
+assets.Add("image.png")
+
+' this will now use the same ImageLoader as asset
+assets.Add(New TexturePacker("sprite.xml"))
+
+' nice sugar, huh? ;)
+Local sp := Sprite.Get("image")
+```
+
 ### TexturePacker
 
 Support for `TexturePacker` sprites is already baked in. But keep in mind that
