@@ -13,6 +13,11 @@ Function Main:Int()
 
     Local suite:TestSuite = New AppTestSuite()
     TestSuiteHelper.Autodiscover(suite)
-    suite.Run(report)
+
+    Try
+        suite.Run(report)
+    Catch ex:Exception
+        Error ex
+    End
     Return 0
 End
