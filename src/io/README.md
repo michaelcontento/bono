@@ -84,7 +84,7 @@ Local img:Image = assets.GetImage("LOWER-case.png")
 
 ## TexturePacker
 
-Load sprite images created with [TexturePacker][] save in the "generic XML"
+Load sprite images created with [TexturePacker][] saved in the "generic XML"
 format. Features that haven't been implemented yet:
 
 1. Rotation
