@@ -50,7 +50,7 @@ Class TexturePacker
         Return childImages.Get(name)
     End
 
-    Method GetNames:MapKeys<String, Sprite>()
+    Method GetNames:MapKeys<String, Image>()
         Return childImages.Keys()
     End
 
