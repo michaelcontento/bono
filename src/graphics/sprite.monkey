@@ -21,7 +21,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
 
     Global imageLoader:ImageLoader
 
-    Function Get:Sprite(name:String)
+    Function Create:Sprite(name:String)
         If Not imageLoader
             Throw New RuntimeException("No ImageLoader configured yet")
         End

@@ -19,7 +19,7 @@ Class SpriteTest Extends AppTestCase
     Method TestGetWithoutLoaderShouldFail:Void()
         Local caught := False
         Try
-            Sprite.Get("file")
+            Sprite.Create("file")
         Catch ex:RuntimeException
             caught = True
         End
@@ -33,7 +33,7 @@ Class SpriteTest Extends AppTestCase
         Local loader := New MockImageLoader()
         Sprite.imageLoader = loader
 
-        Local res:Sprite = Sprite.Get("name")
+        Local res:Sprite = Sprite.Create("name")
 
         AssertNotNull(res)
         AssertEquals("name", loader.lastFile)

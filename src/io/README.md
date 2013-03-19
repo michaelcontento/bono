@@ -33,7 +33,7 @@ assets.Add("image.png")
 assets.Add(New TexturePacker("sprite.xml"))
 
 ' nice sugar, huh? ;)
-Local sp := Sprite.Get("image")
+Local sp := Sprite.Create("image")
 ```
 
 ### TexturePacker
