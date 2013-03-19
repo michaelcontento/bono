@@ -15,6 +15,10 @@ Class TexturePackerTest Extends AppTestCase
         TexturePacker.defaultImageLoader = mockLoader
     End
 
+    Method TearDown:Void()
+        TexturePacker.defaultImageLoader = Null
+    End
+
     Method TestWithExampleSprite:Void()
         Local tp := New TexturePacker(
             "io/texturepacker/sprite/sprite.xml",
