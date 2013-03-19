@@ -74,6 +74,30 @@ with improved docs ;)
 * All [CoRa Games][] games - [Full listing of all games][cr-1]
 * Drag-Math: Multiplication on [Google Play][dm-1], [Amazon][dm-2]
 
+## Tests
+
+All tests are stored in `tests/` and can be executed with:
+
+    $ make tests
+
+But there are other make targets that are quite usefull:
+
+* __lint__: run [pep8][] for all python files
+* __imports__: update the master import file `bono.monkey`
+* __dependencies__: install all required python dependencies
+* __clean__: remove all build artefacts and other temporary stuff
+
+## Contribute
+
+1. Fork this project
+1. Make your changes (new features, bufixes, examples, ...)
+1. Write tests for it
+1. Be sure that _all tests_ are still green
+1. Send me a pull request
+
+Too complicated? You just wanna mess around for yourself? Thats fine! Just skip
+everything after step two :)
+
 ## License
 
     Copyright 2009-2013 Michael Contento <michaelcontento@gmail.com>
@@ -96,3 +120,4 @@ with improved docs ;)
   [cr-1]: http://www.coragames.com/games
   [dm-1]: https://play.google.com/store/apps/details?id=com.neriogames.math.multiplication
   [dm-2]: http://www.amazon.com/Nerio-Games-Math-Multiplication-Trainer/dp/B00BQ1PWW8/ref=sr_1_1?s=mobile-apps&ie=UTF8&qid=1363728371&sr=1-1&keywords=nerio+games
+  [pep8]: https://pypi.python.org/pypi/pep8
