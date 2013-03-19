@@ -3,6 +3,8 @@ Strict
 Private
 
 Import bono
+Import mojo
+Import os
 
 Public
 
@@ -10,11 +12,16 @@ Class AssetLoader Implements ImageLoader
     Private
 
     Field imageLoader:ImageLoader
-    Field names := New StringMap<String>
+    Field names := New StringMap<Int>
+    Field textures := New StringMap<TexturePacker>
+
+    Const TYPE_IMAGE := 0
+    Const TYPE_TEXTURE := 1
 
     Public
 
     Field ignoreCase := True
+    Field ignoreExt := True
 
     Method New(imageLoader:ImageLoader=Null)
         If Not imageLoader
@@ -28,17 +35,21 @@ Class AssetLoader Implements ImageLoader
         Try
             ResolveNameToFile(name)
             Return True
-        Catch ex:Exception
+        Catch ex:InvalidArgumentException
         End
         Return False
     End
 
-    Method GetNames:MapKeys<String, String>()
+    Method GetNames:MapKeys<String, Int>()
         Return names.Keys()
     End
 
     Method GetImage:Image(name:String)
-        Return LoadImage(ResolveNameToFile(name))
+        Local realName := ResolveNameToFile(name)
+        Local mode := names.Get(realName)
+
+        If mode = TYPE_IMAGE Then Return GetImageImage(realName)
+        Return GetImageTexture(realName)
     End
 
     Method GetSprite:Sprite(name:String)
@@ -48,19 +59,18 @@ Class AssetLoader Implements ImageLoader
     ' --- Data import
 
     Method Add:Void(file:String)
-        ' TODO: Check if file exists
+        ' TODO already exists?
+        names.Set(file, TYPE_IMAGE)
     End
 
     Method Add:Void(atlas:TexturePacker, namespace:String="")
-        ' TODO: Implement this
-    End
+        ' TODO already exists?
+        Local base := TrimExt(atlas.GetFilename())
+        textures.Set(base, atlas)
 
-    Method AddPath:Void(path:String, recursive:Bool=True)
-        ' TODO: Implement this
-    End
-
-    Method AddAll:Void()
-        AddPath("", True)
+        For Local name := EachIn atlas.GetNames()
+            names.Set(base + "/" + name, TYPE_TEXTURE)
+        End
     End
 
     ' --- ImageLoader interface
@@ -79,7 +89,12 @@ Class AssetLoader Implements ImageLoader
 
     Method PreloadAll:Void()
         For Local name := EachIn GetNames()
-            Preload(name)
+            If names.Get(name) <> TYPE_IMAGE Then Continue
+            Preload(GetImage(name))
+        End
+
+        For Local name := EachIn textures.Keys()
+            Preload(textures.Get(name).GetRootImage())
         End
     End
 
@@ -101,16 +116,43 @@ Class AssetLoader Implements ImageLoader
     Private
 
     Method ResolveNameToFile:String(name:String)
-        ' TODO: Implement this
+        name = ConvertCase(name)
+        For Local rawImageName := EachIn GetNames()
+            Local imageName := ConvertCase(rawImageName)
+            If imageName = name Then Return rawImageName
+            If ignoreExt And TrimExt(imageName) = name Then Return rawImageName
+        End
+
+        Throw New InvalidArgumentException("There is no asset named " + name)
     End
 
-    Method GetShortName:String(in:String)
-        Local parts := in.Split(".")
-        Return ".".Join(parts[..parts.Length() - 1])
+    Method GetImageImage:Image(name:String)
+        Return LoadImage(name)
+    End
+
+    Method GetImageTexture:Image(name:String)
+        Local textureName := name
+
+        While textureName.Length() > 0
+            If textures.Contains(textureName)
+                Local filename := name[textureName.Length()..]
+                Return textures.Get(textureName).Get(filename)
+            Else
+                textureName = StripExt(textureName)
+            End
+        End
+
+        Throw New RuntimeException("this should never happen")
     End
 
     Method ConvertCase:String(in:String)
         If ignoreCase Then Return in.ToLower()
+        Return in
+    End
+
+    Function TrimExt:String(in:String)
+        Local pos := in.FindLast(".")
+        If pos <> -1 Then Return in[..pos]
         Return in
     End
 End

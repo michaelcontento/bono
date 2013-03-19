@@ -12,6 +12,7 @@ Import bono.tests.graphics.spritetest
 Import bono.tests.helper.arrayhelpertest
 Import bono.tests.helper.mathhelpertest
 Import bono.tests.helper.stringhelpertest
+Import bono.tests.io.assetloadertest
 Import bono.tests.io.imageloader.cachedimageloadertest
 Import bono.tests.io.imageloader.mojoimageloadertest
 Import bono.tests.io.statestoretest
