@@ -7,6 +7,19 @@ Import bono
 Public
 
 Class AssertTest Extends TestCase
+    Method TestAssertNotIdentical:Void()
+        Local a := New Object()
+        Local b := New Object()
+
+        AssertNotIdentical(a, b)
+    End
+
+    Method TestAssertIdentical:Void()
+        Local a := New Object()
+
+        AssertIdentical(a, a)
+    End
+
     Method TestAssertEqualsInt:Void()
         AssertEquals(1, 1)
     End

@@ -17,6 +17,16 @@ End
 Public
 
 Class Assert Abstract
+    Function AssertIdentical:Void(first:Object, second:Object)
+        If ObjectCompare.Compare(first, second) = 0 Then Return
+        Fail("two objects are identical")
+    End
+
+    Function AssertNotIdentical:Void(first:Object, second:Object)
+        If ObjectCompare.Compare(first, second) <> 0 Then Return
+        Fail("two objects are not identical")
+    End
+
     Function AssertEquals:Void(first:Int, second:Int)
         If first = second Then Return
         FailWithDetails("two integers are equal", first, second)
