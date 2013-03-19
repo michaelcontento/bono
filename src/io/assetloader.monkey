@@ -131,18 +131,15 @@ Class AssetLoader Implements ImageLoader
     End
 
     Method GetImageTexture:Image(name:String)
-        Local textureName := name
+        For Local node := EachIn textures
+            If Not name.StartsWith(node.Key()) Then Continue
 
-        While textureName.Length() > 0
-            If textures.Contains(textureName)
-                Local filename := name[textureName.Length()..]
-                Return textures.Get(textureName).Get(filename)
-            Else
-                textureName = StripExt(textureName)
-            End
+            Local atlas := node.Value()
+            Local atlasName := name[node.Key().Length() + 1..]
+            If atlas.Contains(atlasName) Then Return atlas.Get(atlasName)
         End
 
-        Throw New RuntimeException("this should never happen")
+        Return Null
     End
 
     Method ConvertCase:String(in:String)

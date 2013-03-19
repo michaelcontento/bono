@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:1c3bbb2fc3726b0b9d37a23b0e65c13d$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="sprite.png" width="38" height="14">
+    <sprite n="rect-blue.png" x="26" y="2" w="10" h="10"/>
+    <sprite n="rect-green.png" x="14" y="2" w="10" h="10"/>
+    <sprite n="rect-red.png" x="2" y="2" w="10" h="10"/>
+</TextureAtlas>

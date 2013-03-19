@@ -10,7 +10,7 @@ Public
 Class AssetLoaderTest Extends TestCase
     Field asset:AssetLoader
     Field loader:MockImageLoader
-    Const PREFIX := "ios/assetloader/"
+    Const PREFIX := "io/assetloader/"
 
     Method SetUp:Void()
         loader = New MockImageLoader()
@@ -27,6 +27,21 @@ Class AssetLoaderTest Extends TestCase
 
         asset.Add("foo")
         AssertTrue(asset.Contains("foo"))
+    End
+
+    Method TestAddTexturePacker:Void()
+        Local atlasPrefix := PREFIX + "sprite/"
+        Local atlas := New TexturePacker(atlasPrefix + "sprite.xml")
+
+        asset.Add(atlas)
+
+        AssertTrue(asset.Contains(atlasPrefix + "sprite/rect-green.png"))
+        AssertTrue(asset.Contains(atlasPrefix + "sprite/rect-red.png"))
+        AssertTrue(asset.Contains(atlasPrefix + "sprite/rect-blue.png"))
+
+        AssertNotNull(asset.GetImage(atlasPrefix + "sprite/rect-green.png"))
+        AssertNotNull(asset.GetImage(atlasPrefix + "sprite/rect-red.png"))
+        AssertNotNull(asset.GetImage(atlasPrefix + "sprite/rect-blue.png"))
     End
 
     Method TestGetNamesShouldStartEmpty:Void()
