@@ -22,7 +22,7 @@ Class TexturePackerTest Extends AppTestCase
 
         RenderAndCompare(tp, "rect-green.png")
 
-        MarkTestIncomplete("This should work but AssertScreenEquals seems to be buggy")
+        MarkTestSkipped("This should work but AssertScreenEquals seems to be buggy")
         ' RenderAndCompare(tp, "rect-blue.png")
         ' RenderAndCompare(tp, "rect-red.png")
     End
