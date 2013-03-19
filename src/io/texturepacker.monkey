@@ -66,6 +66,14 @@ Class TexturePacker
         Return childImages.Contains(name)
     End
 
+    Method GetFilename:String()
+        Return xmlFilename
+    End
+
+    Method GetRootImage:Image()
+        Return rootImage
+    End
+
     Private
 
     Method LoadXml:Void()

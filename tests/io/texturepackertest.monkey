@@ -27,6 +27,22 @@ Class TexturePackerTest Extends AppTestCase
         ' RenderAndCompare(tp, "rect-red.png")
     End
 
+    Method TestGetFilename:Void()
+        Local file := GetXmlFile("valid-1x1")
+        Local tp := New TexturePacker(file)
+
+        AssertEquals(file, tp.GetFilename())
+    End
+
+    Method TestGetRootImage:Void()
+        Local file := GetXmlFile("valid-1x1")
+        Local tp := New TexturePacker(file)
+
+        AssertNotNull(tp.GetRootImage())
+        AssertEquals(1, tp.GetRootImage().Width())
+        AssertEquals(1, tp.GetRootImage().Height())
+    End
+
     Method RenderAndCompare:Void(tp:TexturePacker, file:String)
         Cls()
         DrawImage(tp.Get(file), 0, 0)
