@@ -85,4 +85,21 @@ Class MathHelperTest Extends TestCase
         AssertEquals("F", MathHelper.IntToHex(15))
         AssertEquals("A2DE", MathHelper.IntToHex(41694))
     End
+
+    Method TestEnsureBounds:Void()
+        AssertEquals(0.0, MathHelper.EnsureBounds(0, 0, 0))
+        AssertEquals(0.0, MathHelper.EnsureBounds(0, 0, 10))
+
+        AssertEquals(0.0, MathHelper.EnsureBounds(0, -10, 10))
+        AssertEquals(0.0, MathHelper.EnsureBounds(0, -10, 10))
+
+        AssertEquals(0.0, MathHelper.EnsureBounds(20, -10, 10))
+        AssertEquals(0.0, MathHelper.EnsureBounds(-20, -10, 10))
+
+        AssertEquals(0.0, MathHelper.EnsureBounds(20, -10, 10))
+        AssertEquals(0.0, MathHelper.EnsureBounds(-20, -10, 10))
+
+        AssertEquals(-9.0, MathHelper.EnsureBounds(11, -10, 10))
+        AssertEquals(9.0, MathHelper.EnsureBounds(-11, -10, 10))
+    End
 End

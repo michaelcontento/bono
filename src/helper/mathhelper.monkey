@@ -33,6 +33,17 @@ Class MathHelper Abstract
         Return left - right * Floor(left / right)
     End
 
+    Function EnsureBounds:Float(current:Float, min:Float, max:Float)
+        Local range := Abs(min) + Abs(max)
+        While current < min
+            current += range
+        End
+        While current > max
+            current -= range
+        End
+        Return current
+    End
+
     Function HexToInt:Int(hex:String)
         Local result:Int
         Local hexLen:Int = hex.Length() - 1
