@@ -1,7 +1,7 @@
 # [Bono][]
 
-This is my personal (and first) 2D engine / module library for [Monkey][]
-- a "cross translator" that translates into html5, objective-c, c++ and even
+This is my personal (and first) 2D engine / module library for [Monkey][] -
+a "cross translator" that translates into html5, objective-c, c++ and even
 flash.
 
 ## Getting started
