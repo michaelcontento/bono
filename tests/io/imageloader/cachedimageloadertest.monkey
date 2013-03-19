@@ -44,13 +44,11 @@ Class CachedImageLoaderTest Extends TestCase
     End
 
     Method TestShouldReturnTheParentResult:Void()
-        MarkTestSkipped("Implement AssertSame first")
-
         dummy.nextImage = CreateImage(1, 1)
-        'AssertSame(dummy.nextImage, cache.LoadImage(""))
+        AssertIdentical(dummy.nextImage, cache.LoadImage(""))
 
         Local wrongImage := CreateImage(1, 1)
-        'AssertSame(wrongImage, cache.LoadImage(""))
+        AssertNotIdentical(wrongImage, cache.LoadImage(""))
     End
 
     Method TestImplementsImageLoader:Void()

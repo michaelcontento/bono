@@ -61,8 +61,7 @@ Class SpriteTest Extends AppTestCase
         Local line1 := sprite.GetTimeline()
         Local line2 := sprite.GetTimeline()
 
-        MarkTestSkipped("Implement AssertSame first")
-        'AssertSame(line1, line2)
+        AssertIdentical(line1, line2)
     End
 
     Method TestSetAndGetRotation:Void()
