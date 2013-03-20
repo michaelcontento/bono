@@ -9,7 +9,7 @@ class LocalyticsBridge
     public static void StartSession(String id)
     {
         localyticsSession = new LocalyticsSession(
-            MonkeyGame.activity.getApplicationContext(),
+            BBAndroidGame.AndroidGame().GetActivity().getApplicationContext(),
             id
         );
         Resume();

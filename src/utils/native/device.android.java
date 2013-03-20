@@ -41,12 +41,12 @@ class Device
     {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
-        MonkeyGame.activity.startActivity(i);
+        BBAndroidGame.AndroidGame().GetActivity().startActivity(i);
     }
 
     static void ShowAlertNative(String title, String message, String[] buttons, AlertDelegate callback)
     {
-        AlertDialog.Builder alert = new AlertDialog.Builder(MonkeyGame.activity);
+        AlertDialog.Builder alert = new AlertDialog.Builder(BBAndroidGame.AndroidGame().GetActivity());
         alert.setTitle(title);
         alert.setMessage(message);
         alert.setNegativeButton(

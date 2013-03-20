@@ -99,7 +99,7 @@ class PaymentWrapper implements PlasmaListener {
 
     private void itemDbClear()
     {
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = BBAndroidGame.AndroidGame().GetActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
         edit.clear();
         edit.commit();
@@ -109,7 +109,7 @@ class PaymentWrapper implements PlasmaListener {
 
     private void itemDbSave()
     {
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = BBAndroidGame.AndroidGame().GetActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
         edit.putString(TAG, getOwnedItemsAsString());
         edit.commit();
@@ -119,7 +119,7 @@ class PaymentWrapper implements PlasmaListener {
 
     private void itemDbLoad()
     {
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = BBAndroidGame.AndroidGame().GetActivity().getPreferences(Context.MODE_PRIVATE);
         try {
             loadOwnedItemsAsString(prefs.getString(TAG, ""));
         } catch (ClassCastException e) {
@@ -151,7 +151,7 @@ class PaymentWrapper implements PlasmaListener {
     public void Init(String itemGroupId)
     {
         if (plasma == null) {
-            plasma = new Plasma(itemGroupId, MonkeyGame.activity);
+            plasma = new Plasma(itemGroupId, BBAndroidGame.AndroidGame().GetActivity());
             plasma.setPlasmaListener(this);
             itemDbLoad();
         }

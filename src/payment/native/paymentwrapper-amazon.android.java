@@ -93,7 +93,7 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
     }
 
     public SharedPreferences getSharedPreferencesForCurrentUser() {
-        return MonkeyGame.activity.getSharedPreferences(userId, Context.MODE_PRIVATE);
+        return BBAndroidGame.AndroidGame().GetActivity().getSharedPreferences(userId, Context.MODE_PRIVATE);
     }
 
     /*
@@ -334,7 +334,7 @@ class PaymentWrapper {
 
     public void Init()
     {
-        mPurchaseObserver = new MonkeyPurchaseObserver(MonkeyGame.activity.getBaseContext());
+        mPurchaseObserver = new MonkeyPurchaseObserver(BBAndroidGame.AndroidGame().GetActivity().getBaseContext());
         PurchasingManager.registerObserver(mPurchaseObserver);
         started = true;
     }
