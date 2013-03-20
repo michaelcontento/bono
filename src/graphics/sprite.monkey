@@ -66,7 +66,7 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
             tmpPos.x, tmpPos.y,
             rotation,
             tmpScale.x, tmpScale.y,
-            currentFrame)
+            0)
         GetColor().Deactivate()
     End
 
