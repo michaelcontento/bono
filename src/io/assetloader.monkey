@@ -15,6 +15,7 @@ Class AssetLoader Implements ImageLoader
     Field names := New StringMap<Int>
     Field textures := New StringMap<TexturePacker>
 
+    Global preloadColor := New Color(0, 0, 0, 0)
     Const TYPE_IMAGE := 0
     Const TYPE_TEXTURE := 1
 
@@ -81,9 +82,9 @@ Class AssetLoader Implements ImageLoader
 
     ' --- Preload
 
-    Method Preload:Void(name:String)
+    Method Preload:Void(img:Image)
         preloadColor.Activate()
-        DrawImage(LoadImage(name, 0, 0))
+        DrawImage(img, 0, 0)
         preloadColor.Deactivate()
     End
 
