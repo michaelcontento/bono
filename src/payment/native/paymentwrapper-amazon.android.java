@@ -162,6 +162,7 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
                     editor.putBoolean(key, true);
                     break;
                 case SUBSCRIPTION:
+                    key = receipt.getSku();
                     editor.putBoolean(key, true);
                     editor.putLong(key + "_START", new Date().getTime());
                     break;
