@@ -15,11 +15,11 @@ Import "native/flurrybridge.${TARGET}.${LANG}"
 
 Extern
 
-Class Flurry Abstract
-    Function StartSession:Void(id:String)="FlurryBridge::StartSession"
-    Function LogEvent:Void(name:String)="FlurryBridge::LogEvent"
-    Function LogEventTimed:Void(name:String)="FlurryBridge::LogEventTimed"
-    Function EndTimedEvent:Void(name:String)="FlurryBridge::EndTimedEvent"
+Class Flurry="FlurryBridge"
+    Function StartSession:Void(id:String)
+    Function LogEvent:Void(name:String)
+    Function LogEventTimed:Void(name:String)
+    Function EndTimedEvent:Void(name:String)
 End
 
 #Else

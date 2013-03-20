@@ -15,8 +15,12 @@ Strict
 ' ==  COMMERCIAL BREAK END  ==
 ' ============================
 
-#If TARGET="ios"
+#If TARGET="ios" Or TARGET="android"
 
+' =============================
+' == IOS                     ==
+' =============================
+'
 ' You need to include the following frameworks to your project:
 '   * RevMobAds.framework
 '   * SystemConfiguration.framework
@@ -25,27 +29,11 @@ Strict
 '
 ' Whereas the last three are standard apple frameworks and the first one can be
 ' found here: http://sdk.revmob.com/ios
-
-Private
-
-Import "native/revmobbridge.${TARGET}.${LANG}"
-
-Extern
-
-Class Revmob Abstract
-    Function StartSession:Void(id:String)="RevmobBridge::StartSession"
-    Function ShowFullscreen:Void()="RevmobBridge::ShowFullscreen"
-    Function ShowBanner:Void()="RevmobBridge::ShowBanner"
-    Function HideBanner:Void()="RevmobBridge::HideBanner"
-    Function OpenAdLink:Void()="RevmobBridge::OpenAdLink"
-    Function ShowPopup:Void()="RevmobBridge::ShowPopup"
-    Function EnableTestingWithAds:Void()="RevmobBridge::EnableTestingWithAds"
-    Function EnableTestingWithoutAds:Void()="RevmobBridge::EnableTestingWithoutAds"
-    Function DisableTesting:Void()="RevmobBridge::DisableTesting"
-End
-
-#ElseIf TARGET="android"
-
+'
+' =============================
+' == Android                 ==
+' =============================
+'
 ' 1) Download the Revmob SDK from http://sdk.revmob.com/android
 ' 2) If there is no libs/ folder in the android build folder: create it now!
 ' 3) Copy the revmob-*.jar from the SDK into the libs/ folder
@@ -100,16 +88,16 @@ Import "native/revmobbridge.${TARGET}.${LANG}"
 
 Extern
 
-Class Revmob Abstract
-    Function StartSession:Void(id:String)="RevmobBridge.StartSession"
-    Function ShowFullscreen:Void()="RevmobBridge.ShowFullscreen"
-    Function ShowBanner:Void()="RevmobBridge.ShowBanner"
-    Function HideBanner:Void()="RevmobBridge.HideBanner"
-    Function OpenAdLink:Void()="RevmobBridge.OpenAdLink"
-    Function ShowPopup:Void()="RevmobBridge.ShowPopup"
-    Function EnableTestingWithAds:Void()="RevmobBridge.EnableTestingWithAds"
-    Function EnableTestingWithoutAds:Void()="RevmobBridge.EnableTestingWithoutAds"
-    Function DisableTesting:Void()="RevmobBridge.DisableTesting"
+Class Revmob="RevmobBridge"
+    Function StartSession:Void(id:String)
+    Function ShowFullscreen:Void()
+    Function ShowBanner:Void()
+    Function HideBanner:Void()
+    Function OpenAdLink:Void()
+    Function ShowPopup:Void()
+    Function EnableTestingWithAds:Void()
+    Function EnableTestingWithoutAds:Void()
+    Function DisableTesting:Void()
 End
 
 #Else

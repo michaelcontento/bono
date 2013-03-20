@@ -8,11 +8,11 @@ Import "native/localyticsbridge.${TARGET}.${LANG}"
 
 Extern
 
-Class Localytics Abstract
-    Function StartSession:Void(id:String)="LocalyticsBridge.StartSession"
-    Function Suspend:Void()="LocalyticsBridge.Suspend"
-    Function Resume:Void()="LocalyticsBridge.Resume"
-    Function TagEvent:Void(name:String)="LocalyticsBridge.TagEvent"
+Class Localytics="LocalyticsBridge"
+    Function StartSession:Void(id:String)
+    Function Suspend:Void()
+    Function Resume:Void()
+    Function TagEvent:Void(name:String)
 End
 
 #Else

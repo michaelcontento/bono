@@ -18,24 +18,14 @@ End
 
 Extern
 
-Class Device Extends DeviceNonNative Abstract
-#If TARGET="ios" Or TARGET="glfw"
-    Function GetTimestamp:Int()="Device::GetTimestamp"
-    Function OpenUrl:Void(url:String)="Device::OpenUrl"
-    Function GetLanguage:String()="Device::GetLanguage"
+Class Device Extends DeviceNonNative
+    Function GetTimestamp:Int()
+    Function OpenUrl:Void(url:String)
+    Function GetLanguage:String()
 
     Private
 
-    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device::ShowAlertNative"
-#Else
-    Function GetTimestamp:Int()="Device.GetTimestamp"
-    Function OpenUrl:Void(url:String)="Device.OpenUrl"
-    Function GetLanguage:String()="Device.GetLanguage"
-
-    Private
-
-    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device.ShowAlertNative"
-#End
+    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)
 End
 
 ' Interfaces can't be external and for this we need to do a little dance ...
