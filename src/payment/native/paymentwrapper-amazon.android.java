@@ -82,6 +82,23 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
         new PurchaseAsyncTask().execute(purchaseResponse);
     }
 
+    /**
+     * Is invoked once the call from initiatePurchaseUpdatesRequest is completed.
+     * On a successful response, a response object is passed which contains the request id, request status, a set of
+     * previously purchased receipts, a set of revoked skus, and the next offset if applicable. If a user downloads your
+     * application to another device, this call is used to sync up this device with all the user's purchases.
+     * 
+     * @param purchaseUpdatesResponse
+     *            Response object containing the user's recent purchases.
+     */
+    @Override
+    public void onPurchaseUpdatesResponse(final PurchaseUpdatesResponse purchaseUpdatesResponse) {
+        Log.v(TAG, "onPurchaseUpdatesRecived recieved: Response -" + purchaseUpdatesResponse);
+        Log.v(TAG, "PurchaseUpdatesRequestStatus:" + purchaseUpdatesResponse.getPurchaseUpdatesRequestStatus());
+        Log.v(TAG, "RequestID:" + purchaseUpdatesResponse.getRequestId());
+        new PurchaseUpdatesAsyncTask().execute(purchaseUpdatesResponse);
+    }
+
     /*
      * Helper method to print out relevant receipt information to the log.
      */
