@@ -54,6 +54,10 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
     End
 
     Method OnRender:Void()
+        Local oldHandleX := image.HandleX()
+        Local oldHandleY := image.HandleY()
+        image.SetHandle(realSize.x / 2, realSize.y / 2)
+
         tmpScale.Set(GetSize()).Div(realSize)
 
         tmpPos.Set(GetSize()).Div(2)
@@ -68,6 +72,8 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
             tmpScale.x, tmpScale.y,
             0)
         GetColor().Deactivate()
+
+        image.SetHandle(oldHandleX, oldHandleY)
     End
 
     Method OnUpdate:Void(timer:DeltaTimer)
