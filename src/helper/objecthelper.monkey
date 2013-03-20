@@ -2,7 +2,7 @@ Strict
 
 Private
 
-Import "native/objecthelper.${TARGET}.${LANG}"
+Import "native/objecthelper.${LANG}"
 
 Extern
 
