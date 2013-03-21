@@ -18,11 +18,8 @@ Class Countdown Implements Updateable
 
     Public
 
-    Method New()
-        Throw New InvalidConstructorException("use New(Float)")
-    End
 
-    Method New(duration:Float)
+    Method New(duration:Float=0)
         Set(duration)
     End
 
