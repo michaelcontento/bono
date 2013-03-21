@@ -18,7 +18,7 @@ Class Countdown Implements Updateable
 
     Public
 
-    Field stopOnFinish := False
+    Field pauseOnFinish := False
 
     Method New(duration:Float=0)
         Set(duration)
@@ -75,7 +75,7 @@ Class Countdown Implements Updateable
         TriggerTickCallbacks()
         TriggerFinishCallbacks()
 
-        If stopOnFinish And IsFinished() Then Stop()
+        If pauseOnFinish And IsFinished() Then Pause()
     End
 
     Method Add:Void(duration:Float)
