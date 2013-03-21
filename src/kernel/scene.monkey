@@ -19,6 +19,8 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
 
     Public
 
+    Field emitterAutoEnable := True
+
     Method OnSceneEnter:Void()
     End
 
@@ -61,10 +63,12 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
     Method AddChild:Void(child:Object)
         If Not childs.Contains(child) Then childs.AddLast(child)
 
-        If keyhandlerFan And Keyhandler(child)
+        If Keyhandler(child)
+            If Not keyEventsEnabled And emitterAutoEnable Then EnableKeyEvents()
             GetKeyhandlerFan().Add(Keyhandler(child))
         End
-        If touchableFan And Touchable(child)
+        If Touchable(child)
+            If Not touchEventsEnabled And emitterAutoEnable Then EnableTouchEvents()
             GetTouchableFan().Add(Touchable(child))
         End
     End
@@ -72,12 +76,8 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
     Method RemoveChild:Void(child:Object)
         childs.RemoveEach(child)
 
-        If keyhandlerFan And Keyhandler(child)
-            GetKeyhandlerFan().Remove(Keyhandler(child))
-        End
-        If touchableFan And Touchable(child)
-            GetTouchableFan().Remove(Touchable(child))
-        End
+        If Keyhandler(child) Then GetKeyhandlerFan().Remove(Keyhandler(child))
+        If Touchable(child) Then GetTouchableFan().Remove(Touchable(child))
     End
 
     Method GetDirector:Director()
@@ -133,13 +133,7 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
     Method GetTouchableFan:TouchableFan()
         If Not touchableFan
             touchableFan = New TouchableFan()
-
             If Touchable(Self) Then touchableFan.Add(Touchable(Self))
-
-            For Local obj:Object = EachIn childs
-                If Not Touchable(obj) Then Continue
-                touchableFan.Add(Touchable(obj))
-            End
         End
 
         Return touchableFan
@@ -148,13 +142,7 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
     Method GetKeyhandlerFan:KeyhandlerFan()
         If Not keyhandlerFan
             keyhandlerFan = New KeyhandlerFan()
-
             If Keyhandler(Self) Then keyhandlerFan.Add(Keyhandler(Self))
-
-            For Local obj:Object = EachIn childs
-                If Not Keyhandler(obj) Then Continue
-                keyhandlerFan.Add(Keyhandler(obj))
-            End
         End
 
         Return keyhandlerFan
