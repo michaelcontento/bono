@@ -107,19 +107,17 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
     End
 
     Method DrawImageRect:Void(x:Float, y:Float, srcX:Float, srcY:Float, srcWidth:Float, srcHeight:Float)
-        ' borrow tmpPos (mainly used in OnRender) here to avoid a new
-        ' instance of Vector2D
-        tmpPos.Set(GetSize()).Div(2)
+        tmpScale.Set(GetSize()).Div(realSize)
 
-        x += tmpPos.x
-        y += tmpPos.y
+        GetColor().Activate()
         graphics.DrawImageRect(
             image,
             x, y,
             srcX, srcY,
             srcWidth, srcHeight,
             rotation,
-            _scale.x, _scale.y,
-            currentFrame)
+            tmpScale.x, tmpScale.y,
+            0)
+        GetColor().Deactivate()
     End
 End
