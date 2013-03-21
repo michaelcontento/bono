@@ -18,6 +18,7 @@ Class Countdown Implements Updateable
 
     Public
 
+    Field stopOnFinish := False
 
     Method New(duration:Float=0)
         Set(duration)
@@ -73,6 +74,8 @@ Class Countdown Implements Updateable
         elapsed += timer.frameTime
         TriggerTickCallbacks()
         TriggerFinishCallbacks()
+
+        If stopOnFinish And IsFinished() Then Stop()
     End
 
     Method Add:Void(duration:Float)
