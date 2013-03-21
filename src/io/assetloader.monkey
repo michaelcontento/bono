@@ -77,7 +77,7 @@ Class AssetLoader Implements ImageLoader
     ' --- ImageLoader interface
 
     Method LoadImage:Image(file:String)
-        Return imageLoader.LoadImage(file)
+        Return GetImage(file)
     End
 
     ' --- Preload
@@ -128,7 +128,7 @@ Class AssetLoader Implements ImageLoader
     End
 
     Method GetImageImage:Image(name:String)
-        Return LoadImage(name)
+        Return LoadImageRaw(name)
     End
 
     Method GetImageTexture:Image(name:String)
@@ -152,5 +152,9 @@ Class AssetLoader Implements ImageLoader
         Local pos := in.FindLast(".")
         If pos <> -1 Then Return in[..pos]
         Return in
+    End
+
+    Method LoadImageRaw:Image(file:String)
+        Return imageLoader.LoadImage(file)
     End
 End
