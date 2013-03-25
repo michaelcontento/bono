@@ -53,6 +53,16 @@ Class TimelineFactory
         Return MoveTo(New Vector2D(x, y))
     End
 
+    Method SizeTo:ActionSizeTo(size:Vector2D)
+        Local result := New ActionSizeTo(Sizeable(obj), size)
+        line.Append(result)
+        Return result
+    End
+
+    Method SizeTo:ActionSizeTo(width:Float, height:Float)
+        Return SizeTo(width, height)
+    End
+
     Method FadeAlphaTo:ActionFadeAlphaTo(alpha:Float)
         Local result := New ActionFadeAlphaTo(Colorable(obj), alpha)
         line.Append(result)
