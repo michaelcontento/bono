@@ -111,7 +111,9 @@ Class TexturePacker
 
     Method LoadRootImage:Void()
         Local file := xml.GetAttribute("imagepath")
-        rootImage = loader.LoadImage(ExtractDir(xmlFilename) + "/" + file)
+        Local rootFile := ExtractDir(xmlFilename) + "/" + file
+        If rootFile.StartsWith("/") Then rootFile = rootFile[1..]
+        rootImage = loader.LoadImage(rootFile)
 
         If xml.HasAttribute("width")
             Assert.AssertEquals(
