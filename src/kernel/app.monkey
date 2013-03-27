@@ -95,7 +95,7 @@ Class App Extends app.App Abstract
 
     Method OnResume:Int()
         Try
-            timer.Play()
+            If timer Then timer.Play()
             If suspendable Then suspendable.OnResume()
         Catch ex:Exception
             Error ex
@@ -105,7 +105,7 @@ Class App Extends app.App Abstract
 
     Method OnSuspend:Int()
         Try
-            timer.Pause()
+            If timer Then timer.Pause()
             If suspendable Then suspendable.OnSuspend()
         Catch ex:Exception
             Error ex
