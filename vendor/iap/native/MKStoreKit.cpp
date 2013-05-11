@@ -450,20 +450,6 @@ static MKStoreManager* _sharedStoreManager;
 
 - (void) buyFeature:(NSString*) featureId
 {
-	if([self canCurrentDeviceUseFeature: featureId])
-	{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Review request approved", @"")
-														message:NSLocalizedString(@"You can use this feature for reviewing the app.", @"")
-													   delegate:self 
-											  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-											  otherButtonTitles:nil];
-		[alert show];
-		[alert release];
-		
-		[self enableContentForThisSession:featureId];
-		return;
-	}
-	
 	if ([SKPaymentQueue canMakePayments])
 	{
 		NSLog(@"[MKStoreKit] Trying to buy %@", featureId);
@@ -624,50 +610,6 @@ static MKStoreManager* _sharedStoreManager;
 #pragma mark In-App purchases promo codes support
 // This function is only used if you want to enable in-app purchases for free for reviewers
 // Read my blog post http://mk.sg/31
-- (BOOL) canCurrentDeviceUseFeature: (NSString*) featureID
-{
-	NSString *uniqueID = [[UIDevice currentDevice] uniqueIdentifier];
-	// check udid and featureid with developer's server
-	
-	if(ownServer == nil) return NO; // sanity check
-	
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", ownServer, @"featureCheck.php"]];
-	
-	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url 
-                                                              cachePolicy:NSURLRequestReloadIgnoringCacheData 
-                                                          timeoutInterval:60];
-	
-	[theRequest setHTTPMethod:@"POST"];		
-	[theRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-	
-	NSString *postData = [NSString stringWithFormat:@"productid=%@&udid=%@", featureID, uniqueID];
-	
-	NSString *length = [NSString stringWithFormat:@"%d", [postData length]];	
-	[theRequest setValue:length forHTTPHeaderField:@"Content-Length"];	
-	
-	[theRequest setHTTPBody:[postData dataUsingEncoding:NSASCIIStringEncoding]];
-	
-	NSHTTPURLResponse* urlResponse = nil;
-	NSError *error = [[[NSError alloc] init] autorelease];  
-	
-	NSData *responseData = [NSURLConnection sendSynchronousRequest:theRequest
-												 returningResponse:&urlResponse 
-															 error:&error];  
-	
-	NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSASCIIStringEncoding];
-	
-	BOOL retVal = NO;
-	if([responseString isEqualToString:@"YES"])		
-	{
-		retVal = YES;
-	}
-	
-	[responseString release];
-	return retVal;
-}
-
-// This function is only used if you want to enable in-app purchases for free for reviewers
-// Read my blog post http://mk.sg/
 
 -(BOOL) verifyReceipt:(NSData*) receiptData
 {
