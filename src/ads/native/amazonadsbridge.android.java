@@ -17,11 +17,12 @@ class AmazonAdsBridge
     public static void Show()
     {
         if (adView == null) {
-            adView = new AdLayout(MonkeyGame.activity);
+            adView = new AdLayout(BBAndroidGame.AndroidGame().GetActivity());
 
-            MonkeyGame.activity.runOnUiThread(new Runnable() {
+            BBAndroidGame.AndroidGame().GetActivity().runOnUiThread(new Runnable() {
+                @Override
                 public void run() {
-                    LinearLayout layout = (LinearLayout) MonkeyGame.activity.findViewById(R.id.amazonAdsView);
+                    LinearLayout layout = (LinearLayout) BBAndroidGame.AndroidGame().GetActivity().findViewById(R.id.amazonAdsView);
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -31,7 +32,8 @@ class AmazonAdsBridge
         }
 
         if (!adView.isAdLoading()) {
-            MonkeyGame.activity.runOnUiThread(new Runnable() {
+            BBAndroidGame.AndroidGame().GetActivity().runOnUiThread(new Runnable() {
+                @Override
                 public void run() {
                     adView.loadAd(new AdTargetingOptions());
                 }
@@ -45,9 +47,10 @@ class AmazonAdsBridge
             return;
         }
 
-        MonkeyGame.activity.runOnUiThread(new Runnable() {
+        BBAndroidGame.AndroidGame().GetActivity().runOnUiThread(new Runnable() {
+            @Override
             public void run() {
-                LinearLayout layout = (LinearLayout) MonkeyGame.activity.findViewById(R.id.amazonAdsView);
+                LinearLayout layout = (LinearLayout) BBAndroidGame.AndroidGame().GetActivity().findViewById(R.id.amazonAdsView);
                 layout.removeView(adView);
                 adView.destroy();
                 adView = null;
