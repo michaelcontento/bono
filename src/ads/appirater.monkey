@@ -39,6 +39,7 @@ Class Appirater="AppiraterBridge"
     Function SetSignificantEventsUntilPrompt:Void(uses:Int)
     Function SetTimeBeforeReminding:Void(time:Int)
     Function SetDebug:Void(flag:Bool)
+    Function RateApp:Void()
 End
 
 #Else
@@ -84,6 +85,10 @@ Class Appirater Abstract
 
     Function SetDebug:Void(flag:Bool)
         If Target.IS_DEBUG Then Print "[Appirater SetDebug] flag: " + BoolToString(flag)
+    End
+
+    Function RateApp:Void(flag:Bool)
+        If Target.IS_DEBUG Then Print "[Appirater RateApp]"
     End
 
     Private

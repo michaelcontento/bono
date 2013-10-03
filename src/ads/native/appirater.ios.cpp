@@ -47,4 +47,9 @@ public:
     {
         [Appirater setDebug:flag];
     }
+
+    static void RateApp()
+    {
+        [Appirater rateApp];
+    }
 };
