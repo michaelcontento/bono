@@ -107,6 +107,7 @@ Import bono.src.kernel.touch.touchable
 Import bono.src.kernel.touch.touchablefan
 Import bono.src.kernel.touch.touchemitter
 Import bono.src.kernel.touch.touchevent
+Import bono.src.parentalgate
 Import bono.src.tests.apptestcase
 Import bono.src.tests.apptestsuite
 Import bono.src.tests.assert
