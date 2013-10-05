@@ -10,23 +10,23 @@ class RevmobBridge
 
     public static void StartSession(String id)
     {
-        revmob = RevMob.start(BBAndroidGame.AndroidGame().GetActivity(), id);
+        revmob = RevMob.start(MonkeyGame.activity, id);
     }
 
     public static void ShowFullscreen()
     {
         if (revmob == null) { return; }
-        revmob.showFullscreen(BBAndroidGame.AndroidGame().GetActivity());
+        revmob.showFullscreen(MonkeyGame.activity);
     }
 
     public static void ShowBanner()
     {
         if (revmob == null) { return; }
 
-        final RevMobBanner banner = revmob.createBanner(BBAndroidGame.AndroidGame().GetActivity());
-        BBAndroidGame.AndroidGame().GetActivity().runOnUiThread(new Runnable() {
+        final RevMobBanner banner = revmob.createBanner(MonkeyGame.activity);
+        MonkeyGame.activity.runOnUiThread(new Runnable() {
             public void run() {
-                LinearLayout layout = (LinearLayout) BBAndroidGame.AndroidGame().GetActivity().findViewById(R.id.banner);
+                LinearLayout layout = (LinearLayout) MonkeyGame.activity.findViewById(R.id.banner);
                 layout.removeAllViews();
                 layout.addView(banner);
             }
@@ -35,9 +35,9 @@ class RevmobBridge
 
     public static void HideBanner()
     {
-        BBAndroidGame.AndroidGame().GetActivity().runOnUiThread(new Runnable() {
+        MonkeyGame.activity.runOnUiThread(new Runnable() {
             public void run() {
-                LinearLayout layout = (LinearLayout) BBAndroidGame.AndroidGame().GetActivity().findViewById(R.id.banner);
+                LinearLayout layout = (LinearLayout) MonkeyGame.activity.findViewById(R.id.banner);
                 layout.removeAllViews();
             }
         });
@@ -46,13 +46,13 @@ class RevmobBridge
     public static void OpenAdLink()
     {
         if (revmob == null) { return; }
-        revmob.openAdLink(BBAndroidGame.AndroidGame().GetActivity(), null);
+        revmob.openAdLink(MonkeyGame.activity, null);
     }
 
     public static void ShowPopup()
     {
         if (revmob == null) { return; }
-        revmob.showPopup(BBAndroidGame.AndroidGame().GetActivity());
+        revmob.showPopup(MonkeyGame.activity);
     }
 
     public static void EnableTestingWithAds()

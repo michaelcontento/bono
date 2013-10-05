@@ -25,12 +25,12 @@ Import "native/amazonadsbridge.${TARGET}.${LANG}"
 
 Extern
 
-Class AmazonAds="AmazonAdsBridge"
-    Function StartSession:Void(id:String)
-    Function Show:Void()
-    Function Hide:Void()
-    Function EnableTesting:Void()
-    Function DisableTesting:Void()
+Class AmazonAds Abstract
+    Function StartSession:Void(id:String)="AmazonAdsBridge.StartSession"
+    Function Show:Void()="AmazonAdsBridge.Show"
+    Function Hide:Void()="AmazonAdsBridge.Hide"
+    Function EnableTesting:Void()="AmazonAdsBridge.EnableTesting"
+    Function DisableTesting:Void()="AmazonAdsBridge.DisableTesting"
 End
 
 #else

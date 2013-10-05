@@ -29,17 +29,17 @@ Import "native/appirater.ios.cpp"
 
 Extern
 
-Class Appirater="AppiraterBridge"
-    Function Launched:Void(canPrompt:Bool=True)
-    Function EnteredForeground:Void(canPrompt:Bool=True)
-    Function UserDidSignificantEvent:Void(canPrompt:Bool=True)
-    Function SetAppId:Void(id:String)
-    Function SetDaysUntilPrompt:Void(days:Int)
-    Function SetUsesUntilPrompt:Void(days:Int)
-    Function SetSignificantEventsUntilPrompt:Void(uses:Int)
-    Function SetTimeBeforeReminding:Void(time:Int)
-    Function SetDebug:Void(flag:Bool)
-    Function RateApp:Void()
+Class Appirater Abstract
+    Function Launched:Void(canPrompt:Bool=True)="AppiraterBridge::Launched"
+    Function EnteredForeground:Void(canPrompt:Bool=True)="AppiraterBridge::EnteredForeground"
+    Function UserDidSignificantEvent:Void(canPrompt:Bool=True)="AppiraterBridge::UserDidSignificantEvent"
+    Function SetAppId:Void(id:String)="AppiraterBridge::SetAppId"
+    Function SetDaysUntilPrompt:Void(days:Int)="AppiraterBridge::SetDaysUntilPrompt"
+    Function SetUsesUntilPrompt:Void(days:Int)="AppiraterBridge::SetUsesUntilPrompt"
+    Function SetSignificantEventsUntilPrompt:Void(uses:Int)="AppiraterBridge::SetSignificantEventsUntilPrompt"
+    Function SetTimeBeforeReminding:Void(time:Int)="AppiraterBridge::SetTimeBeforeReminding"
+    Function SetDebug:Void(flag:Bool)="AppiraterBridge::SetDebug"
+    Function RateApp:Void()="AppiraterBridge::RateApp"
 End
 
 #Else
