@@ -1,90 +1,305 @@
-import com.samsungapps.plasma.*;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
-class PaymentWrapper implements PlasmaListener {
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.sec.android.iap.sample.helper.SamsungIapHelper;
+import com.sec.android.iap.sample.helper.SamsungIapHelper.OnGetInboxListListener;
+import com.sec.android.iap.sample.helper.SamsungIapHelper.OnGetItemListListener;
+import com.sec.android.iap.sample.helper.SamsungIapHelper.OnInitIapListener;
+import com.sec.android.iap.sample.vo.InBoxVO;
+import com.sec.android.iap.sample.vo.ItemVO;
+import com.sec.android.iap.sample.vo.PurchaseVO;
+
+class PaymentWrapper extends ActivityDelegate implements OnInitIapListener, OnGetItemListListener, OnGetInboxListListener
+{
+    private static final int iapMode = SamsungIapHelper.IAP_MODE_COMMERCIAL;
+    /* private static final int iapMode = SamsungIapHelper.IAP_MODE_TEST_SUCCESS; */
+    private static MonkeyGame activity = MonkeyGame.activity;
+
+    private static final String TAG  = PaymentWrapper.class.getName();
+    private static final String ITEM_DB_KEY = "avalon.payment.samsung";
     private static final int ITEM_AMOUNT = 25;
-    private static final String TAG = "Bono.Payment.Samsung";
-
-    private Plasma plasma = null;
-    private int transactionId = 0;
-    private Set<Integer> pendingTransactions = new HashSet<Integer>();
+    private int transactionCounter = 0;
+    private SamsungIapHelper helper = null;
+    private String itemGroupId = null;
+    private String pendingPurchaseItemId = null;
+    private boolean isInitialized = false;
+    private List<ItemVO> knownItems = new ArrayList<ItemVO>();
     private Set<String> ownedItems = new HashSet<String>();
 
     /**
-     * ---- PLASMA INTERFACE START ----
+     * STEP 1) Kicks off the whole IAP initialization process
      */
-
-    @Override
-    public void onItemInformationListReceived(int transactionId, int statusCode, ArrayList<ItemInformation> itemInformationList)
+    private void initHelper()
     {
-        // Not used as we don't expose the abillity to list / show all available
-        // items in out itemGroup.
-    }
-
-    @Override
-    public void onPurchasedItemInformationListReceived(int transactionId, int statusCode, ArrayList<PurchasedItemInformation> purchasedItemInformationList)
-    {
-        // Contains a list of all purchased items in our itemGroup. Triggered
-        // via requestPurchasedItemInformationList() after each complete
-        // purchase to keep the local item DB in sync.
-
-        itemDbClear();
-        for (PurchasedItemInformation itemInformation : purchasedItemInformationList) {
-            itemDbAdd(itemInformation.getItemId());
+        if (isInitialized || !isInternetConnected()) {
+            return;
         }
-        itemDbSave();
+        isInitialized = true;
+
+        activity.AddActivityDelegate(this);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+                helper = SamsungIapHelper.getInstance(activity, iapMode);
+                helper.setOnInitIapListener(PaymentWrapper.this);
+                helper.setOnGetItemListListener(PaymentWrapper.this);
+                helper.setOnGetInboxListListener(PaymentWrapper.this);
+
+                if (helper.isInstalledIapPackage(activity)) {
+                    if (helper.isValidIapPackage(activity)) {
+                        helper.showProgressDialog(activity);
+                        helper.startAccountActivity(activity);
+                    } else {
+                        helper.showIapDialog(
+                            activity,
+                            helper.getValueString(activity, "title_iap"),
+                            helper.getValueString(activity, "msg_invalid_iap_package"),
+                            true,
+                            null
+                        );
+                    }
+                } else {
+                    helper.installIapPackage(activity);
+                }
+            }
+        });
     }
 
+    /**
+     * STEP 2) Call multiple times but the account certification request should
+     *         be the second call in the initialization process. All other calls
+     *         are real purchase responses.
+     */
     @Override
-    public void onPurchaseItemInitialized(int transactionId, int statusCode, PurchaseTicket purchaseTicket)
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
-        // At this point, the purchase ticket is issued but ticket only means
-        // that a purchase transaction has initialized successfully, the purchase
-        // is not yet complete.
-        //
-        // If a purchase transaction is successfully initialized, the statusCode
-        // of onPurchaseItemInitialized is set as Plasma.STATUS_CODE_SUCCESS.
-        // However, if initialization fails, onPurchaseItemFinished will not be
-        // called. This is explained in the following section.
+        switch (requestCode) {
+            case SamsungIapHelper.REQUEST_CODE_IS_ACCOUNT_CERTIFICATION: {
+                handleRequestCertification(requestCode, resultCode, intent);
+                break;
+            }
 
-        if (statusCode != Plasma.STATUS_CODE_SUCCESS) {
-            Log.v(
-                TAG,
-                "onPurchaseItemInitialized failed for transactionId "
-                + transactionId
-                + " with status code "
-                + statusCode
-            );
-            pendingTransactions.remove(transactionId);
+            case SamsungIapHelper.REQUEST_CODE_IS_IAP_PAYMENT: {
+                handleRequestPayment(requestCode, resultCode, intent);
+                break;
+            }
         }
     }
 
-    @Override
-    public void onPurchaseItemFinished(int transactionId, int statusCode, PurchasedItemInformation purchaseItemInformation)
+    /**
+     * STEP 3) Check the result and continue with binding the IAP service
+     *         connector -- the next step in the initialization chain.
+     */
+    protected void handleRequestCertification(int requestCode, int resultCode, Intent intent)
     {
-        // It is called when a user's purchase transaction is completed, and the
-        // final information about purchase transaction is provided.
-        //
-        // The final information means a receipt of a purchase transaction which
-        // is completed.
-
-        pendingTransactions.remove(transactionId);
-
-        if (statusCode == Plasma.STATUS_CODE_SUCCESS) {
-            itemDbAdd(purchaseItemInformation.getItemId());
-            plasma.requestPurchasedItemInformationList(transactionId++, 1, ITEM_AMOUNT);
-        } else {
-            Log.v(
-                TAG,
-                "onPurchaseItemInitialized failed for transactionId "
-                + transactionId
-                + " with status code "
-                + statusCode
+        if (resultCode == Activity.RESULT_OK) {
+            bindIapService();
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            helper.dismissProgressDialog();
+            helper.showIapDialog(
+                activity,
+                helper.getValueString(activity, "title_samsungaccount_authentication"),
+                helper.getValueString(activity, "msg_authentication_has_been_cancelled"),
+                false,
+                null
             );
         }
     }
 
     /**
-     * ---- PLASMA INTERFACE END ----
+     * STEP 4) Request the IAP service binding and trigger InitIap() afterwards
+     */
+    public void bindIapService()
+    {
+        helper.bindIapService(new SamsungIapHelper.OnIapBindListener() {
+            @Override
+            public void onBindIapFinished(int result)
+            {
+                if (pendingPurchaseItemId == null) {
+                    helper.dismissProgressDialog();
+                }
+
+                if (result == SamsungIapHelper.IAP_RESPONSE_RESULT_OK) {
+                    helper.safeInitIap(activity);
+                } else {
+                    helper.showIapDialog(
+                        activity,
+                        helper.getValueString(activity, "title_iap"),
+                        helper.getValueString(activity, "msg_iap_service_bind_failed"),
+                        false,
+                        null
+                    );
+                }
+            }
+        });
+    }
+
+    /**
+     * STEP 5) Finally! At this point we're able to do "real work" with the
+     *         IAP API. Everything before was just initialization stuff ...
+     *         And we now request all items for this game.
+     */
+    @Override
+    public void onSucceedInitIap()
+    {
+        helper.safeGetItemList(
+            activity,
+            itemGroupId,
+            1, 1 + ITEM_AMOUNT,
+            SamsungIapHelper.ITEM_TYPE_ALL
+        );
+    }
+
+    /**
+     * STEP 6) We received a list of all available items and request the
+     *         current inbox for the current user.
+     */
+    @Override
+    public void onSucceedGetItemList(ArrayList<ItemVO> itemList)
+    {
+        knownItems.addAll(itemList);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String today = sdf.format(new Date());
+        helper.safeGetItemInboxTask(
+            activity,
+            itemGroupId,
+            1, 1 + ITEM_AMOUNT,
+            "20131001",
+            today
+        );
+    }
+
+    /**
+     * STEP 7) With the inbox for the user everything is there and we're done
+     *         with the full initialization of the IAP SDK and the gathering of
+     *         all required informations.
+     */
+    @Override
+    public void OnSucceedGetInboxList(ArrayList<InBoxVO> inboxList)
+    {
+        itemDbClear();
+        for (InBoxVO inboxItem : inboxList) {
+            itemDbAdd(inboxItem.getItemId());
+        }
+        itemDbSave();
+
+        if (pendingPurchaseItemId != null) {
+            startPurchase(pendingPurchaseItemId);
+            pendingPurchaseItemId = null;
+        }
+    }
+
+    /**
+     * STEP 8) Use this method to start the purchase of a new item.
+     */
+    private void startPurchase(String itemId)
+    {
+        if (!isInternetConnected()) {
+            showNoInternetDialog();
+            return;
+        }
+
+        if (!isInitialized) {
+            pendingPurchaseItemId = itemId;
+            initHelper();
+            return;
+        }
+
+        helper.showProgressDialog(activity);
+        ++transactionCounter;
+        helper.startPurchase(
+            activity,
+            SamsungIapHelper.REQUEST_CODE_IS_IAP_PAYMENT,
+            itemGroupId,
+            itemId
+        );
+    }
+
+    /**
+     * STEP 9) Handling of incoming payment responses.
+     */
+    private void handleRequestPayment(int requestCode, int resultCode, Intent intent)
+    {
+        if (intent == null) {
+            return;
+        }
+
+        Bundle extras         = intent.getExtras();
+        String itemId         = "";
+        String thirdPartyName = "";
+        int statusCode        = SamsungIapHelper.IAP_PAYMENT_IS_CANCELED;
+        String errorString    = "";
+        PurchaseVO purchaseVO = null;
+
+        if (extras != null) {
+            thirdPartyName = extras.getString(SamsungIapHelper.KEY_NAME_THIRD_PARTY_NAME);
+            statusCode = extras.getInt(SamsungIapHelper.KEY_NAME_STATUS_CODE);
+            errorString = extras.getString(SamsungIapHelper.KEY_NAME_ERROR_STRING);
+            itemId = extras.getString(SamsungIapHelper.KEY_NAME_ITEM_ID);
+        } else {
+            helper.dismissProgressDialog();
+            helper.showIapDialog(
+                activity,
+                helper.getValueString(activity, "title_iap"),
+                helper.getValueString(activity, "msg_payment_was_not_processed_successfully"),
+                false,
+                null
+            );
+        }
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (statusCode == SamsungIapHelper.IAP_ERROR_NONE) {
+                purchaseVO = new PurchaseVO(extras.getString(SamsungIapHelper.KEY_NAME_RESULT_OBJECT));
+                helper.verifyPurchaseResult(activity, purchaseVO);
+                itemDbAdd(itemId);
+                itemDbSave();
+            } else {
+                helper.dismissProgressDialog();
+                helper.showIapDialog(
+                    activity,
+                    helper.getValueString(activity, "title_iap"),
+                    errorString,
+                    false,
+                    null
+                );
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            helper.dismissProgressDialog();
+            helper.showIapDialog(
+                activity,
+                helper.getValueString(activity, "title_iap"),
+                helper.getValueString(activity, "msg_payment_cancelled"),
+                false,
+                null
+            );
+        }
+
+        --transactionCounter;
+    }
+
+    /**
+     * STEP 10) Cleanup and we're done :)
+     */
+    protected void onDestroy()
+    {
+        if (helper != null) {
+            helper.stopRunningTask();
+        }
+    }
+
+    /**
+     * ---- ITEM STORE ----
      */
 
     private boolean itemDbContains(String productId)
@@ -99,33 +314,26 @@ class PaymentWrapper implements PlasmaListener {
 
     private void itemDbClear()
     {
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = prefs.edit();
+        SharedPreferences.Editor edit = getUserPreferences().edit();
         edit.clear();
         edit.commit();
-
-        Log.v(TAG, "local item DB cleared");
     }
 
     private void itemDbSave()
     {
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putString(TAG, getOwnedItemsAsString());
+        SharedPreferences.Editor edit = getUserPreferences().edit();
+        edit.putString(ITEM_DB_KEY, getOwnedItemsAsString());
         edit.commit();
-
-        Log.v(TAG, "local item DB saved");
     }
 
     private void itemDbLoad()
     {
-        SharedPreferences prefs = MonkeyGame.activity.getPreferences(Context.MODE_PRIVATE);
         try {
-            loadOwnedItemsAsString(prefs.getString(TAG, ""));
+            loadOwnedItemsAsString(
+                getUserPreferences().getString(ITEM_DB_KEY, "")
+            );
         } catch (ClassCastException e) {
         }
-
-        Log.v(TAG, "local item DB loaded");
     }
 
     private void loadOwnedItemsAsString(String input)
@@ -145,50 +353,60 @@ class PaymentWrapper implements PlasmaListener {
     }
 
     /**
+     * ---- HELPER STUFF ----
+     */
+
+    private SharedPreferences getUserPreferences()
+    {
+        return activity.getPreferences(Context.MODE_PRIVATE);
+    }
+
+    private void showNoInternetDialog()
+    {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setTitle(helper.getValueString(activity, "title_iap"));
+        alert.setMessage(helper.getValueString(activity, "msg_no_internet"));
+        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {}
+        });
+        alert.show();
+    }
+
+    private boolean isInternetConnected()
+    {
+        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
+
+    /**
      * ---- MONKEY INTERFACE START ----
      */
 
     public void Init(String itemGroupId)
     {
-        if (plasma == null) {
-            plasma = new Plasma(itemGroupId, MonkeyGame.activity);
-            plasma.setPlasmaListener(this);
-            itemDbLoad();
-        }
+        this.itemGroupId = itemGroupId;
+        itemDbLoad();
+        initHelper();
     }
 
-    public boolean Purchase(String productId)
+    public boolean Purchase(String itemId)
     {
-        if (plasma == null) {
-            Log.v(TAG, "not yet initialized");
-            return false;
-        }
-
-        if (!plasma.requestPurchaseItem(transactionId++, productId)) {
-            Log.v(TAG, "failed to request item purchase");
-            return false;
-        }
-
-        Log.v(
-            TAG,
-            "purchase requested for productId " + productId
-            + " with transactionId " + (transactionId - 1)
-        );
-        pendingTransactions.add(transactionId - 1);
+        startPurchase(itemId);
         return true;
     }
 
-    public boolean IsBought(String productId)
+    public boolean IsBought(String itemId)
     {
-        return itemDbContains(productId);
+        return itemDbContains(itemId);
     }
 
     public boolean IsPurchaseInProgress()
     {
-        return !pendingTransactions.isEmpty();
+        return (transactionCounter > 0);
     }
-
-    /**
-     * ---- MONKEY INTERFACE END ----
-     */
 }

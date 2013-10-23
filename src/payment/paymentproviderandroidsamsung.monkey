@@ -2,16 +2,6 @@ Strict
 
 Private
 
-' 1) Download the official SDK: http://developer.samsung.com
-' 2) If there is no libs/ folder in build/android: create it!
-' 3) Copy the plasma.jar from the SDK into the libs/ folder
-' 4) Ensure this lines exists inside <manifest> of your AndroidManifest.xml
-'
-'    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-'    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-'    <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
-'    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
-
 Import bono
 Import bono.src.payment.paymentprovider
 Import "native/paymentwrapper-samsung.android.java"
