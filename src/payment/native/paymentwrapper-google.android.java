@@ -29,13 +29,13 @@ class PaymentWrapper
         billingObserver = getBillingObserver();
         BillingController.registerObserver(billingObserver);
 
-        BillingController.checkBillingSupported(BBAndroidGame.AndroidGame().GetActivity());
-        BillingController.checkSubscriptionSupported(BBAndroidGame.AndroidGame().GetActivity());
+        BillingController.checkBillingSupported(MonkeyGame.activity);
+        BillingController.checkSubscriptionSupported(MonkeyGame.activity);
     }
 
     public boolean Purchase(String productId) {
         pendingItems.add(productId);
-        BillingController.requestPurchase(BBAndroidGame.AndroidGame().GetActivity(), productId, true, null);
+        BillingController.requestPurchase(MonkeyGame.activity, productId, true, null);
         return false;
     }
 
@@ -57,7 +57,7 @@ class PaymentWrapper
 
     private AbstractBillingObserver getBillingObserver()
     {
-        return new AbstractBillingObserver(BBAndroidGame.AndroidGame().GetActivity()) {
+        return new AbstractBillingObserver(MonkeyGame.activity) {
             public void onBillingChecked(boolean supported) {
                 PaymentWrapper.this.onBillingChecked(supported);
             }
@@ -103,7 +103,7 @@ class PaymentWrapper
     }
 
     public void restoreFromLocalTransactions() {
-        for (Transaction trans : BillingController.getTransactions(BBAndroidGame.AndroidGame().GetActivity())) {
+        for (Transaction trans : BillingController.getTransactions(MonkeyGame.activity)) {
             onPurchaseStateChanged(trans.productId, trans.purchaseState);
         }
     }
@@ -111,7 +111,7 @@ class PaymentWrapper
     public void onBillingChecked(boolean supported) {
         billingSupported = supported;
         if (billingSupported && !billingObserver.isTransactionsRestored()) {
-            BillingController.restoreTransactions(BBAndroidGame.AndroidGame().GetActivity());
+            BillingController.restoreTransactions(MonkeyGame.activity);
         }
     }
 
@@ -125,7 +125,7 @@ class PaymentWrapper
             ownedItems.remove(itemId);
         }
 
-        BillingController.confirmNotifications(BBAndroidGame.AndroidGame().GetActivity(), itemId);
+        BillingController.confirmNotifications(MonkeyGame.activity, itemId);
     }
 
     public void onRequestPurchaseResponse(String itemId, ResponseCode response) {

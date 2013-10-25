@@ -34,6 +34,7 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
 
     public MonkeyPurchaseObserver(Context context) {
         super(context);
+        requestIds = new HashMap<String, String>();
     }
 
     /**
@@ -46,7 +47,6 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
     @Override
     public void onSdkAvailable(final boolean isSandboxMode) {
         Log.v(TAG, "onSdkAvailable recieved: Response -" + isSandboxMode);
-        requestIds = new HashMap<String, String>();
         PurchasingManager.initiateGetUserIdRequest();
     }
 
@@ -110,7 +110,7 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
     }
 
     public SharedPreferences getSharedPreferencesForCurrentUser() {
-        return BBAndroidGame.AndroidGame().GetActivity().getSharedPreferences(userId, Context.MODE_PRIVATE);
+        return MonkeyGame.activity.getSharedPreferences(userId, Context.MODE_PRIVATE);
     }
 
     /*
@@ -179,7 +179,6 @@ class MonkeyPurchaseObserver extends BasePurchasingObserver {
                     editor.putBoolean(key, true);
                     break;
                 case SUBSCRIPTION:
-                    key = receipt.getSku();
                     editor.putBoolean(key, true);
                     editor.putLong(key + "_START", new Date().getTime());
                     break;
@@ -352,7 +351,7 @@ class PaymentWrapper {
 
     public void Init()
     {
-        mPurchaseObserver = new MonkeyPurchaseObserver(BBAndroidGame.AndroidGame().GetActivity().getBaseContext());
+        mPurchaseObserver = new MonkeyPurchaseObserver(MonkeyGame.activity.getBaseContext());
         PurchasingManager.registerObserver(mPurchaseObserver);
         started = true;
     }

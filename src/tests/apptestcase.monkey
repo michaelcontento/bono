@@ -27,11 +27,11 @@ Class AppTestCase Extends TestCase
     End
 
     Method SwapBuffer:Void()
-        GetGraphicsDevice().EndRender()
-        mojo.graphics.EndRender()
+        ' GetGraphicsDevice().EndRender()
+        ' mojo.graphics.EndRender()
 
-        mojo.graphics.BeginRender()
-        GetGraphicsDevice().BeginRender()
+        ' mojo.graphics.BeginRender()
+        ' GetGraphicsDevice().BeginRender()
     End
 
     Method AssertScreenEquals:Void(imgfile:String)
