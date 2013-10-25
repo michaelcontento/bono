@@ -53,6 +53,10 @@ Class BaseDisplayObject Implements Colorable, Positionable, Sizeable, Alignable 
         Return color
     End
 
+    Method HasColor:Bool()
+        Return (Not (Not color))
+    End
+
     ' --- Positionable
     Method GetPosition:Vector2D()
         If pos = Null Then pos = New Vector2D(0, 0)

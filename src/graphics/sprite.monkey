@@ -64,14 +64,14 @@ Class Sprite Extends BaseDisplayObject Implements Updateable, Renderable, Rotate
         tmpPos.Add(GetPosition())
         Align.Align(tmpPos, Self, GetAlignment())
 
-        GetColor().Activate()
+        If HasColor() Then GetColor().Activate()
         DrawImage(
             image,
             tmpPos.x, tmpPos.y,
             rotation,
             tmpScale.x, tmpScale.y,
             0)
-        GetColor().Deactivate()
+        If HasColor() Then GetColor().Deactivate()
 
         image.SetHandle(oldHandleX, oldHandleY)
     End
