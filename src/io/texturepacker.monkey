@@ -113,6 +113,14 @@ Class TexturePacker
         Local file := xml.GetAttribute("imagepath")
         Local rootFile := ExtractDir(xmlFilename) + "/" + file
         If rootFile.StartsWith("/") Then rootFile = rootFile[1..]
+
+        ' if the loader is the main AssetLoader, then we need to register
+        ' the root image first -- otherwise this could trigger a exception
+        Local assetLoader := AssetLoader(loader)
+        If assetLoader And (Not assetLoader.Contains(rootFile))
+            assetLoader.Add(rootFile)
+        End
+
         rootImage = loader.LoadImage(rootFile)
 
         If xml.HasAttribute("width")
