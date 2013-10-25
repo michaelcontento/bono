@@ -48,13 +48,13 @@ Class Color
     End
 
     Method Activate:Void()
-        If Not oldColor Then oldColor = New Color(MIN, MIN, MIN, MIN)
+        If Not oldColor Then oldColor = New Color()
 
         Local colorStack:Float[] = GetColor()
         oldColor.red = colorStack[0]
         oldColor.green = colorStack[1]
         oldColor.blue = colorStack[2]
-        oldColor.alpha = GetAlpha()
+        oldColor.alphaFloat = GetAlpha()
 
         MojoSet(Self)
     End
