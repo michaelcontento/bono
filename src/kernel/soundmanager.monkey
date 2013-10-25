@@ -33,6 +33,17 @@ Class SoundManager
         musicSounds.Set(key, True)
     End
 
+    Method Preload:Void(name:String)
+        If Not files.Contains(name) Then Return
+        If sounds.Contains(name) Then Return
+        If musicSounds.Contains(name) Then Return
+
+        Local tmpSound := LoadSound(files.Get(name))
+        If tmpSound = Null Then Return
+
+        sounds.Set(name, tmpSound)
+    End
+
     Method PreloadAll:Void()
         Local tmpSound:Sound
         For Local node:map.Node<String, String> = EachIn files
@@ -42,7 +53,7 @@ Class SoundManager
             tmpSound = LoadSound(node.Value())
             If tmpSound = Null Then Continue
 
-            sounds.Set(node.Key(), LoadSound(node.Value()))
+            sounds.Set(node.Key(), tmpSound)
         End
     End
 
