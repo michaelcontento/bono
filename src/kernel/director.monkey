@@ -42,8 +42,16 @@ Class Director
 
     ' --- SCENE
 
+    Method HasScene:Bool(name:String)
+        Return scenes.Contains(name)
+    End
+
+    Method RemoveScene:Void(name:String)
+        scenes.Remove(name)
+    End
+
     Method AddScene:Void(name:String, scene:Sceneable)
-        If scenes.Contains(name)
+        If HasScene(name)
             Error("There is already a scene named: " + name)
         End
 
