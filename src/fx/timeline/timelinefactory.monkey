@@ -27,6 +27,10 @@ Class TimelineFactory
         Return line
     End
 
+    Method Clear:Void()
+        GetTimeline().Clear()
+    End
+
     Method Loop:Void(times:Int=Timeline.INFINITE)
         line.Loop(times)
     End
@@ -61,6 +65,12 @@ Class TimelineFactory
 
     Method SizeTo:ActionSizeTo(width:Float, height:Float)
         Return SizeTo(width, height)
+    End
+
+    Method FadeColorTo:ActionFadeColorTo(dst:Color)
+        Local result := New ActionFadeColorTo(Colorable(obj), dst)
+        line.Append(result)
+        Return result
     End
 
     Method FadeAlphaTo:ActionFadeAlphaTo(alpha:Float)

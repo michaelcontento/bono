@@ -1,6 +1,6 @@
 Strict
 
-#REFLECTION_FILTER+="*test|*src.tests*"
+' #REFLECTION_FILTER+="*test|*src.tests*"
 
 Public
 
@@ -13,6 +13,7 @@ Import bono.src.exceptions.runtimeexception
 Import bono.src.fx.actions.action
 Import bono.src.fx.actions.actioncallback
 Import bono.src.fx.actions.actionfadealphato
+Import bono.src.fx.actions.actionfadecolorto
 Import bono.src.fx.actions.actionmoveto
 Import bono.src.fx.actions.actionparallel
 Import bono.src.fx.actions.actionrotate
