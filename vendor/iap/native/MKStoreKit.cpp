@@ -690,6 +690,7 @@ int isProductPurchased(String product) {
 void buyProduct(String product) {
 	NSString *kProductID = product.ToNSString();
 
+    [[MKStoreManager sharedManager] setIsPurchaseInProgress: YES];
 	[[MKStoreManager sharedManager] buyFeature:kProductID];
 }
 
