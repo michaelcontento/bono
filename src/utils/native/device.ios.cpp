@@ -63,4 +63,17 @@ public:
         [alert show];
         [alert release];
     }
+
+    bool static FileExistsNative(String path)
+    {
+        String realPath = String(pathForResource(path));
+        typedef struct stat stat_t;
+        stat_t st;
+        if (stat(realPath.ToCString<char>(), &st)) return false;
+        switch (st.st_mode & S_IFMT) {
+            case S_IFREG: return true;
+            case S_IFDIR: return false;
+        }
+        return false;
+    }
 };

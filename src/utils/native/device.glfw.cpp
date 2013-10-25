@@ -77,4 +77,15 @@ public:
     }
 #endif
 
+    bool static FileExistsNative(String path)
+    {
+        typedef struct stat stat_t;
+        stat_t st;
+        if (stat(path.ToCString<char>(), &st)) return false;
+        switch (st.st_mode & S_IFMT) {
+            case S_IFREG: return true;
+            case S_IFDIR: return false;
+        }
+        return false;
+    }
 };

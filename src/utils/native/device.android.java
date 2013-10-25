@@ -41,12 +41,12 @@ class Device
     {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
-        BBAndroidGame.AndroidGame().GetActivity().startActivity(i);
+        MonkeyGame.activity.startActivity(i);
     }
 
     static void ShowAlertNative(String title, String message, String[] buttons, AlertDelegate callback)
     {
-        AlertDialog.Builder alert = new AlertDialog.Builder(BBAndroidGame.AndroidGame().GetActivity());
+        AlertDialog.Builder alert = new AlertDialog.Builder(MonkeyGame.activity);
         alert.setTitle(title);
         alert.setMessage(message);
         alert.setNegativeButton(
@@ -67,4 +67,20 @@ class Device
         }
         alert.create().show();
     }
+
+    static boolean FileExistsNative(String path)
+    {
+       try{
+           if (path.toLowerCase().startsWith("monkey://data/")) {
+               path = MonkeyData.assetPath(path);
+               InputStream in = MonkeyData.getAssets().open(path);
+               in.close();
+               return true;
+           }else{
+               return false;
+           }
+       }catch( IOException e ){
+       }
+       return false;
+   }
 }
