@@ -66,7 +66,8 @@ Class AssetLoader Implements ImageLoader
 
     Method Add:Void(atlas:TexturePacker, namespace:String="")
         ' TODO already exists?
-        Local base := TrimExt(atlas.GetFilename())
+        Local base := namespace
+        If base = "" Then base = TrimExt(atlas.GetFilename())
         textures.Set(base, atlas)
 
         For Local name := EachIn atlas.GetNames()
