@@ -29,9 +29,11 @@ Class RegistryStore<T> Implements Persistable
 
     Method FromString:Void(data:String)
         If data.Length() = 0 Then Return
+        If Not data.Contains(SEPARATOR) Then Return
         Local records:String[] = data.Split(SEPARATOR)
 
         For Local record:String = EachIn records
+            If Not record.Contains(DELIMITER) Then Continue
             Local parts:String[] = record.Split(DELIMITER)
             Registry<T>.Set(parts[0], T(parts[1]))
         End
