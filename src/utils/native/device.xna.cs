@@ -20,4 +20,8 @@ public class Device
     {
         return "en";
     }
+
+    public static void Close()
+    {
+    }
 }

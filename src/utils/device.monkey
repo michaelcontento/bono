@@ -15,6 +15,7 @@ Class DeviceNative Abstract
     Function GetTimestamp:Int()="Device::GetTimestamp"
     Function OpenUrl:Void(url:String)="Device::OpenUrl"
     Function GetLanguage:String()="Device::GetLanguage"
+    Function Close:Void()="Device::Close"
 
     Function FileExistsNative:Bool(path:String)="Device::FileExistsNative"
     Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device::ShowAlertNative"
@@ -26,6 +27,7 @@ Class DeviceNative Abstract
     Function GetTimestamp:Int()="Device.GetTimestamp"
     Function OpenUrl:Void(url:String)="Device.OpenUrl"
     Function GetLanguage:String()="Device.GetLanguage"
+    Function Close:Void()="Device.Close"
 
     Function FileExistsNative:Bool(path:String)="Device.FileExistsNative"
     Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device.ShowAlertNative"
@@ -58,6 +60,10 @@ Class Device Abstract
 
     Function ShowAlert:Void(title:String, message:String, buttons:String[], callback:AlertCallback)
         DeviceNative.ShowAlertNative(title, message, buttons, New AlertDelegateBridge(callback))
+    End
+
+    Function Close:Void()
+        DeviceNative.Close()
     End
 End
 

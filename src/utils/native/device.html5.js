@@ -13,3 +13,6 @@ Device.OpenUrl = function(url) {
 Device.GetLanguage = function() {
     return "en";
 };
+
+Device.Close = function () {
+};

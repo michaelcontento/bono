@@ -83,4 +83,9 @@ class Device
        }
        return false;
    }
+
+   static void Close()
+   {
+       MonkeyGame.activity.finish();
+   }
 }

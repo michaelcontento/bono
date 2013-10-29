@@ -76,4 +76,8 @@ public:
         }
         return false;
     }
+
+    void static Close()
+    {
+    }
 };
