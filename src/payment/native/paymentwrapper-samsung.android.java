@@ -29,6 +29,7 @@ class PaymentWrapper extends ActivityDelegate implements OnInitIapListener, OnGe
     private int transactionCounter = 0;
     private String itemGroupId = null;
     private String pendingPurchaseItemId = null;
+    private boolean prepared = false;
     private boolean isInitialized = false;
     private List<ItemVO> knownItems = new ArrayList<ItemVO>();
     private Set<String> ownedItems = new HashSet<String>();
@@ -38,10 +39,10 @@ class PaymentWrapper extends ActivityDelegate implements OnInitIapListener, OnGe
      */
     private void initHelper()
     {
-        if (isInitialized || !isInternetConnected()) {
+        if (prepared || !isInternetConnected()) {
             return;
         }
-        isInitialized = true;
+        prepared = true;
 
         getActivity().AddActivityDelegate(this);
         getActivity().runOnUiThread(new Runnable() {
@@ -54,10 +55,7 @@ class PaymentWrapper extends ActivityDelegate implements OnInitIapListener, OnGe
                 helper.setOnGetInboxListListener(PaymentWrapper.this);
 
                 if (helper.isInstalledIapPackage(getActivity())) {
-                    if (helper.isValidIapPackage(getActivity())) {
-                        helper.showProgressDialog(getActivity());
-                        helper.startAccountActivity(getActivity());
-                    } else {
+                    if (!helper.isValidIapPackage(getActivity())) {
                         helper.showIapDialog(
                             getActivity(),
                             helper.getValueString(getActivity(), "title_iap"),
@@ -215,8 +213,17 @@ class PaymentWrapper extends ActivityDelegate implements OnInitIapListener, OnGe
         }
 
         if (!isInitialized) {
+            isInitialized = true;
             pendingPurchaseItemId = itemId;
-            initHelper();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run()
+                {
+                    SamsungIapHelper helper = SamsungIapHelper.getInstance(getActivity(), iapMode);
+                    helper.showProgressDialog(getActivity());
+                    helper.startAccountActivity(getActivity());
+                }
+            });
             return;
         }
 
