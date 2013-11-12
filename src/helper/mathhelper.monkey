@@ -25,8 +25,9 @@ Class MathHelper Abstract
     Const SQRT1_2:Float = 0.707106781186547524401
 
     Function Round:Int(given:Float)
-        If (given - Int(given)) >= 0.5 Then Return Ceil(given)
-        Return Floor(given)
+        If given > 0 Then Return Int(Floor(given + 0.5))
+        If given < 0 Then Return Int(Ceil(given - 0.5))
+        Return 0
     End
 
     Function ModF:Float(left:Float, right:Float)
