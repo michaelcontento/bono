@@ -1,14 +1,14 @@
 MONKEY_PATH=/Applications/Monkey
 TRANS_NAME=trans_macos
 CONFIG=debug
-TARGET=Glfw_Game
+TARGET=glfw
 BONO_MODPATH=$(CURDIR)/.modpath
 
 all: dependencies imports lint tests
 
 tests: clean
 	@echo "Running tests ..."
-	@$(MONKEY_PATH)/bin/transcc_macos \
+	@$(MONKEY_PATH)/bin/$(TRANS_NAME) \
 		-config=$(CONFIG) \
 		-target=$(TARGET) \
 		-modpath=".;$(BONO_MODPATH);$(CURDIR);$(MONKEY_PATH)/modules" \
