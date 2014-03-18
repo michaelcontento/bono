@@ -29,6 +29,9 @@ class ChartboostGlue {
 
 	//delegate glue
 	private static ChartboostDelegate chartboostDelegateGlue = new ChartboostDelegate() {
+	    @Override
+	    public void didFailToLoadUrl(String url) {}
+
 		@Override
 		public boolean shouldRequestInterstitial(String location) { return true; }
 
