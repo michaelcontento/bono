@@ -90,6 +90,7 @@ Import bono.src.kernel.contentscaler.contentscaler
 Import bono.src.kernel.contentscaler.contentscalerfull
 Import bono.src.kernel.deltatimer
 Import bono.src.kernel.director
+Import bono.src.kernel.interfaces.hardwarebackable
 Import bono.src.kernel.interfaces.renderable
 Import bono.src.kernel.interfaces.sceneable
 Import bono.src.kernel.interfaces.suspendable

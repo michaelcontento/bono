@@ -21,6 +21,7 @@ Class BonoApp Extends App Abstract
     Field renderable:Renderable
     Field suspendable:Suspendable
     Field updateable:Updateable
+    Field hardwarebackable:Hardwarebackable
 
     Method Run:Void() Abstract
 
@@ -37,6 +38,7 @@ Class BonoApp Extends App Abstract
         renderable = Renderable(obj)
         suspendable = Suspendable(obj)
         updateable = Updateable(obj)
+        hardwarebackable = Hardwarebackable(obj)
     End
 
     ' --- CONFIG
@@ -54,6 +56,15 @@ Class BonoApp Extends App Abstract
     End
 
     ' --- MONKEY APP
+
+    Method OnBack:Int()
+        If hardwarebackable
+            hardwarebackable.OnHardwareBack()
+        Else
+            OnClose()
+        End
+        Return 0
+    End
 
     Method OnCreate:Int()
         Try

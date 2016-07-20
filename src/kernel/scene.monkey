@@ -6,7 +6,7 @@ Import bono
 
 Public
 
-Class Scene Implements Sceneable, Updateable, Suspendable Abstract
+Class Scene Implements Sceneable, Updateable, Suspendable, Hardwarebackable Abstract
     Private
 
     Field childs:List<Object> = New List<Object>
@@ -25,6 +25,10 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
     End
 
     Method OnSceneLeave:Void()
+    End
+
+    Method OnHardwareBack:Void()
+        Device.Close()
     End
 
     Method OnRender:Void()
