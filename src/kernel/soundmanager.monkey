@@ -16,7 +16,7 @@ Class SoundManager
     Field loopEnabled:StringMap<Bool> = New StringMap<Bool>()
     Field musicSounds:StringMap<Bool> = New StringMap<Bool>()
     Field lastChannel:Int
-    Const CHANNELS:Int = 9
+    Const CHANNELS:Int = 32
 
     Public
 
