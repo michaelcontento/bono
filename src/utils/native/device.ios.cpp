@@ -22,7 +22,7 @@ public:
 }
 @end
 
-class Device
+class DeviceNative
 {
 public:
     int static GetTimestamp()
@@ -66,7 +66,7 @@ public:
 
     bool static FileExistsNative(String path)
     {
-        String realPath = String(pathForResource(path));
+        String realPath = String(BBIosGame::BBIosGame().PathToFilePath(path));
         typedef struct stat stat_t;
         stat_t st;
         if (stat(realPath.ToCString<char>(), &st)) return false;

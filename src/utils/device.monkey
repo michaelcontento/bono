@@ -12,25 +12,25 @@ Extern
 #if TARGET="ios" Or TARGET="glfw"
 
 Class DeviceNative Abstract
-    Function GetTimestamp:Int()="Device::GetTimestamp"
-    Function OpenUrl:Void(url:String)="Device::OpenUrl"
-    Function GetLanguage:String()="Device::GetLanguage"
-    Function Close:Void()="Device::Close"
+    Function GetTimestamp:Int()
+    Function OpenUrl:Void(url:String)
+    Function GetLanguage:String()
+    Function Close:Void()
 
-    Function FileExistsNative:Bool(path:String)="Device::FileExistsNative"
-    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device::ShowAlertNative"
+    Function FileExistsNative:Bool(path:String)
+    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)
 End
 
 #else
 
 Class DeviceNative Abstract
-    Function GetTimestamp:Int()="Device.GetTimestamp"
-    Function OpenUrl:Void(url:String)="Device.OpenUrl"
-    Function GetLanguage:String()="Device.GetLanguage"
-    Function Close:Void()="Device.Close"
+    Function GetTimestamp:Int()
+    Function OpenUrl:Void(url:String)
+    Function GetLanguage:String()
+    Function Close:Void()
 
-    Function FileExistsNative:Bool(path:String)="Device.FileExistsNative"
-    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)="Device.ShowAlertNative"
+    Function FileExistsNative:Bool(path:String)
+    Function ShowAlertNative:Void(title:String, message:String, buttons:String[], cb:AlertDelegate)
 End
 
 #endif

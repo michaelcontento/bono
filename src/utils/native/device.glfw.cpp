@@ -14,7 +14,7 @@ public:
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-class Device
+class DeviceNative
 {
 public:
     int static GetTimestamp()

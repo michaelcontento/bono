@@ -25,7 +25,7 @@ class CallbackOnClickListener implements DialogInterface.OnClickListener
     }
 }
 
-class Device
+class DeviceNative
 {
     static String GetLanguage()
     {
@@ -41,12 +41,16 @@ class Device
     {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
-        MonkeyGame.activity.startActivity(i);
+
+        Activity activity = BBAndroidGame.AndroidGame().GetActivity();
+        activity.startActivity(i);
     }
 
     static void ShowAlertNative(String title, String message, String[] buttons, AlertDelegate callback)
     {
-        AlertDialog.Builder alert = new AlertDialog.Builder(MonkeyGame.activity);
+        Activity activity = BBAndroidGame.AndroidGame().GetActivity();
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(title);
         alert.setMessage(message);
         alert.setNegativeButton(
@@ -72,8 +76,10 @@ class Device
     {
        try{
            if (path.toLowerCase().startsWith("monkey://data/")) {
-               path = MonkeyData.assetPath(path);
-               InputStream in = MonkeyData.getAssets().open(path);
+               path = BBAndroidGame.AndroidGame().PathToAssetPath(path);
+
+               Activity activity = BBAndroidGame.AndroidGame().GetActivity();
+               InputStream in = activity.getAssets().open(path);
                in.close();
                return true;
            }else{
@@ -86,6 +92,7 @@ class Device
 
    static void Close()
    {
-       MonkeyGame.activity.finish();
+       Activity activity = BBAndroidGame.AndroidGame().GetActivity();
+       activity.finish();
    }
 }
