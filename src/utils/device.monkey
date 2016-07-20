@@ -3,7 +3,7 @@ Strict
 Private
 
 Import bono
-Import mojo.graphics
+Import mojo.app
 Import mojo.data
 Import "native/device.${TARGET}.${LANG}"
 
