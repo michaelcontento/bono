@@ -2,7 +2,11 @@ Strict
 
 Public
 
-#If TARGET="ios"
+#IF BONO_PAYMENT_FREE
+    #Print "Bono: PaymentProviderAlias set to PaymentProviderFree"
+    Import bono.src.payment.paymentproviderfree
+    Alias PaymentProviderAlias = PaymentProviderFree
+#ElseIf TARGET="ios"
     #Print "Bono: PaymentProviderAlias set to PaymentProviderAppleIos"
     Import bono.src.payment.paymentproviderappleios
     Alias PaymentProviderAlias = PaymentProviderAppleIos
