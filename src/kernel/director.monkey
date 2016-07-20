@@ -11,7 +11,7 @@ Class Director
 
     Global instance:Director
     Field scenes:StringMap<Sceneable> = New StringMap<Sceneable>()
-    Field app:App
+    Field app:BonoApp
     Field currentScene:Sceneable
     Field currentSceneName:String
     Field previousScene:Sceneable
@@ -32,11 +32,11 @@ Class Director
         Return Director.Shared().GetApp().TranslateSpace(pos)
     End
 
-    Method SetApp:Void(app:App)
+    Method SetApp:Void(app:BonoApp)
         Self.app = app
     End
 
-    Method GetApp:App()
+    Method GetApp:BonoApp()
         Return app
     End
 

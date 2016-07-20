@@ -9,7 +9,7 @@ Import mojo.graphics
 
 Public
 
-Class App Extends app.App Abstract
+Class BonoApp Extends App Abstract
     Private
 
     Field timer:DeltaTimer

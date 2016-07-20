@@ -13,22 +13,22 @@ Class ContentScalerFull Implements ContentScaler
 
     Public
 
-    Method TranslateSpace:Vector2D(app:App, vec:Vector2D)
+    Method TranslateSpace:Vector2D(app:BonoApp, vec:Vector2D)
         InitScaleVector(app)
         Return vec.Div(scaleVec)
     End
 
-    Method OnRenderPre:Void(app:App)
+    Method OnRenderPre:Void(app:BonoApp)
         InitScaleVector(app)
         MatrixHelper.Scale(scaleVec)
     End
 
-    Method OnRenderPost:Void(app:App)
+    Method OnRenderPost:Void(app:BonoApp)
     End
 
     Private
 
-    Method InitScaleVector:Void(app:App)
+    Method InitScaleVector:Void(app:BonoApp)
         If Not scaleVec
             scaleVec = Device.GetSize().Div(app.GetVirtualSize())
         End

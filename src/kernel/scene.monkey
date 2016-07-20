@@ -84,7 +84,7 @@ Class Scene Implements Sceneable, Updateable, Suspendable Abstract
         Return Director.Shared()
     End
 
-    Method GetApp:App()
+    Method GetApp:BonoApp()
         Return GetDirector().GetApp()
     End
 
