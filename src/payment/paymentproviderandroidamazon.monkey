@@ -52,6 +52,9 @@ Class PaymentProviderAndroidAmazon Implements PaymentProvider
 
     Field publicKey:String
 
+    Method Init:Void(idsConsumable:String[], idsNonConsumable:String[])
+    End
+
     Method IsProcessing:Bool()
         Initialize()
         Return wrapper.IsPurchaseInProgress()
@@ -65,6 +68,9 @@ Class PaymentProviderAndroidAmazon Implements PaymentProvider
     Method IsPurchased:Bool(id:String)
         Initialize()
         Return wrapper.IsBought(id)
+    End
+
+    Method RestorePreviousPurchases:Void()
     End
 
     Private
