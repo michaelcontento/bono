@@ -2,7 +2,7 @@ Strict
 
 Public
 
-#IF BONO_PAYMENT_FREE
+#IF BONO_PAYMENT_FREE Or (TARGET="android" And BONO_ANDROID_MARKET="amazon-underground")
     #Print "Bono: PaymentProviderAlias set to PaymentProviderFree"
     Import bono.src.payment.paymentproviderfree
     Alias PaymentProviderAlias = PaymentProviderFree

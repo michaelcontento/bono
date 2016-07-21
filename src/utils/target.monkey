@@ -1,7 +1,7 @@
 Strict
 
 #BONO_ANDROID_MARKET="google"
-#If Not (BONO_ANDROID_MARKET="google") And Not (BONO_ANDROID_MARKET="amazon")
+#If Not (BONO_ANDROID_MARKET="google") And Not (BONO_ANDROID_MARKET="amazon") And Not (BONO_ANDROID_MARKET="amazon-underground")
     #Error "BONO: Invalid BONO_ANDROID_MARKET setting"
 #End
 
@@ -17,8 +17,14 @@ Class Target Abstract
 #If BONO_ANDROID_MARKET="amazon" And TARGET="android"
     Const PLATFORM_ID:String = TARGET + ":amazon"
     Const IS_MARKET_AMAZON:Bool = True
+    Const IS_MARKET_AMAZON_UNDERGROUND:Bool = False
+#ElseIf BONO_ANDROID_MARKET="amazon-underground" And TARGET="android"
+    Const PLATFORM_ID:String = TARGET + ":amazon-underground"
+    Const IS_MARKET_AMAZON:Bool = True
+    Const IS_MARKET_AMAZON_UNDERGROUND:Bool = True
 #Else
     Const IS_MARKET_AMAZON:Bool = False
+    Const IS_MARKET_AMAZON_UNDERGROUND:Bool = False
 #End
 
 #If LANG="js"
