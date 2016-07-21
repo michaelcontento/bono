@@ -13,6 +13,7 @@ Class PaymentManager Implements PaymentProvider
 
     Field provider:PaymentProvider
     Global instance:PaymentManager
+    Global initialized:Bool
 
     Public
 
@@ -42,26 +43,31 @@ Class PaymentManager Implements PaymentProvider
 
     Method RestorePreviousPurchases:Void()
         DebugLog("RestorePreviousPurchases")
-        #If TARGET="ios"
-            PaymentProviderAlias(GetProvider()).RestorePreviousPurchases()
-        #End
+        GetProvider().RestorePreviousPurchases()
     End
 
-    Method SetPublicKey:Void(key:String)
-        DebugLog("SetPublicKey")
-        #If TARGET="android" And BONO_ANDROID_MARKET="google"
-            PaymentProviderAlias(GetProvider()).publicKey = key
-        #End
+    Method Init:Void(idsConsumable:String[], idsNonConsumable:String[])
+        GetProvider().Init(idsConsumable, idsNonConsumable);
     End
 
-    Method SetItemGroupId:Void(itemGroupId:String)
-        DebugLog("SetItemGroupId")
-        #If TARGET="android" And BONO_ANDROID_MARKET="samsung"
-            PaymentProviderAlias(GetProvider()).itemGroupId = itemGroupId
-        #End
+    Method Init:Void()
+        If initialized
+            Throw New RuntimeException("Payment already initialized!")
+        End
+        initialized = True
+
+        Local ids := new List<String>()
+        For Local id:String = EachIn idAlias.Values()
+            ids.AddLast(idPrefix + id)
+        End
+
+        GetProvider().Init([], ids.ToArray());
     End
 
     Method GetProvider:PaymentProvider()
+        IF Not initialized
+            Throw New RuntimeException("Payment not initialized - call Init() first!")
+        End
         Return provider
     End
 
@@ -84,8 +90,6 @@ Class PaymentManager Implements PaymentProvider
     End
 
     Method DebugLog:Void(func:String, message:String="")
-        #If CONFIG="debug"
-            Print "[PaymentManager " + func + "] " + message
-        #End
+        Print "[PaymentManager " + func + "] " + message
     End
 End

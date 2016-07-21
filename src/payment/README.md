@@ -71,10 +71,9 @@ in the future.
 dependencies. Just take a look at the source of each provider to get a detailed
 description what need to be done OR keep an eye on [this][1].
 
-### AppleIos
+### MonkeyStore
 
-Supports iOS > 3.0 and both iPhone and iPad. It's built based on the [iap][]
-module for Monkey and [MKStorekit][].
+Provider for both iOS and Google Play Store as provided by Monkey itself.
 
 ### AndroidAmazon
 
@@ -87,34 +86,16 @@ jar-file and stick to the docs regarding the `AndroidManifest.xml`.
 **Important:** The current android market is selected based on
 `#BONO_ANDROID_MARKET`!
 
-### AndroidSamsung
-
-Support for the android target and the Samsung App Store. Should run on Android
-API > 13 and the whole setup is done in a few minutes. Just use the official
-jar-file and stick to the docs regarding the `AndroidManifest.xml`.
-
-**Important:** Read the docs at the top of `paymentproviderandroidsamsung.monkey`!
-
-**Important:** The current android market is selected based on
-`#BONO_ANDROID_MARKET`!
-
-### AndroidGoogle
-
-Support for the android target and the Google Play Store. Should run on Android
-API > 13 and the whole thing is pretty complicated to setup, as you need a lot
-of java code. Luckily the most stuff can be reused from the official IAP example
-and a little bit of glue code out of [Horizon-for-Monkey][].
-
-**Important:** Read the docs at the top of `paymentproviderandroidgoogle.monkey`!
-
-**Important:** The current android market is selected based on
-`#BONO_ANDROID_MARKET`!
-
 ### AutoUnlock
 
 Pretty simple behaviour: `IsPurchased()` returns `False` until
 `Purchase()` is called with the same id. Default provider if there is no
 alternative.
+
+### Free
+
+Similar to **AutoUnlock** but here `IsPurchased()` returns **always** `True`.
+Simply set `#BONO_PAYMENT_FREE=1` and all your IAPs are always "purchased".
 
 ### Alias
 
@@ -159,7 +140,4 @@ Monkey preprocessor magic, to the right provider for the current target.
 * [Amazon IAP](https://developer.amazon.com/sdk/in-app-purchasing.html)
 * [Google IAP](http://developer.android.com/google/play/billing/billing_overview.html)
 
-  [iap]: http://www.monkeycoder.co.nz/Community/posts.php?topic=1219#29629
-  [MKStorekit]: https://github.com/MugunthKumar/MKStoreKit
-  [Horizon-for-Monkey]: https://github.com/JochenHeizmann/Horizon-for-Monkey
   [1]: https://github.com/michaelcontento/bono/issues/15

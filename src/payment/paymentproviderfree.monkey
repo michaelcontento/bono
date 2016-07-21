@@ -9,6 +9,9 @@ Public
 Class PaymentProviderFree Implements PaymentProvider
     Public
 
+    Method Init:Void(idsConsumable:String[], idsNonConsumable:String[])
+    End
+
     Method IsProcessing:Bool()
         Return False
     End
@@ -18,5 +21,8 @@ Class PaymentProviderFree Implements PaymentProvider
 
     Method IsPurchased:Bool(id:String)
         Return True
+    End
+
+    Method RestorePreviousPurchases:Void()
     End
 End

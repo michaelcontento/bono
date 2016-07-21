@@ -1,7 +1,7 @@
 Strict
 
 #BONO_ANDROID_MARKET="google"
-#If Not (BONO_ANDROID_MARKET="google") And Not (BONO_ANDROID_MARKET="amazon") And Not (BONO_ANDROID_MARKET="samsung")
+#If Not (BONO_ANDROID_MARKET="google") And Not (BONO_ANDROID_MARKET="amazon")
     #Error "BONO: Invalid BONO_ANDROID_MARKET setting"
 #End
 
@@ -19,13 +19,6 @@ Class Target Abstract
     Const IS_MARKET_AMAZON:Bool = True
 #Else
     Const IS_MARKET_AMAZON:Bool = False
-#End
-
-#If BONO_ANDROID_MARKET="samsung" And TARGET="android"
-    Const PLATFORM_ID:String = TARGET + ":samsung"
-    Const IS_MARKET_SAMSUNG:Bool = True
-#Else
-    Const IS_MARKET_SAMSUNG:Bool = False
 #End
 
 #If LANG="js"
