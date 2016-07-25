@@ -18,13 +18,13 @@ Private
 
 #If BONO_ADS_DISABLED
 
-#Info "BONO: Appodeal ads have been disabled"
+#Print "Bono: Appodeal ads have been disabled"
 
 #Else
 
 Import bono.vendor.appodeal.appodeal
 
-Const AdTypes := AdType.NON_SKIPPABLE_VIDEO | AdType.REWARDED_VIDEO | AdType.INTERSTITIAL;
+Const AdTypes := AdType.NON_SKIPPABLE_VIDEO | AdType.REWARDED_VIDEO | AdType.INTERSTITIAL
 
 #EndIf
 
