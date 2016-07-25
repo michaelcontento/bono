@@ -16,9 +16,15 @@ Strict
 
 Private
 
-#If Not BONO_ADS_DISABLED
+#If BONO_ADS_DISABLED
+
+#Info "BONO: Appodeal ads have been disabled"
+
+#Else
 
 Import bono.vendor.appodeal.appodeal
+
+Const AdTypes := AdType.NON_SKIPPABLE_VIDEO | AdType.REWARDED_VIDEO | AdType.INTERSTITIAL;
 
 #EndIf
 
@@ -30,35 +36,20 @@ Class Appodeal Abstract
         Local appo := AdAppodeal.GetAppodeal()
 
         appo.disableLocationPermissionCheck()
-        appo.initialize(appKey, AdType.INTERSTITIAL | AdType.NON_SKIPPABLE_VIDEO);
-
-        appo.setAutoCache(AdType.NON_SKIPPABLE_VIDEO, True)
-        appo.setAutoCache(AdType.INTERSTITIAL, True)
+        appo.initialize(appKey, AdTypes);
+        appo.setAutoCache(AdTypes, True)
 #EndIf
     End
 
     Function Show:Void()
 #If Not BONO_ADS_DISABLED
-        Local appo := AdAppodeal.GetAppodeal()
-
-        If appo.isLoaded(AdType.NON_SKIPPABLE_VIDEO)
-            appo.show(AdType.NON_SKIPPABLE_VIDEO)
-            Return
-        End
-
-        If appo.isLoaded(AdType.INTERSTITIAL)
-            appo.show(AdType.INTERSTITIAL)
-            Return
-        End
+        AdAppodeal.GetAppodeal().show(AdTypes)
 #EndIf
     End
 
     Function Hide:Void()
 #If Not BONO_ADS_DISABLED
-        Local appo := AdAppodeal.GetAppodeal()
-
-        appo.hide(AdType.NON_SKIPPABLE_VIDEO)
-        appo.hide(AdType.INTERSTITIAL)
+        AdAppodeal.GetAppodeal().hide(AdTypes)
 #EndIf
     End
 End
